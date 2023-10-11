@@ -1,24 +1,17 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {useState} from 'react';
+import { TextSubmissionForm } from './components/TextSubmissionForm';
+import {Box, dark, light, ThemeProvider} from "@amboss/design-system";
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    const [theme, setTheme] = useState(false)
+
+    return (
+        <ThemeProvider theme={theme ? dark : light}>
+            <Box className="App">
+                <TextSubmissionForm />
+            </Box>
+        </ThemeProvider>
   );
 }
 
