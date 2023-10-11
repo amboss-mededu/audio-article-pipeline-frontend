@@ -1,3 +1,10 @@
+.header__navigation > div {
+  width: fit-content;
+  padding: 0 1rem;
+  margin: 0 0 0 auto;
+  line-height: 52px;
+}
+
 .App {
   text-align: center;
 }
