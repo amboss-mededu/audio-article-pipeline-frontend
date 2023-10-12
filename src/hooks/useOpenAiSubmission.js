@@ -16,7 +16,7 @@ const useOpenAiSubmission = () => {
         setError(null);
 
         try {
-            const apiUrl = 'http://localhost:4000/openai/request';
+            const apiUrl = '/api/openai/request';
 
             const response = await axios.post(apiUrl, {
                 promptId,

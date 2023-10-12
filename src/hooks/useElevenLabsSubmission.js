@@ -13,7 +13,7 @@ const useElevenLabsSubmission = () => {
         setError(null);
 
         try {
-            const apiUrl = 'http://localhost:4000/elevenlabs/request';
+            const apiUrl = '/api/elevenlabs/request';
 
             const response = await axios.post(apiUrl, {
                 text: elevenLabsInput, // Passing the previously obtained result

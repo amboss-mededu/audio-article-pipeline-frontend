@@ -8,11 +8,12 @@ const AppProvider = ({ children }) => {
     const [activeTab, setActiveTab] = useState(0); // default to the first tab
     const [elevenLabsInput, setElevenLabsInput] = useState(null); // Umbrella state for the elevenlabs input
     const [openAiInput, setOpenAiInput] = useState(''); // stores the input to openAi call
+    const [promptId, setPromptId] = useState('1');
+
 
     // Not yet reviewed
     const [resultScript, setResultScript] = useState(null);
     const [audioFilePath, setAudioFilePath] = useState(null);
-    const [promptId, setPromptId] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [progress, setProgress] = useState(0);
@@ -25,14 +26,13 @@ const AppProvider = ({ children }) => {
                 activeTab, setActiveTab,
                 elevenLabsInput, setElevenLabsInput,
                 openAiInput, setOpenAiInput,
+                promptId, setPromptId,
 
                 // not deployed (yet)
                 resultScript,
                 setResultScript,
                 audioFilePath,
                 setAudioFilePath,
-                promptId,
-                setPromptId,
                 loading,
                 setLoading,
                 error,

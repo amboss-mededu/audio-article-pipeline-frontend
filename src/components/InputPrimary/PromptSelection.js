@@ -1,40 +1,47 @@
 import React, { useEffect, useState } from 'react';
+import { Select } from "@amboss/design-system";
+import {useAppContext} from "../../context/AppContext";
 
 const PromptSelect = ({ onChange }) => {
     const [prompts, setPrompts] = useState([]);
-    const [selectedPromptId, setSelectedPromptId] = useState("");
+
+    const { promptId, setPromptId } = useAppContext();
 
     useEffect(() => {
         // Fetch prompts from backend
-        fetch('/well-known/prompts.json')
+        fetch('/.well-known/prompts.json')
             .then(response => response.json())
-            .then(data => setPrompts(data.prompts))
-            .catch(error => {
-                console.error('Error fetching prompts:', error)
+            .then(data => {
+                console.log(data.prompts)
+                setPrompts(data.prompts)
             })
-            .finally((data) => {
-                if (!data || !data.prompts) setPrompts({id: "1", title: "Default"})
+            .catch(error => {
+                console.error('Error fetching prompts:', error);
+                setPrompts([{id: "1", title: "Default"}])
             })
     }, []);
 
     const handleChange = (event) => {
-        setSelectedPromptId(event.target.value);
-        onChange(event.target.value);
+        setPromptId(event.target.value);
     };
 
+    const selectOptions = prompts.map(prompt => ({
+        label: prompt.title,
+        value: prompt.id
+    }));
+
     return (
-        <select
-            value={selectedPromptId}
-            onChange={handleChange}
+        <Select
+            name="promptSelect"
+            value={promptId}
             placeholder="Select a prompt"
-        >
-            <option value="" disabled>Select a prompt</option>
-            {prompts.map((prompt) => (
-                <option key={prompt.id} value={prompt.id}>
-                    {prompt.title}
-                </option>
-            ))}
-        </select>
+            options={selectOptions}
+            onChange={handleChange}
+            label="Prompt Selection"
+            labelHint="Choose a prompt for your input"
+            emptyStateMessage="No prompts available"
+        />
     );
 };
+
 export default PromptSelect;

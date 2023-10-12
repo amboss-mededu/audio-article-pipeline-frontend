@@ -18,8 +18,8 @@ function App() {
         <ThemeProvider theme={theme ? dark : light}>
                 <Box className="App">
                     <HeaderNavigation onTabChange={handleTabChange} />
-                    {activeTab === 0 && <div>Show Transcript View</div>}
-                    <InputPage />
+                    {activeTab === 0 && <InputPage />}
+
                 </Box>
         </ThemeProvider>
   );

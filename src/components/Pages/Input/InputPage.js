@@ -5,6 +5,7 @@ import {useState} from "react";
 import useOpenAiSubmission from "../../../hooks/useOpenAiSubmission";
 import useElevenLabsSubmission from "../../../hooks/useElevenLabsSubmission";
 import {useAppContext} from "../../../context/AppContext";
+import {ProgressController} from "../../../context/ProgressController";
 
 export const InputPage = () => {
     const [promptId, setPromptId] = useState('');
@@ -39,7 +40,9 @@ export const InputPage = () => {
                 <Stack>
                     <Divider />
                     <LoadingSpinner screenReaderText="Loading" />
-                    <Box><ProgressBar progress={50} maxValue={100} /></Box> {/* example progress value */}
+                    <Box>
+                        <ProgressController />
+                    </Box>
                 </Stack>
             )}
 
@@ -57,7 +60,9 @@ export const InputPage = () => {
                 <Stack>
                     <Divider />
                     <LoadingSpinner screenReaderText="Loading" />
-                    <Box><ProgressBar progress={50} maxValue={100} /></Box> {/* example progress value */}
+                    <Box>
+                        <ProgressController />
+                    </Box>
                 </Stack>
             )}
 
