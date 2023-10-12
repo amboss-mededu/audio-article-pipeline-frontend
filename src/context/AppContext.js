@@ -6,6 +6,8 @@ const AppContext = createContext();
 const AppProvider = ({ children }) => {
     // Sorted:
     const [activeTab, setActiveTab] = useState(0); // default to the first tab
+    const [elevenLabsInput, setElevenLabsInput] = useState(null); // Umbrella state for the elevenlabs input
+
 
     // State
     const [inputHtml, setInputHtml] = useState('');
@@ -21,8 +23,8 @@ const AppProvider = ({ children }) => {
     return (
         <AppContext.Provider
             value={{
-                activeTab,
-                setActiveTab,
+                activeTab, setActiveTab,
+                elevenLabsInput, setElevenLabsInput,
 
                 inputHtml,
                 setInputHtml,

@@ -1,13 +1,13 @@
 import {Box, Button, FormFieldGroup, Stack, Textarea} from "@amboss/design-system";
 
-export const SecondarySubmissionForm = ({canProceedToElevenLabs, resultScript, setResultScript, loading}) => {
+export const SecondarySubmissionForm = ({canProceedToElevenLabs, elevenLabsInput, setElevenLabsInput, loading}) => {
     return (
         <Stack alignItems={"spaceBetween"}>
             <FormFieldGroup label="Result">
                 <Textarea
                     label="Result"
-                    value={resultScript}
-                    onChange={(e) => setResultScript(e.target.value)}
+                    value={elevenLabsInput}
+                    onChange={(e) => setElevenLabsInput(e.target.value)}
                     name="openai-result" rows={15}
                 />
             </FormFieldGroup>

@@ -1,12 +1,13 @@
 import React, {useState} from 'react';
-import { TextSubmissionForm } from './components/TextSubmissionForm';
+import { TextSubmissionForm } from './components/Pages/Input/InputPage';
 import {Box, dark, light, ThemeProvider} from "@amboss/design-system";
-import { AppProvider } from './context/AppContext';
+import {AppProvider, useAppContext} from './context/AppContext';
 import HeaderNavigation from "./components/Header/Navigation";
 import './styles/App.css';
 
 function App() {
     const [theme, setTheme] = useState(false)
+    const { activeTab } = useAppContext();
 
     const handleTabChange = (selectedIndex) => {
         // Handle tab change based on selectedIndex
@@ -15,12 +16,11 @@ function App() {
 
     return (
         <ThemeProvider theme={theme ? dark : light}>
-            <AppProvider>
                 <Box className="App">
                     <HeaderNavigation onTabChange={handleTabChange} />
+                    {activeTab === 0 && <div>Show Transcript View</div>}
                     <TextSubmissionForm />
                 </Box>
-            </AppProvider>
         </ThemeProvider>
   );
 }
