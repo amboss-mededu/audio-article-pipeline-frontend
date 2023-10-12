@@ -4,13 +4,12 @@ import React, { createContext, useState, useContext } from 'react';
 const AppContext = createContext();
 
 const AppProvider = ({ children }) => {
-    // Sorted:
+    // Deployed:
     const [activeTab, setActiveTab] = useState(0); // default to the first tab
     const [elevenLabsInput, setElevenLabsInput] = useState(null); // Umbrella state for the elevenlabs input
+    const [openAiInput, setOpenAiInput] = useState(''); // stores the input to openAi call
 
-
-    // State
-    const [inputHtml, setInputHtml] = useState('');
+    // Not yet reviewed
     const [resultScript, setResultScript] = useState(null);
     const [audioFilePath, setAudioFilePath] = useState(null);
     const [promptId, setPromptId] = useState('');
@@ -25,9 +24,9 @@ const AppProvider = ({ children }) => {
             value={{
                 activeTab, setActiveTab,
                 elevenLabsInput, setElevenLabsInput,
+                openAiInput, setOpenAiInput,
 
-                inputHtml,
-                setInputHtml,
+                // not deployed (yet)
                 resultScript,
                 setResultScript,
                 audioFilePath,

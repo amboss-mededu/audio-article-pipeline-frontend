@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { TextSubmissionForm } from './components/Pages/Input/InputPage';
+import { InputPage } from './components/Pages/Input/InputPage';
 import {Box, dark, light, ThemeProvider} from "@amboss/design-system";
 import {AppProvider, useAppContext} from './context/AppContext';
 import HeaderNavigation from "./components/Header/Navigation";
@@ -19,7 +19,7 @@ function App() {
                 <Box className="App">
                     <HeaderNavigation onTabChange={handleTabChange} />
                     {activeTab === 0 && <div>Show Transcript View</div>}
-                    <TextSubmissionForm />
+                    <InputPage />
                 </Box>
         </ThemeProvider>
   );

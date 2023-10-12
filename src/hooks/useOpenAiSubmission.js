@@ -10,7 +10,8 @@ const useOpenAiSubmission = () => {
     const [error, setError] = useState(null);
     const [openAiCallId, setOpenAiCallId] = useState(null);
 
-    const handleSubmit = async (promptId, inputHtml) => {
+    const handleSubmit = async (e, promptId, inputHtml) => {
+        e.preventDefault();
         setLoading(true);
         setError(null);
 

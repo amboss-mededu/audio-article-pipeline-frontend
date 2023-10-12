@@ -7,7 +7,8 @@ const useElevenLabsSubmission = () => {
     const [audioFilePath, setAudioFilePath] = useState(null);
     const [error, setError] = useState(null);
 
-    const handleSubmit = async (resultScript, openAiCallId) => {
+    const handleSubmit = async (e, elevenLabsInput, openAiCallId) => {
+        e.preventDefault();
         setLoading(true);
         setError(null);
 
@@ -15,7 +16,7 @@ const useElevenLabsSubmission = () => {
             const apiUrl = 'http://localhost:4000/elevenlabs/request';
 
             const response = await axios.post(apiUrl, {
-                text: resultScript, // Passing the previously obtained result
+                text: elevenLabsInput, // Passing the previously obtained result
                 openAiCallId: openAiCallId
             });
 

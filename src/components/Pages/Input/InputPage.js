@@ -1,4 +1,4 @@
-import {Box, Divider, LoadingSpinner, ProgressBar, Stack} from "@amboss/design-system";
+import {Box, Divider, H2, LoadingSpinner, ProgressBar, Stack} from "@amboss/design-system";
 import {SecondarySubmissionForm} from "../../InputSecondary/SecondarySubmission";
 import {PrimarySubmissionForm} from "../../InputPrimary/PrimarySubmission";
 import {useState} from "react";
@@ -6,8 +6,7 @@ import useOpenAiSubmission from "../../../hooks/useOpenAiSubmission";
 import useElevenLabsSubmission from "../../../hooks/useElevenLabsSubmission";
 import {useAppContext} from "../../../context/AppContext";
 
-export const TextSubmissionForm = () => {
-    const [inputHtml, setInputHtml] = useState('');
+export const InputPage = () => {
     const [promptId, setPromptId] = useState('');
     const { elevenLabsInput, setElevenLabsInput } = useAppContext()
 
@@ -27,15 +26,13 @@ export const TextSubmissionForm = () => {
 
     return (
         <div>
-            <h1>Text Analyzer</h1>
+            <H2> 📜✨ AI Text To Speech ✨🔉</H2>
 
             <PrimarySubmissionForm
                 loading={openAiLoading}
-                inputHtml={inputHtml}
-                setInputHtml={setInputHtml}
                 promptId={promptId}
                 setPromptId={setPromptId}
-                onSubmit={handleOpenAiSubmit}
+                handleSubmit={handleOpenAiSubmit}
             />
 
             {openAiLoading && (
@@ -51,8 +48,9 @@ export const TextSubmissionForm = () => {
             <SecondarySubmissionForm
                 elevenLabsInput={elevenLabsInput}
                 setElevenLabsInput={setElevenLabsInput}
-                onSubmit={handleElevenLabsSubmit}
+                handleSubmit={handleElevenLabsSubmit}
                 canProceed={true}
+                openAiCallId={openAiCallId}
             />
 
             {elevenLabsLoading && (
