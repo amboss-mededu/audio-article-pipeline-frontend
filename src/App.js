@@ -4,6 +4,7 @@ import {Box, dark, light, ThemeProvider} from "@amboss/design-system";
 import {AppProvider, useAppContext} from './context/AppContext';
 import HeaderNavigation from "./components/Header/Navigation";
 import './styles/App.css';
+import AudioRenderer from "./components/Pages/Episode/EpisodePage";
 
 function App() {
     const [theme, setTheme] = useState(false)
@@ -19,6 +20,7 @@ function App() {
                 <Box className="App">
                     <HeaderNavigation onTabChange={handleTabChange} />
                     {activeTab === 0 && <InputPage />}
+                    {activeTab === 2 && <AudioRenderer />}
 
                 </Box>
         </ThemeProvider>

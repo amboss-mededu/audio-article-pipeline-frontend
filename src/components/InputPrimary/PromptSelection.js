@@ -12,7 +12,6 @@ const PromptSelect = ({ onChange }) => {
         fetch('/.well-known/prompts.json')
             .then(response => response.json())
             .then(data => {
-                console.log(data.prompts)
                 setPrompts(data.prompts)
             })
             .catch(error => {

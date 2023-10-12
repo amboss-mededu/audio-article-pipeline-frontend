@@ -50,7 +50,7 @@ export const PrimarySubmissionForm = ({loading, handleSubmit}) => {
                                 onChange={handleModelChange}
                                 options={[
                                     {label: 'GPT-3.5-Turbo', value: 'gpt-3.5-turbo'},
-                                    {label: 'GPT-3.5-16K', value: 'gpt-3.5-16k'},
+                                    {label: 'GPT-3.5-16K', value: 'gpt-3.5-turbo-16k'},
                                     {label: 'GPT-4', value: 'gpt-4'},
                                 ]}
                             />

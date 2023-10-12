@@ -48,6 +48,8 @@ export const InputPage = () => {
 
             {openAiError && <div>{openAiError}</div>}
 
+            <Divider />
+
             <SecondarySubmissionForm
                 elevenLabsInput={elevenLabsInput}
                 setElevenLabsInput={setElevenLabsInput}
@@ -58,7 +60,6 @@ export const InputPage = () => {
 
             {elevenLabsLoading && (
                 <Stack>
-                    <Divider />
                     <LoadingSpinner screenReaderText="Loading" />
                     <Box>
                         <ProgressController />
@@ -69,7 +70,7 @@ export const InputPage = () => {
             {elevenLabsError && <div>{elevenLabsError}</div>}
 
             {audioFilePath && (
-                <Box>
+                <Box alignText={"center"}>
                     <audio controls>
                         <source src={audioFilePath} type="audio/mp3" />
                         Your browser does not support the audio tag.

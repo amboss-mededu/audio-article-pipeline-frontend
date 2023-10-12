@@ -7,7 +7,7 @@ export const SecondarySubmissionForm = ({canProceed, elevenLabsInput, setElevenL
          >
             <Stack alignItems={"spaceBetween"}>
                 <form onSubmit={(e) => handleSubmit(e, elevenLabsInput, openAiCallId)}>
-                    <FormFieldGroup label="Result">
+                    <FormFieldGroup>
                         <Textarea
                             label="Result"
                             value={elevenLabsInput}
@@ -17,7 +17,7 @@ export const SecondarySubmissionForm = ({canProceed, elevenLabsInput, setElevenL
                         />
                     </FormFieldGroup>
                     {canProceed && ( // Only show second button when user can proceed
-                        <Box>
+                        <Box lSpace={"zero"}>
                             <Button
                                 type="submit"
                                 variant="primary"
