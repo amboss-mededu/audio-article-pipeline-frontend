@@ -34,7 +34,7 @@ export const PrimarySubmissionForm = ({loading, handleSubmit}) => {
                             hint={`Token count: ${tokenCount}`}
                             onChange={handleInputChange}
                             resize="both"
-                            maxLength={10000}
+                            maxLength={100000}
                             placeholder="Enter your HTML here..."
                         />
 

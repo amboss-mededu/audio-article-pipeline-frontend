@@ -13,6 +13,7 @@ export const SecondarySubmissionForm = ({canProceed, elevenLabsInput, setElevenL
                             value={elevenLabsInput}
                             onChange={(e) => setElevenLabsInput(e.target.value)}
                             name="openai-result" rows={15}
+                            maxLength={100000}
                         />
                     </FormFieldGroup>
                     {canProceed && ( // Only show second button when user can proceed
