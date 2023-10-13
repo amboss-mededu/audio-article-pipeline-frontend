@@ -16,7 +16,7 @@ const PromptSelect = ({ onChange }) => {
             })
             .catch(error => {
                 console.error('Error fetching prompts:', error);
-                setPrompts([{id: "1", title: "Default"}])
+                setPrompts([{id: 1, title: "Default"}])
             })
     }, []);
 
