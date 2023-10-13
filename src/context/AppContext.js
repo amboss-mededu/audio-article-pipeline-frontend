@@ -9,6 +9,7 @@ const AppProvider = ({ children }) => {
     const [elevenLabsInput, setElevenLabsInput] = useState(null); // Umbrella state for the elevenlabs input
     const [openAiInput, setOpenAiInput] = useState(''); // stores the input to openAi call
     const [promptId, setPromptId] = useState('1');
+    const [selectedArticle, setSelectedArticle] = useState(null)
 
 
     // Not yet reviewed
@@ -27,6 +28,7 @@ const AppProvider = ({ children }) => {
                 elevenLabsInput, setElevenLabsInput,
                 openAiInput, setOpenAiInput,
                 promptId, setPromptId,
+                selectedArticle, setSelectedArticle,
 
                 // not deployed (yet)
                 resultScript,

@@ -1,14 +1,26 @@
-import {Box, Button, FormFieldGroup, Inline, Input, Select, Stack, Textarea} from "@amboss/design-system";
+import {
+    Box,
+    Button,
+    FormFieldGroup,
+    Inline,
+    Input,
+    SegmentedControl,
+    Select,
+    Stack,
+    Textarea
+} from "@amboss/design-system";
 import {useState} from "react";
 import {useAppContext} from "../../context/AppContext";
 import PromptSelect from "./PromptSelection";
+import {ArticleSelect} from "../Pages/Episode/ArticleSelect";
 
 export const PrimarySubmissionForm = ({loading, handleSubmit}) => {
+
+    const [inputType, setInputType] = useState('html')
     const [tokenCount, setTokenCount] = useState(0);
     const [model, setModel] = useState('gpt-3.5-turbo');
 
     const { promptId, setPromptId } = useAppContext()
-
     const { openAiInput, setOpenAiInput } = useAppContext();
 
     const handleInputChange = (e) => {
@@ -29,14 +41,39 @@ export const PrimarySubmissionForm = ({loading, handleSubmit}) => {
             <Stack alignItems={"spaceBetween"}>
                 <form onSubmit={(e) => handleSubmit(e, promptId, openAiInput)}>
                     <FormFieldGroup label="Input" labelHint="Supports plain text">
-                        <Textarea
-                            value={openAiInput}
-                            hint={`Token count: ${tokenCount}`}
-                            onChange={handleInputChange}
-                            resize="both"
-                            maxLength={100000}
-                            placeholder="Enter your HTML here..."
-                        />
+                        <Inline alignItems={"center"}>
+                            <SegmentedControl
+                                onChange={(value) => setInputType(value)}
+                                value={inputType}
+                                options={[
+                                    {
+                                        label: 'HTML',
+                                        name: 'html',
+                                        value: 'html'
+                                    },
+                                    {
+                                        label: 'Article',
+                                        name: 'article',
+                                        value: 'article'
+                                    }
+                                ]}
+                                size="m"
+                            />
+                        </Inline>
+                        {
+                            inputType === "html" ?
+                                <Textarea
+                                    value={openAiInput}
+                                    hint={`Token count: ${tokenCount}`}
+                                    onChange={handleInputChange}
+                                    resize="both"
+                                    maxLength={100000}
+                                    placeholder="Enter your HTML here..."
+                                />
+                            :
+                                <ArticleSelect />
+
+                        }
 
                         <Inline
                             space={"xl"}

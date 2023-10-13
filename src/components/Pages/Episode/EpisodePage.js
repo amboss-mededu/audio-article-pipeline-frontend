@@ -1,8 +1,9 @@
 
 import React, { useState, useEffect } from "react";
 import {Select, FormFieldGroup, Radio, Button, Box, Inline} from "@amboss/design-system";
-import articlesData from "../../../helpers/xid.json";
 import axios from "axios";
+import {ArticleSelect} from "./ArticleSelect";
+import {useAppContext} from "../../../context/AppContext";
 
 const voices = [
     { label: 'Bella', value: '1' },
@@ -11,18 +12,9 @@ const voices = [
 ];
 
 const AudioRenderer = () => {
-    const [selectedArticle, setSelectedArticle] = useState('');
+    const {selectedArticle, setSelectedArticle} = useAppContext();
     const [selectedVoice, setSelectedVoice] = useState('');
     const [selectedMode, setSelectedMode] = useState('');
-    const [articles, setArticles] = useState([]);
-
-    useEffect(() => {
-        const formattedData = articlesData.map(article => ({
-            label: article.title,
-            value: article.xid.toString(),
-        }));
-        setArticles(formattedData);
-    }, []); // Empty dependency array means this useEffect runs once when component mounts
 
     const handleRenderAudio = () => {
         console.log('Rendering Audio with the following settings:');
@@ -59,13 +51,7 @@ const AudioRenderer = () => {
             <h2>Audio Renderer</h2>
 
             <Box space={"zero"} vSpace={"l"}><Inline space={"l"} alignItems={"left"}>
-                <Select
-                    label="Select Article"
-                    placeholder="Select an article"
-                    options={articles}
-                    value={selectedArticle}
-                    onChange={(e) => setSelectedArticle(e.target.value)}
-                />
+                <ArticleSelect />
                 <Select
                     label="Select Voice"
                     placeholder="Select a voice"
