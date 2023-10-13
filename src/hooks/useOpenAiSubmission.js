@@ -10,17 +10,17 @@ const useOpenAiSubmission = () => {
     const [error, setError] = useState(null);
     const [openAiCallId, setOpenAiCallId] = useState(null);
 
-    const handleSubmit = async (e, promptId, inputHtml) => {
+    const handleSubmit = async (e, promptId, openAiInput, openAiInputType) => {
         e.preventDefault();
         setLoading(true);
         setError(null);
 
         try {
-            const apiUrl = '/api/openai/request';
+            const apiUrl = `/api/openai/request?inputType=${openAiInputType}`;
 
             const response = await axios.post(apiUrl, {
                 promptId,
-                userMessage: inputHtml,
+                userMessage: openAiInput,
             });
 
             if (!response || !response.data) throw new Error ( "No response")

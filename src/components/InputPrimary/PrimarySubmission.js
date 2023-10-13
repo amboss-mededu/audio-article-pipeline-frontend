@@ -16,7 +16,7 @@ import {ArticleSelect} from "../Pages/Episode/ArticleSelect";
 
 export const PrimarySubmissionForm = ({loading, handleSubmit}) => {
 
-    const [inputType, setInputType] = useState('html')
+    const [openAiInputType, setOpenAiInputType] = useState('text')
     const [tokenCount, setTokenCount] = useState(0);
     const [model, setModel] = useState('gpt-3.5-turbo');
 
@@ -39,29 +39,29 @@ export const PrimarySubmissionForm = ({loading, handleSubmit}) => {
              space={"zero"} vSpace={"l"}
         >
             <Stack alignItems={"spaceBetween"}>
-                <form onSubmit={(e) => handleSubmit(e, promptId, openAiInput)}>
+                <form onSubmit={(e) => handleSubmit(e, promptId, openAiInput, openAiInputType)}>
                     <FormFieldGroup label="Input" labelHint="Supports plain text">
                         <Inline alignItems={"center"}>
                             <SegmentedControl
-                                onChange={(value) => setInputType(value)}
-                                value={inputType}
+                                onChange={(value) => setOpenAiInputType(value)}
+                                value={openAiInputType}
                                 options={[
                                     {
-                                        label: 'HTML',
-                                        name: 'html',
-                                        value: 'html'
+                                        label: 'HTML or Markdown',
+                                        name: 'text',
+                                        value: 'text'
                                     },
                                     {
                                         label: 'Article',
-                                        name: 'article',
-                                        value: 'article'
+                                        name: 'xid',
+                                        value: 'xid'
                                     }
                                 ]}
                                 size="m"
                             />
                         </Inline>
                         {
-                            inputType === "html" ?
+                            openAiInputType === "text" ?
                                 <Textarea
                                     value={openAiInput}
                                     hint={`Token count: ${tokenCount}`}
