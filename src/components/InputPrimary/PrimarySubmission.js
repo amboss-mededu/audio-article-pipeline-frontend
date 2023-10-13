@@ -3,7 +3,6 @@ import {
     Button,
     FormFieldGroup,
     Inline,
-    Input,
     SegmentedControl,
     Select,
     Stack,
@@ -20,7 +19,7 @@ export const PrimarySubmissionForm = ({loading, handleSubmit}) => {
     const [tokenCount, setTokenCount] = useState(0);
     const [model, setModel] = useState('gpt-3.5-turbo');
 
-    const { promptId, setPromptId } = useAppContext()
+    const { promptId } = useAppContext()
     const { openAiInput, setOpenAiInput } = useAppContext();
 
     const handleInputChange = (e) => {

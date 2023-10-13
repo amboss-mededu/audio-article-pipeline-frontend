@@ -1,4 +1,4 @@
-import {Box, Divider, H2, LoadingSpinner, ProgressBar, Stack} from "@amboss/design-system";
+import {Box, Divider, H2, LoadingSpinner, Stack} from "@amboss/design-system";
 import {SecondarySubmissionForm} from "../../InputSecondary/SecondarySubmission";
 import {PrimarySubmissionForm} from "../../InputPrimary/PrimarySubmission";
 import {useState} from "react";

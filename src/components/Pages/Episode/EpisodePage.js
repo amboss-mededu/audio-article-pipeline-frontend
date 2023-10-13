@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {Select, FormFieldGroup, Radio, Button, Box, Inline} from "@amboss/design-system";
 import axios from "axios";
 import {ArticleSelect} from "./ArticleSelect";
@@ -12,7 +12,7 @@ const voices = [
 ];
 
 const AudioRenderer = () => {
-    const {selectedArticle, setSelectedArticle} = useAppContext();
+    const {selectedArticle} = useAppContext();
     const [selectedVoice, setSelectedVoice] = useState('');
     const [selectedMode, setSelectedMode] = useState('');
 

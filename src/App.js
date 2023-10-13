@@ -1,22 +1,28 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { InputPage } from './components/Pages/Input/InputPage';
 import {Box, dark, light, ThemeProvider} from "@amboss/design-system";
-import {AppProvider, useAppContext} from './context/AppContext';
+import { useAppContext} from './context/AppContext';
 import HeaderNavigation from "./components/Header/Navigation";
 import './styles/App.css';
 import AudioRenderer from "./components/Pages/Episode/EpisodePage";
 
 function App() {
-    const [theme, setTheme] = useState(false)
     const { activeTab } = useAppContext();
+    const [isNightTime, setNightTime] = useState(false)
 
     const handleTabChange = (selectedIndex) => {
         // Handle tab change based on selectedIndex
         console.log(`Tab ${selectedIndex + 1} selected`);
     };
 
+    useEffect(() => {
+        const currentTime = new Date().getHours();
+        console.log(currentTime)
+        setNightTime(currentTime >= 19 || currentTime <= 6);
+    }, []);
+
     return (
-        <ThemeProvider theme={theme ? dark : light}>
+        <ThemeProvider theme={isNightTime ? dark : light}>
                 <Box className="App">
                     <HeaderNavigation onTabChange={handleTabChange} />
                     {activeTab === 0 && <InputPage />}
