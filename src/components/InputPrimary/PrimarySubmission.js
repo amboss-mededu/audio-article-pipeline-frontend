@@ -5,6 +5,7 @@ import {useState} from "react";
 import {PrimaryInputForm} from "./PrimaryInputForm";
 
 export const PrimarySubmissionForm = ({loading, handleSubmit}) => {
+    console.log("PrimarySubmissionForm mounted")
 
     const [openAiInputType, setOpenAiInputType] = useState('text')
 

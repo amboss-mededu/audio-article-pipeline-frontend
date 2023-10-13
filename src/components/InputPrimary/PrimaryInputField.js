@@ -4,9 +4,10 @@ import {useState} from "react";
 import {useAppContext} from "../../context/AppContext";
 
 export const PrimaryInputField = ({openAiInputType}) => {
+    console.log("PrimaryInputField mounted")
+
     const [tokenCount, setTokenCount] = useState(0);
     const { openAiInput, setOpenAiInput } = useAppContext();
-
 
     const handleInputChange = (e) => {
         setOpenAiInput(e.target.value);

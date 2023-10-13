@@ -5,6 +5,8 @@ import {useAppContext} from "../../context/AppContext";
 import {useState} from "react";
 
 export const PrimaryInputForm = ({handleSubmit, openAiInputType, loading}) => {
+    console.log("PrimaryInputForm mounted")
+
     const { promptId } = useAppContext()
     const { openAiInput } = useAppContext();
     const [model, setModel] = useState('gpt-3.5-turbo');

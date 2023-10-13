@@ -3,25 +3,12 @@ import { Select } from "@amboss/design-system";
 import {useAppContext} from "../../context/AppContext";
 
 const PromptSelect = () => {
-    const [prompts, setPrompts] = useState([]);
+    console.log("PromptSelect mounted")
+    const { prompts } = useAppContext();
     const { promptId, setPromptId } = useAppContext();
 
-    useEffect(() => {
-        // Fetch prompts from backend
-        fetch('/.well-known/prompts.json')
-            .then(response => response.json())
-            .then(data => {
-                setPrompts(data.prompts)
-            })
-            .catch(error => {
-                console.error('Error fetching prompts:', error);
-                setPrompts([{id: 1, title: "Default"}])
-            })
-    }, []);
-
     const handleChange = (e) => {
-        console.log(e.target.value)
-        console.log(promptId)
+        console.log("Clicked: ", e.target.value)
         setPromptId(e.target.value);
     };
 
@@ -32,7 +19,6 @@ const PromptSelect = () => {
         })
     });
 
-    console.log(selectOptions)
 
     return (
         <Select

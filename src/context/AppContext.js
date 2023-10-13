@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, {createContext, useState, useContext, useEffect} from 'react';
 
 // Create the context
 const AppContext = createContext();
@@ -9,7 +9,8 @@ const AppProvider = ({ children }) => {
     const [elevenLabsInput, setElevenLabsInput] = useState(null); // Umbrella state for the elevenlabs input
     const [openAiInput, setOpenAiInput] = useState(''); // stores the input to openAi call
     const [promptId, setPromptId] = useState(1);
-    const [selectedArticle, setSelectedArticle] = useState(null)
+    const [selectedArticle, setSelectedArticle] = useState(null);
+    const [prompts, setPrompts] = useState([]);
 
 
     // Not yet reviewed
@@ -21,6 +22,19 @@ const AppProvider = ({ children }) => {
     const [canProceedToElevenLabs, setCanProceedToElevenLabs] = useState(false);
     const [openAiCallId, setOpenAiCallId] = useState(null);
 
+    useEffect(() => {
+        // Fetch prompts from backend
+        fetch('/.well-known/prompts.json')
+            .then(response => response.json())
+            .then(data => {
+                setPrompts(data.prompts)
+            })
+            .catch(error => {
+                console.error('Error fetching prompts:', error);
+                setPrompts([{id: 1, title: "Default"}])
+            })
+    }, []);
+
     return (
         <AppContext.Provider
             value={{
@@ -29,6 +43,7 @@ const AppProvider = ({ children }) => {
                 openAiInput, setOpenAiInput,
                 promptId, setPromptId,
                 selectedArticle, setSelectedArticle,
+                prompts, setPrompts,
 
                 // not deployed (yet)
                 resultScript,
