@@ -2,9 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Select } from "@amboss/design-system";
 import {useAppContext} from "../../context/AppContext";
 
-const PromptSelect = ({ onChange }) => {
+const PromptSelect = () => {
     const [prompts, setPrompts] = useState([]);
-
     const { promptId, setPromptId } = useAppContext();
 
     useEffect(() => {
@@ -20,14 +19,20 @@ const PromptSelect = ({ onChange }) => {
             })
     }, []);
 
-    const handleChange = (event) => {
-        setPromptId(event.target.value);
+    const handleChange = (e) => {
+        console.log(e.target.value)
+        console.log(promptId)
+        setPromptId(e.target.value);
     };
 
-    const selectOptions = prompts.map(prompt => ({
-        label: prompt.title,
-        value: prompt.id
-    }));
+    const selectOptions = prompts.map(prompt => {
+        return ({
+            label: prompt.title,
+            value: prompt.id
+        })
+    });
+
+    console.log(selectOptions)
 
     return (
         <Select

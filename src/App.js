@@ -17,7 +17,6 @@ function App() {
 
     useEffect(() => {
         const currentTime = new Date().getHours();
-        console.log(currentTime)
         setNightTime(currentTime >= 19 || currentTime <= 6);
     }, []);
 

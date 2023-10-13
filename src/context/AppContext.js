@@ -8,7 +8,7 @@ const AppProvider = ({ children }) => {
     const [activeTab, setActiveTab] = useState(0); // default to the first tab
     const [elevenLabsInput, setElevenLabsInput] = useState(null); // Umbrella state for the elevenlabs input
     const [openAiInput, setOpenAiInput] = useState(''); // stores the input to openAi call
-    const [promptId, setPromptId] = useState('1');
+    const [promptId, setPromptId] = useState(1);
     const [selectedArticle, setSelectedArticle] = useState(null)
 
 
