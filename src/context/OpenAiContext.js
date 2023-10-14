@@ -1,25 +1,11 @@
-import React, {createContext, useContext, useEffect, useState} from 'react';
+import React, {createContext, useContext, useState} from 'react';
 import useOpenAiSubmission from '../hooks/useOpenAiSubmission';
 
 const OpenAiContext = createContext();
 
 export const OpenAiProvider = ({ children }) => {
     const [openAiInputType, setOpenAiInputType] = useState("text");
-    const [prompts, setPrompts] = useState([]);
     const [promptId, setPromptId] = useState(1);
-
-    useEffect(() => {
-        // Fetch prompts from backend
-        fetch('/.well-known/prompts.json')
-            .then(response => response.json())
-            .then(data => {
-                setPrompts(data.prompts)
-            })
-            .catch(error => {
-                console.error('Error fetching prompts:', error);
-                setPrompts([{id: 1, title: "Default"}])
-            })
-    }, []);
 
     const {
         loading,
@@ -33,7 +19,6 @@ export const OpenAiProvider = ({ children }) => {
             value={{
                 loading, error, openAiCallId, handleSubmit,
                 promptId, setPromptId,
-                prompts,
                 openAiInputType, setOpenAiInputType
         }}
         >

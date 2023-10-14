@@ -1,11 +1,24 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { Select } from "@amboss/design-system";
 import {useOpenAiContext} from "../../context/OpenAiContext";
 
 const PromptSelect = () => {
     console.log("PromptSelect mounted")
-    const { prompts } = useOpenAiContext();
+    const [ prompts, setPrompts ] = useState([]);
     const { promptId, setPromptId } = useOpenAiContext();
+
+    useEffect(() => {
+        // Fetch prompts from backend
+        fetch('/.well-known/prompts.json')
+            .then(response => response.json())
+            .then(data => {
+                setPrompts(data.prompts)
+            })
+            .catch(error => {
+                console.error('Error fetching prompts:', error);
+                setPrompts([{id: 1, title: "Default"}])
+            })
+    }, []);
 
     const handleChange = (e) => {
         console.log("Clicked: ", e.target.value)
