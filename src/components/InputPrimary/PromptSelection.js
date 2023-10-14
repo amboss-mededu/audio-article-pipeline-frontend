@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Select } from "@amboss/design-system";
-import {useAppContext} from "../../context/AppContext";
+import {useOpenAiContext} from "../../context/OpenAiContext";
 
 const PromptSelect = () => {
     console.log("PromptSelect mounted")
-    const { prompts } = useAppContext();
-    const { promptId, setPromptId } = useAppContext();
+    const { prompts } = useOpenAiContext();
+    const { promptId, setPromptId } = useOpenAiContext();
 
     const handleChange = (e) => {
         console.log("Clicked: ", e.target.value)

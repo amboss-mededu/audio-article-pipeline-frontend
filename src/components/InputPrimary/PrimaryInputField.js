@@ -2,14 +2,14 @@ import {Textarea} from "@amboss/design-system";
 import {ArticleSelect} from "../Pages/Episode/ArticleSelect";
 import {useState} from "react";
 import {useAppContext} from "../../context/AppContext";
-import {useOpenAi} from "../../context/OpenAiContext";
+import {useOpenAiContext} from "../../context/OpenAiContext";
 
 export const PrimaryInputField = () => {
     console.log("PrimaryInputField mounted")
 
     const [tokenCount, setTokenCount] = useState(0);
     const { openAiInput, setOpenAiInput } = useAppContext();
-    const { openAiInputType } = useOpenAi();
+    const { openAiInputType } = useOpenAiContext();
 
     const handleInputChange = (e) => {
         setOpenAiInput(e.target.value);

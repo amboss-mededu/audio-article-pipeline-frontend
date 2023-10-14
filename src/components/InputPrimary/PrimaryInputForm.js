@@ -1,19 +1,18 @@
 import {Button, FormFieldGroup, Inline, Select} from "@amboss/design-system";
 import {PrimaryInputField} from "./PrimaryInputField";
 import PromptSelect from "./PromptSelection";
-import {useAppContext} from "../../context/AppContext";
 import {useState} from "react";
-import {useOpenAi} from "../../context/OpenAiContext";
+import {useOpenAiContext} from "../../context/OpenAiContext";
 
 export const PrimaryInputForm = () => {
     console.log("PrimaryInputForm mounted")
 
-    const { promptId, openAiInput } = useAppContext();
-    const { openAiInputType } = useOpenAi();
+    const { promptId, openAiInput } = useOpenAiContext();
+    const { openAiInputType } = useOpenAiContext();
 
     const [model, setModel] = useState('gpt-3.5-turbo');
 
-    const { loading, handleSubmit } = useOpenAi();
+    const { loading, handleSubmit } = useOpenAiContext();
 
     const handleModelChange = (e) => {
         setModel(e.target.value);

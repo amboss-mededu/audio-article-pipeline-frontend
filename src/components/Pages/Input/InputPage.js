@@ -1,22 +1,18 @@
 import {Box, Divider, H2, LoadingSpinner, Stack} from "@amboss/design-system";
 import {SecondarySubmissionForm} from "../../InputSecondary/SecondarySubmission";
 import {PrimarySubmissionForm} from "../../InputPrimary/PrimarySubmission";
-import {useState} from "react";
-import useOpenAiSubmission from "../../../hooks/useOpenAiSubmission";
 import useElevenLabsSubmission from "../../../hooks/useElevenLabsSubmission";
 import {useAppContext} from "../../../context/AppContext";
 import {ProgressController} from "../../../context/ProgressController";
+import {useOpenAiContext} from "../../../context/OpenAiContext";
 
 export const InputPage = () => {
-    const [promptId, setPromptId] = useState('');
     const { elevenLabsInput, setElevenLabsInput } = useAppContext()
-
     const {
         loading: openAiLoading,
         error: openAiError,
-        openAiCallId,
-        handleSubmit: handleOpenAiSubmit
-    } = useOpenAiSubmission();
+        openAiCallId
+    } = useOpenAiContext();
 
     const {
         loading: elevenLabsLoading,
@@ -29,12 +25,7 @@ export const InputPage = () => {
         <div>
             <H2> 📜✨ AI Text To Speech ✨🔉</H2>
 
-            <PrimarySubmissionForm
-                loading={openAiLoading}
-                promptId={promptId}
-                setPromptId={setPromptId}
-                handleSubmit={handleOpenAiSubmit}
-            />
+            <PrimarySubmissionForm />
 
             {openAiLoading && (
                 <Stack>
