@@ -3,13 +3,17 @@ import {PrimaryInputField} from "./PrimaryInputField";
 import PromptSelect from "./PromptSelection";
 import {useAppContext} from "../../context/AppContext";
 import {useState} from "react";
+import {useOpenAi} from "../../context/OpenAiContext";
 
-export const PrimaryInputForm = ({handleSubmit, openAiInputType, loading}) => {
+export const PrimaryInputForm = () => {
     console.log("PrimaryInputForm mounted")
 
-    const { promptId } = useAppContext()
-    const { openAiInput } = useAppContext();
+    const { promptId, openAiInput } = useAppContext();
+    const { openAiInputType } = useOpenAi();
+
     const [model, setModel] = useState('gpt-3.5-turbo');
+
+    const { loading, handleSubmit } = useOpenAi();
 
     const handleModelChange = (e) => {
         setModel(e.target.value);
@@ -18,7 +22,7 @@ export const PrimaryInputForm = ({handleSubmit, openAiInputType, loading}) => {
     return (
         <form onSubmit={(e) => handleSubmit(e, promptId, openAiInput, openAiInputType)}>
             <FormFieldGroup label="Input" labelHint="Supports plain text">
-                <PrimaryInputField openAiInputType={openAiInputType} />
+                <PrimaryInputField />
 
                 <Inline
                     space={"xl"}

@@ -1,13 +1,13 @@
 import {
     Box, Inline, SegmentedControl, Stack,
 } from "@amboss/design-system";
-import {useState} from "react";
 import {PrimaryInputForm} from "./PrimaryInputForm";
+import {useOpenAi} from "../../context/OpenAiContext";
 
-export const PrimarySubmissionForm = ({loading, handleSubmit}) => {
+export const PrimarySubmissionForm = () => {
     console.log("PrimarySubmissionForm mounted")
 
-    const [openAiInputType, setOpenAiInputType] = useState('text')
+    const {openAiInputType, setOpenAiInputType} = useOpenAi();
 
     return (
         <Box className={"form__openAiInput"}
@@ -33,7 +33,7 @@ export const PrimarySubmissionForm = ({loading, handleSubmit}) => {
                         size="m"
                     />
                 </Inline>
-                <PrimaryInputForm loading={loading} handleSubmit={handleSubmit} openAiInputType={openAiInputType} />
+                <PrimaryInputForm />
             </Stack>
         </Box>
     )
