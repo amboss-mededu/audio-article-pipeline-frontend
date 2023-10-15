@@ -1,11 +1,12 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import { Select } from "@amboss/design-system";
 import {useOpenAiContext} from "../../context/OpenAiContext";
 
 const PromptSelect = () => {
     console.log("PromptSelect mounted")
-    const [ prompts, setPrompts ] = useState([]);
-    const { promptId, setPromptId } = useOpenAiContext();
+
+    const {  prompts, promptId, setPrompts, setPromptId } = useOpenAiContext();
+    console.log(prompts, promptId)
 
     useEffect(() => {
         // Fetch prompts from backend
@@ -18,9 +19,9 @@ const PromptSelect = () => {
                 console.error('Error fetching prompts:', error);
                 setPrompts([{id: 1, title: "Default"}])
             })
-    }, []);
+    }, [setPrompts]);
 
-    const handleChange = (e) => {
+    const handlePromptChange = (e) => {
         console.log("Clicked: ", e.target.value)
         setPromptId(e.target.value);
     };
@@ -30,8 +31,7 @@ const PromptSelect = () => {
             label: prompt.title,
             value: prompt.id
         })
-    });
-
+    })
 
     return (
         <Select
@@ -39,7 +39,7 @@ const PromptSelect = () => {
             value={promptId}
             placeholder="Select a prompt"
             options={selectOptions}
-            onChange={handleChange}
+            onChange={handlePromptChange}
             label="Prompt Selection"
             labelHint="Choose a prompt for your input"
             emptyStateMessage="No prompts available"

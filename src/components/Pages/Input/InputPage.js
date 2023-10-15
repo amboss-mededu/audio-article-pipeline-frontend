@@ -7,11 +7,12 @@ import {ProgressController} from "../../../context/ProgressController";
 import {useOpenAiContext} from "../../../context/OpenAiContext";
 
 export const InputPage = () => {
-    const { elevenLabsInput, setElevenLabsInput } = useAppContext()
+    const { elevenLabsInput, setElevenLabsInput } = useAppContext();
+
     const {
         loading: openAiLoading,
         error: openAiError,
-        openAiCallId
+        openAiCallId,
     } = useOpenAiContext();
 
     const {
@@ -23,7 +24,7 @@ export const InputPage = () => {
 
     return (
         <div>
-            <H2> 📜✨ AI Text To Speech ✨🔉</H2>
+            <H2> 📜 AI Text To Speech 🔉</H2>
 
             <PrimarySubmissionForm />
 
