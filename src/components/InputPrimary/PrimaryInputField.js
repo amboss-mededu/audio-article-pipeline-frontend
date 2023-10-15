@@ -1,7 +1,6 @@
 import {Textarea} from "@amboss/design-system";
 import {ArticleSelect} from "../Pages/Episode/ArticleSelect";
 import {useState} from "react";
-import {useAppContext} from "../../context/AppContext";
 import {useOpenAiContext} from "../../context/OpenAiContext";
 
 export const PrimaryInputField = () => {

@@ -6,7 +6,6 @@ const PromptSelect = () => {
     console.log("PromptSelect mounted")
 
     const { prompts, promptId, setPromptId } = usePrimaryInputContext();
-    console.log(prompts, promptId)
 
     const handlePromptChange = (e) => {
         console.log("Clicked: ", e.target.value)

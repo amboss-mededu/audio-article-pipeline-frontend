@@ -1,7 +1,7 @@
 import {Button, FormFieldGroup, Inline, Select} from "@amboss/design-system";
 import {PrimaryInputField} from "./PrimaryInputField";
 import PromptSelect from "./PromptSelection";
-import {useState} from "react";
+import React, {useState} from "react";
 import {useOpenAiContext} from "../../context/OpenAiContext";
 
 export const PrimaryInputForm = () => {

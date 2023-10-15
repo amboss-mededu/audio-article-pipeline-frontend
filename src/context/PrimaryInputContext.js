@@ -4,7 +4,7 @@ import React, {createContext, useState, useContext, useEffect} from 'react';
 const PrimaryInputContext = createContext();
 
 const PrimaryInputProvider = ({ children }) => {
-    const [promptId, setPromptId] = useState(1);
+    const [promptId, setPromptId] = useState('1');
     const [prompts, setPrompts] = useState([])
 
     useEffect(() => {
@@ -16,7 +16,7 @@ const PrimaryInputProvider = ({ children }) => {
             })
             .catch(error => {
                 console.error('Error fetching prompts:', error);
-                setPrompts([{id: 1, title: "Default"}])
+                setPrompts([{id: '1', title: "Default"}])
             })
     }, [setPrompts]);
 
