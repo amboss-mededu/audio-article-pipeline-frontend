@@ -3,6 +3,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import {useAppContext} from "../context/AppContext";
 import {usePrimaryInputContext} from "../context/PrimaryInputContext";
+import {Text} from "@amboss/design-system";
 
 const useOpenAiSubmission = () => {
     const { setElevenLabsInput } = useAppContext();
@@ -12,7 +13,7 @@ const useOpenAiSubmission = () => {
     const [error, setError] = useState(null);
     const [openAiCallId, setOpenAiCallId] = useState(null);
 
-    const handleSubmit = async (e, openAiInput, openAiInputType) => {
+    const handleSubmit = async (e, openAiInput, openAiInputType, model) => {
         e.preventDefault();
         setLoading(true);
         setError(null);
@@ -23,6 +24,7 @@ const useOpenAiSubmission = () => {
             const response = await axios.post(apiUrl, {
                 promptId,
                 userMessage: openAiInput,
+                model: model
             });
 
             if (!response || !response.data) throw new Error ( "No response")
@@ -31,7 +33,11 @@ const useOpenAiSubmission = () => {
             setOpenAiCallId(response.data.openAiCallId);
 
         } catch (err) {
-            setError('An error occurred while processing your request.');
+            console.log(err.response.data.error)
+            setError(
+                <div style={{whiteSpace: "pre-line"}}><Text>{`An error occurred while processing your request: \n ${err.response.data.error}`}</Text></div>
+            );
+
         } finally {
             setLoading(false);
         }

@@ -7,8 +7,6 @@ const AppProvider = ({ children }) => {
     // Deployed:
     const [activeTab, setActiveTab] = useState(0); // default to the first tab
     const [elevenLabsInput, setElevenLabsInput] = useState(null); // Umbrella state for the elevenlabs input
-    const [selectedArticle, setSelectedArticle] = useState(null);
-
 
     // Not yet reviewed
     const [resultScript, setResultScript] = useState(null);
@@ -24,7 +22,6 @@ const AppProvider = ({ children }) => {
             value={{
                 activeTab, setActiveTab,
                 elevenLabsInput, setElevenLabsInput,
-                selectedArticle, setSelectedArticle,
 
                 // not deployed (yet)
                 resultScript,

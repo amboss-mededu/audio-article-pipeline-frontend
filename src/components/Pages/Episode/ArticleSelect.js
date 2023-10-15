@@ -1,19 +1,19 @@
 import articlesData from "../../../helpers/xid.json";
 import {Select} from "@amboss/design-system";
 import React, {useEffect, useState} from "react";
-import {useAppContext} from "../../../context/AppContext";
+import {useOpenAiContext} from "../../../context/OpenAiContext";
 
 export const ArticleSelect = () => {
     const [articles, setArticles] = useState([]);
-    const {selectedArticle, setSelectedArticle} = useAppContext();
+    const {selectedArticle, setSelectedArticle} = useOpenAiContext();
 
     useEffect(() => {
         const formattedData = articlesData.map(article => ({
             label: article.title,
-            value: article.xid.toString(),
+            value: article.xid,
         }));
         setArticles(formattedData);
-    }, []); // Empty dependency array means this useEffect runs once when component mounts
+    }, [setArticles]);
 
     return(
         <Select

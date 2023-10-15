@@ -7,6 +7,7 @@ export const OpenAiProvider = ({ children }) => {
 
     const [openAiInput, setOpenAiInput] = useState(''); // stores the input to openAi call
     const [openAiInputType, setOpenAiInputType] = useState("text")
+    const [selectedArticle, setSelectedArticle] = useState(null);
 
     const {
         loading,
@@ -20,7 +21,8 @@ export const OpenAiProvider = ({ children }) => {
             value={{
                 loading, error, openAiCallId, handleSubmit,
                 openAiInput, setOpenAiInput,
-                openAiInputType, setOpenAiInputType
+                openAiInputType, setOpenAiInputType,
+                selectedArticle, setSelectedArticle,
         }}
         >
             {children}

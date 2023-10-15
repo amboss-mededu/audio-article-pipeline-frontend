@@ -7,7 +7,7 @@ import {useOpenAiContext} from "../../context/OpenAiContext";
 export const PrimaryInputForm = () => {
     console.log("PrimaryInputForm mounted")
 
-    const { openAiInput, openAiInputType, loading, handleSubmit } = useOpenAiContext();
+    const { openAiInput, openAiInputType, loading, handleSubmit, selectedArticle } = useOpenAiContext();
 
     const [model, setModel] = useState('gpt-3.5-turbo');
 
@@ -16,7 +16,7 @@ export const PrimaryInputForm = () => {
     };
 
     return (
-        <form onSubmit={(e) => handleSubmit(e, openAiInput, openAiInputType)}>
+        <form onSubmit={(e) => handleSubmit(e, openAiInputType === 'xid' ? selectedArticle : openAiInput, openAiInputType, model)}>
             <FormFieldGroup label="Input" labelHint="Supports plain text">
                 <PrimaryInputField />
 
@@ -33,7 +33,7 @@ export const PrimaryInputForm = () => {
                         options={[
                             {label: 'GPT-3.5-Turbo', value: 'gpt-3.5-turbo'},
                             {label: 'GPT-3.5-16K', value: 'gpt-3.5-turbo-16k'},
-                            {label: 'GPT-4', value: 'gpt-4'},
+                            {label: 'GPT-4', value: 'gpt-4'}
                         ]}
                     />
                 </Inline>
