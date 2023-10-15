@@ -7,7 +7,6 @@ const AppProvider = ({ children }) => {
     // Deployed:
     const [activeTab, setActiveTab] = useState(0); // default to the first tab
     const [elevenLabsInput, setElevenLabsInput] = useState(null); // Umbrella state for the elevenlabs input
-    const [openAiInput, setOpenAiInput] = useState(''); // stores the input to openAi call
     const [selectedArticle, setSelectedArticle] = useState(null);
 
 
@@ -25,7 +24,6 @@ const AppProvider = ({ children }) => {
             value={{
                 activeTab, setActiveTab,
                 elevenLabsInput, setElevenLabsInput,
-                openAiInput, setOpenAiInput,
                 selectedArticle, setSelectedArticle,
 
                 // not deployed (yet)

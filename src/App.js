@@ -6,6 +6,7 @@ import HeaderNavigation from "./components/Header/Navigation";
 import './styles/App.css';
 import AudioRenderer from "./components/Pages/Episode/EpisodePage";
 import {OpenAiProvider} from "./context/OpenAiContext";
+import {PrimaryInputProvider} from "./context/PrimaryInputContext";
 
 function App() {
     const { activeTab } = useAppContext();
@@ -23,13 +24,15 @@ function App() {
 
     return (
         <ThemeProvider theme={isNightTime ? dark : light}>
-            <OpenAiProvider>
-                <Box className="App">
-                    <HeaderNavigation onTabChange={handleTabChange} />
-                    {activeTab === 0 && <InputPage />}
-                    {activeTab === 2 && <AudioRenderer />}
-                </Box>
-            </OpenAiProvider>
+            <PrimaryInputProvider>
+                <OpenAiProvider>
+                    <Box className="App">
+                        <HeaderNavigation onTabChange={handleTabChange} />
+                        {activeTab === 0 && <InputPage />}
+                        {activeTab === 2 && <AudioRenderer />}
+                    </Box>
+                </OpenAiProvider>
+            </PrimaryInputProvider>
         </ThemeProvider>
   );
 }

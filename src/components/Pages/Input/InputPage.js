@@ -7,6 +7,8 @@ import {ProgressController} from "../../../context/ProgressController";
 import {useOpenAiContext} from "../../../context/OpenAiContext";
 
 export const InputPage = () => {
+    console.log("Input remounted")
+
     const { elevenLabsInput, setElevenLabsInput } = useAppContext();
 
     const {

@@ -8,8 +8,7 @@ export const PrimaryInputField = () => {
     console.log("PrimaryInputField mounted")
 
     const [tokenCount, setTokenCount] = useState(0);
-    const { openAiInput, setOpenAiInput } = useAppContext();
-    const { openAiInputType } = useOpenAiContext();
+    const { openAiInput, setOpenAiInput, openAiInputType } = useOpenAiContext();
 
     const handleInputChange = (e) => {
         setOpenAiInput(e.target.value);

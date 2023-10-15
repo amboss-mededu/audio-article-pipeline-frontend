@@ -2,15 +2,17 @@
 import { useState } from 'react';
 import axios from 'axios';
 import {useAppContext} from "../context/AppContext";
+import {usePrimaryInputContext} from "../context/PrimaryInputContext";
 
 const useOpenAiSubmission = () => {
     const { setElevenLabsInput } = useAppContext();
+    const { promptId } = usePrimaryInputContext();
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [openAiCallId, setOpenAiCallId] = useState(null);
 
-    const handleSubmit = async (e, promptId, openAiInput, openAiInputType) => {
+    const handleSubmit = async (e, openAiInput, openAiInputType) => {
         e.preventDefault();
         setLoading(true);
         setError(null);
@@ -41,4 +43,5 @@ const useOpenAiSubmission = () => {
         handleSubmit,
     };
 };
+
 export default useOpenAiSubmission

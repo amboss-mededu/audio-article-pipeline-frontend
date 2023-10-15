@@ -4,8 +4,9 @@ import useOpenAiSubmission from '../hooks/useOpenAiSubmission';
 const OpenAiContext = createContext();
 
 export const OpenAiProvider = ({ children }) => {
-    const [prompts, setPrompts] = useState([]);
-    const [promptId, setPromptId] = useState(1);
+
+    const [openAiInput, setOpenAiInput] = useState(''); // stores the input to openAi call
+    const [openAiInputType, setOpenAiInputType] = useState("text")
 
     const {
         loading,
@@ -18,8 +19,8 @@ export const OpenAiProvider = ({ children }) => {
         <OpenAiContext.Provider
             value={{
                 loading, error, openAiCallId, handleSubmit,
-                promptId, setPromptId,
-                prompts, setPrompts
+                openAiInput, setOpenAiInput,
+                openAiInputType, setOpenAiInputType
         }}
         >
             {children}
