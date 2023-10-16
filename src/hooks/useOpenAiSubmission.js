@@ -18,45 +18,59 @@ const useOpenAiSubmission = () => {
         setLoading(true);
         setError(null);
 
-        const apiUrl = `/api/openai/request?inputType=${openAiInputType}`;
+        const stream = true;
+
+        const apiUrl = `/api/openai/request?inputType=${openAiInputType}&stream=${stream.toString()}`;
 
         try {
-            if (stream) {
-                // Streaming scenario
-                const eventSource = new EventSource(`${apiUrl}&stream=true`);
 
-                eventSource.onmessage = (event) => {
-                    const message = JSON.parse(event.data);
-                    // Do something with each streamed message, e.g., append it to some state variable
-                    setElevenLabsInput(prev => prev + message);
-                };
+            let responseData = ""; // Store streamed data here
+            setElevenLabsInput("")
+            let lastKnownIndex = 0;
 
-                eventSource.onerror = (error) => {
-                    eventSource.close();
-                    setError(<div style={{whiteSpace: "pre-line"}}><Text>{`Streaming error: ${error.message}`}</Text></div>);
-                    setLoading(false);
-                };
+            const response = await axios.post(apiUrl, {
+                promptId,
+                userMessage: openAiInput,
+                model: model
+            }, {
+                // Axios config for handling streamed response
+                onDownloadProgress: (progressEvent) => {
+                    const rawText = progressEvent.currentTarget.responseText;
 
-            } else {
-                // Non-streaming scenario
-                const response = await axios.post(apiUrl, {
-                    promptId,
-                    userMessage: openAiInput,
-                    model: model
-                });
+                    // Split the rawText by '\n\n' to get individual messages
+                    const messages = rawText.slice(lastKnownIndex).split('\n\n').filter(Boolean);
 
-                if (!response || !response.data) throw new Error("No response");
+                    // Update the lastKnownIndex
+                    lastKnownIndex = rawText.length;
 
-                setElevenLabsInput(response.data.data.message);
-                setOpenAiCallId(response.data.openAiCallId);
-            }
+                    messages.forEach(message => {
+                        // Extract the message content
+                        const match = message.match(/^data: (.+)$/);
+                        if (match) {
+                            const parsedData = JSON.parse(match[1]);
+                            setElevenLabsInput(prevState => prevState + parsedData?.data);
+                        }
+                    });
+                }
+            });
+
+            if (!responseData) throw new Error("No response");
+
+            // Parse the entire response data after it's fully received
+            // const parsedData = JSON.parse(responseData);
+            // setElevenLabsInput(parsedData.data.message);
+            // setOpenAiCallId(parsedData.openAiCallId);
 
         } catch (err) {
-            console.log(err.response.data.error);
-            setError(<div style={{whiteSpace: "pre-line"}}><Text>{`An error occurred while processing your request: \n ${err.response.data.error}`}</Text></div>);
+            console.log(err.response?.data?.error || err.message);
+            setError(
+                <div style={{whiteSpace: "pre-line"}}>
+                    <Text>{`An error occurred while processing your request: \n ${err.response?.data?.error || err.message}`}</Text>
+                </div>
+            );
 
         } finally {
-            if (!stream) setLoading(false);
+            setLoading(false);
         }
     };
 
