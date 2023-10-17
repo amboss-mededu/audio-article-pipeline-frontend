@@ -19,60 +19,71 @@ const useOpenAiSubmission = () => {
         setError(null);
 
         const stream = true;
-
-        const apiUrl = `/api/openai/request?inputType=${openAiInputType}&stream=${stream.toString()}`;
+        const apiUrl = `/api/openai/request/stream?inputType=${openAiInputType}`;
+        // const apiUrl = `https://automaticunitedmotion.domkoeln.repl.co/openai`;
+        setElevenLabsInput("")
 
         try {
-
             let responseData = ""; // Store streamed data here
-            setElevenLabsInput("")
-            let lastKnownIndex = 0;
 
-            const response = await axios.post(apiUrl, {
-                promptId,
-                userMessage: openAiInput,
-                model: model
-            }, {
-                // Axios config for handling streamed response
-                onDownloadProgress: (progressEvent) => {
-                    const rawText = progressEvent.currentTarget.responseText;
-
-                    // Split the rawText by '\n\n' to get individual messages
-                    const messages = rawText.slice(lastKnownIndex).split('\n\n').filter(Boolean);
-
-                    // Update the lastKnownIndex
-                    lastKnownIndex = rawText.length;
-
-                    messages.forEach(message => {
-                        // Extract the message content
-                        const match = message.match(/^data: (.+)$/);
-                        if (match) {
-                            const parsedData = JSON.parse(match[1]);
-                            setElevenLabsInput(prevState => prevState + parsedData?.data);
-                        }
-                    });
-                }
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'text/event-stream'
+                },
+                body: JSON.stringify({
+                    promptId,
+                    userMessage: openAiInput,
+                    model
+                })
             });
 
-            if (!responseData) throw new Error("No response");
+            const result = []
+            const reader = response.body.pipeThrough(new TextDecoderStream()).getReader();
 
-            // Parse the entire response data after it's fully received
-            // const parsedData = JSON.parse(responseData);
-            // setElevenLabsInput(parsedData.data.message);
-            // setOpenAiCallId(parsedData.openAiCallId);
+            while (true) {
+                const {value, done} = await reader.read();
+                if (done) {
+                    console.log("Done");
+                    setLoading(false);
+                    break;
+                }
+
+                const messages = (value).split('\n\n').filter(Boolean);
+                messages.forEach(message => {
+                    const json = message.replace('data: ', '')
+                    const data = JSON.parse(json);
+                    // Listen for done/error events from the server
+                    if (data.done) {
+                        console.log("Stream finished");
+                        setLoading(false);
+                    } else if (data.error) {
+                        setError(
+                            <div style={{whiteSpace: "pre-line"}}>
+                                <Text>{`An error occurred while processing your request: \n ${data.error}`}</Text>
+                            </div>
+                        );
+                    } else {
+                        result.push(data?.data);
+                        setElevenLabsInput(result.join(""));
+                    }
+                });
+                console.log(result);
+            }
 
         } catch (err) {
-            console.log(err.response?.data?.error || err.message);
+            console.log(err.message);
             setError(
                 <div style={{whiteSpace: "pre-line"}}>
-                    <Text>{`An error occurred while processing your request: \n ${err.response?.data?.error || err.message}`}</Text>
+                    <Text>{`An error occurred while processing your request: \n ${err.message}`}</Text>
                 </div>
             );
 
         } finally {
-            setLoading(false);
         }
     };
+
 
     return {
         loading, error,
