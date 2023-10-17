@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import { InputPage } from './components/Pages/Input/InputPage';
-import {Box, dark, light, ThemeProvider} from "@amboss/design-system";
+import {Box, Container, dark, light, ThemeProvider} from "@amboss/design-system";
 import { useAppContext} from './context/AppContext';
 import HeaderNavigation from "./components/Header/Navigation";
 import './styles/App.css';
@@ -24,15 +24,17 @@ function App() {
 
     return (
         <ThemeProvider theme={isNightTime ? dark : light}>
-            <PrimaryInputProvider>
-                <OpenAiProvider>
-                    <Box className="App">
-                        <HeaderNavigation onTabChange={handleTabChange} />
-                        {activeTab === 0 && <InputPage />}
-                        {activeTab === 2 && <AudioRenderer />}
-                    </Box>
-                </OpenAiProvider>
-            </PrimaryInputProvider>
+            <Container>
+                <PrimaryInputProvider>
+                    <OpenAiProvider>
+                        <Box className="App">
+                            <HeaderNavigation onTabChange={handleTabChange} />
+                            {activeTab === 0 && <InputPage />}
+                            {activeTab === 2 && <AudioRenderer />}
+                        </Box>
+                    </OpenAiProvider>
+                </PrimaryInputProvider>
+            </Container>
         </ThemeProvider>
   );
 }

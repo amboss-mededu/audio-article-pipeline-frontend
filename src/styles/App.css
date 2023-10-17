@@ -5,6 +5,11 @@
   line-height: 52px;
 }
 
+div[data-ds-id="Toggle"] div[data-ds-id="Inline"] {
+  flex-direction: row-reverse;
+}
+
+
 .App {
   text-align: center;
 }

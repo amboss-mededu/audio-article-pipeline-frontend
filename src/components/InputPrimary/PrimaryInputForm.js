@@ -1,4 +1,4 @@
-import {Button, FormFieldGroup, Inline, Select} from "@amboss/design-system";
+import {Button, Checkbox, FormFieldGroup, Inline, Select, Toggle} from "@amboss/design-system";
 import {PrimaryInputField} from "./PrimaryInputField";
 import PromptSelect from "./PromptSelection";
 import React, {useState} from "react";
@@ -10,13 +10,14 @@ export const PrimaryInputForm = () => {
     const { openAiInput, openAiInputType, loading, handleSubmit, selectedArticle } = useOpenAiContext();
 
     const [model, setModel] = useState('gpt-3.5-turbo');
+    const [stream, setStream] = useState(false)
 
     const handleModelChange = (e) => {
         setModel(e.target.value);
     };
 
     return (
-        <form onSubmit={(e) => handleSubmit(e, openAiInputType === 'xid' ? selectedArticle : openAiInput, openAiInputType, model)}>
+        <form onSubmit={(e) => handleSubmit(e, openAiInputType === 'xid' ? selectedArticle : openAiInput, openAiInputType, model, stream)}>
             <FormFieldGroup label="Input" labelHint="Supports plain text">
                 <PrimaryInputField />
 
@@ -36,6 +37,20 @@ export const PrimaryInputForm = () => {
                             {label: 'GPT-4', value: 'gpt-4'}
                         ]}
                     />
+                    <FormFieldGroup className={"formgroup__open-ai-stream--toggle"} label="Live typing">
+                        <div className={"test123"}><Toggle
+                            className={"toggle__open-ai-stream"}
+                            alignItems="right"
+                            label={stream ? "On" : "Off"}
+                            name="stream-openai"
+                            onBlur={function noRefCheck(){}}
+                            onChange={(e) => setStream(e.target && e.target.checked)}
+                            onClick={function noRefCheck(){}}
+                            onFocus={function noRefCheck(){}}
+                            size="m"
+                            value="stream-openai"
+                        /></div>
+                    </FormFieldGroup>
                 </Inline>
 
                 <Button
