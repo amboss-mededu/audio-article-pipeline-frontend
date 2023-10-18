@@ -6,7 +6,7 @@ import {ArticleSelect} from "../../../Commons/ArticleSelect";
 export const OpenAiArticleInput = () => {
 
     const [tokenCount, setTokenCount] = useState(0);
-    const { openAiInput, setOpenAiInput, openAiInputType } = useOpenAiContext();
+    const { openAiInput, setOpenAiInput, openAiInputType, openAiLoading } = useOpenAiContext();
 
     const handleInputChange = (e) => {
         setOpenAiInput(e.target.value);
@@ -24,8 +24,9 @@ export const OpenAiArticleInput = () => {
                 resize="both"
                 maxLength={100000}
                 placeholder="Enter your HTML here..."
+                disabled={openAiLoading}
             />
             :
-            <ArticleSelect />
+            <ArticleSelect disabled={openAiLoading} />
     )
 }

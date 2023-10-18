@@ -15,7 +15,7 @@ const useOpenAi = ({promptId}) => {
         setLoading(true);
         setError(null);
 
-        const apiUrl = process.env.NODE_ENV === 'development'
+        const apiUrl = process.env.NODE_ENV === '_development'
             ? 'https://automaticunitedmotion.domkoeln.repl.co/openai'
             : `${process.env.REACT_APP_API_URL}/api/openai/request?inputType=${openAiInputType}&stream=${stream}`;
 

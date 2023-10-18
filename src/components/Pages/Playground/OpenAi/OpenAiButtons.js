@@ -14,14 +14,29 @@ export const OpenAiButtons = () => {
 
     return (
         <Inline>
-            <Button
-                type="submit"
-                variant="primary"
-                loading={openAiLoading}
-                disabled={buttonIsDisabled()}
-            >
-                Send to OpenAI
-            </Button>
+            <>
+                {openAiLoading
+                    ? (
+                        <Button
+                            variant="primary"
+                            destructive={true}
+                            onClick={() => console.error("Function not yet implemented.")}
+                        >
+                            Cancel Request
+                        </Button>
+                    )
+                    : (
+                        <Button
+                            type="submit"
+                            variant="primary"
+                            loading={openAiLoading}
+                            disabled={buttonIsDisabled()}
+                        >
+                            Send to OpenAI
+                        </Button>
+                    )
+                }
+            </>
             <>
                 {step < 2
                     ? (

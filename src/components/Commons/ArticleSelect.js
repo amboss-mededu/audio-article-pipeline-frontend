@@ -3,7 +3,7 @@ import {Select} from "@amboss/design-system";
 import React, {useEffect, useState} from "react";
 import {useOpenAiContext} from "../../context/OpenAiContext";
 
-export const ArticleSelect = () => {
+export const ArticleSelect = ({disabled = false}) => {
     const [articles, setArticles] = useState([]);
     const {selectedArticle, setSelectedArticle} = useOpenAiContext();
 
@@ -22,6 +22,7 @@ export const ArticleSelect = () => {
             options={articles}
             value={selectedArticle}
             onChange={(e) => setSelectedArticle(e.target.value)}
+            disabled={disabled}
         />
     )
 }

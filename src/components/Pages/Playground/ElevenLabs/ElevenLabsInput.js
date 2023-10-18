@@ -13,7 +13,7 @@ export const ElevenLabsInput = () => {
                 name={"eleven-labs-input"}
                 value={elevenLabsInput}
                 maxLength={20000}
-                rows={10}
+                rows={20}
                 placeholder={"Wait for output from OpenAi or say something yourself."}
                 label={"Result"}
                 tabIndex={0}

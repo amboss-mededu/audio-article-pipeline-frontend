@@ -5,7 +5,7 @@ import {useOpenAiContext} from "../../../../context/OpenAiContext";
 
 export const OpenAiInputOptions = ({ stream, setStream}) => {
 
-    const { model, setModel, models: options } = useOpenAiContext();
+    const { model, setModel, models: options, openAiLoading } = useOpenAiContext();
 
     const handleModelChange = (e) => {
         setModel(e.target.value);
@@ -17,15 +17,16 @@ export const OpenAiInputOptions = ({ stream, setStream}) => {
             alignItems={"left"}
             vAlignItems={"center"}
         >
-            <PromptSelect />
+            <PromptSelect disabled={openAiLoading} />
             <Select
                 label="Model Selection"
                 value={model}
                 onChange={handleModelChange}
                 options={options}
+                disabled={openAiLoading}
             />
             <FormFieldGroup className={"formgroup__open-ai-stream--toggle"} label="Live typing">
-                <div className={"test123"}><Toggle
+                <Toggle
                     className={"toggle__open-ai-stream"}
                     alignItems="right"
                     label={stream ? "On" : "Off"}
@@ -36,7 +37,8 @@ export const OpenAiInputOptions = ({ stream, setStream}) => {
                     onFocus={function noRefCheck(){}}
                     size="m"
                     value="stream-openai"
-                /></div>
+                    disabled={openAiLoading}
+                />
             </FormFieldGroup>
         </Inline>
     )

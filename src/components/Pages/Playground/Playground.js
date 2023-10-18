@@ -33,7 +33,6 @@ export const Playground = () => {
                 {openAiLoading && (
                     <Stack>
                         <Divider />
-                        <LoadingSpinner screenReaderText="Loading" />
                         <Box>
                             <ProgressController />
                         </Box>

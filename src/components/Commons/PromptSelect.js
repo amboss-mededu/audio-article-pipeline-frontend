@@ -2,7 +2,7 @@ import React from 'react';
 import { Select } from "@amboss/design-system";
 import {useOpenAiContext} from "../../context/OpenAiContext";
 
-const PromptSelect = () => {
+const PromptSelect = ({disabled = false}) => {
 
     const { prompts, promptId, setPromptId } = useOpenAiContext();
 
@@ -28,6 +28,7 @@ const PromptSelect = () => {
             label="Prompt Selection"
             labelHint="Choose a prompt for your input"
             emptyStateMessage="No prompts available"
+            disabled={disabled}
         />
     );
 };

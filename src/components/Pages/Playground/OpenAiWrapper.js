@@ -8,7 +8,7 @@ import {usePlaygroundContext} from "../../../context/PlaygroundContext";
 
 export const OpenAiWrapper = () => {
 
-    const { openAiInput, openAiInputType, setOpenAiInputType, handleOpenAiSubmit, selectedArticle, model } = useOpenAiContext();
+    const { openAiInput, openAiInputType, setOpenAiInputType, handleOpenAiSubmit, selectedArticle, model, openAiLoading } = useOpenAiContext();
     const { setStep } = usePlaygroundContext();
 
     const [stream, setStream] = useState(false)
@@ -37,6 +37,7 @@ export const OpenAiWrapper = () => {
                         value={openAiInputType}
                         options={options}
                         size="m"
+                        disabled={openAiLoading}
                     />
                 </Inline>
 
