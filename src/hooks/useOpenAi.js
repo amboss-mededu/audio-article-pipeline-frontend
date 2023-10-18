@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import {useAppContext} from "../context/AppContext";
 import {Text} from "@amboss/design-system";
 import {useElevenLabsContext} from "../context/ElevenLabsContext";
 
@@ -12,7 +11,6 @@ const useOpenAi = ({promptId}) => {
 
     const handleSubmit = async (e, openAiInput, openAiInputType, model, stream) => {
         e.preventDefault();
-        setElevenLabsInput(null);
         setElevenLabsInput(" ");
         setLoading(true);
         setError(null);
@@ -24,7 +22,6 @@ const useOpenAi = ({promptId}) => {
         try {
 
             if(stream) {
-                let responseData = ""; // Store streamed data here
 
                 const response = await fetch(apiUrl, {
                     method: 'POST',
@@ -39,7 +36,7 @@ const useOpenAi = ({promptId}) => {
                     })
                 });
 
-                const result = []
+                const result = [] // Store streamed data here
                 const reader = response.body.pipeThrough(new TextDecoderStream()).getReader();
 
                 while (true) {
@@ -69,7 +66,6 @@ const useOpenAi = ({promptId}) => {
                             setElevenLabsInput(result.join(""));
                         }
                     });
-                    console.log(result);
                 }
 
             } else {

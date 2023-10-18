@@ -1,4 +1,4 @@
-import {Box, Divider, H2, LoadingSpinner, Stack} from "@amboss/design-system";
+import {Box, Divider, LoadingSpinner, Stack} from "@amboss/design-system";
 import {ProgressController} from "../../../context/ProgressController";
 import {useOpenAiContext} from "../../../context/OpenAiContext";
 import {OpenAiWrapper} from "./OpenAiWrapper";
@@ -8,7 +8,7 @@ import {ElevenLabsWrapper} from "./ElevenLabsWrapper";
 
 export const Playground = () => {
 
-    const { step, setStep } = usePlaygroundContext();
+    const { step } = usePlaygroundContext();
 
     const {
         openAiLoading,

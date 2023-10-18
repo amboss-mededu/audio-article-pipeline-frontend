@@ -1,19 +1,26 @@
 import {FormFieldGroup, Textarea} from "@amboss/design-system";
-import {useAppContext} from "../../../../context/AppContext";
 import {useElevenLabsContext} from "../../../../context/ElevenLabsContext";
 
 export const ElevenLabsInput = () => {
 
     const { elevenLabsInput, setElevenLabsInput } = useElevenLabsContext();
 
+
     return (
         <FormFieldGroup>
             <Textarea
-                label="Result"
+                key={elevenLabsInput}
+                name={"eleven-labs-input"}
                 value={elevenLabsInput}
-                onChange={(e) => setElevenLabsInput(e.target.value)}
-                name="openai-result" rows={15}
-                maxLength={100000}
+                maxLength={20000}
+                rows={10}
+                placeholder={"Wait for output from OpenAi or say something yourself."}
+                label={"Result"}
+                tabIndex={0}
+                onChange={(e) =>
+                    setElevenLabsInput(e.target.value)
+                }
+
             />
         </FormFieldGroup>
     )

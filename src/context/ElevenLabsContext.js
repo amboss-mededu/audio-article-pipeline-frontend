@@ -1,13 +1,11 @@
-import React, {createContext, useContext, useEffect, useState} from 'react';
-import useOpenAi from "../hooks/useOpenAi";
-import {useAppContext} from "./AppContext";
+import React, {createContext, useContext, useState} from 'react';
 import useElevenLabs from "../hooks/useElevenLabs";
 
 const ElevenLabsContext = createContext();
 
 export const ElevenLabsProvider = ({ children }) => {
 
-    const [elevenLabsInput, setElevenLabsInput] = useState(null); // Umbrella state for the elevenlabs input
+    const [elevenLabsInput, setElevenLabsInput] = useState([]); // Umbrella state for the elevenlabs input
 
     const {
         loading: elevenLabsLoading,
@@ -17,15 +15,14 @@ export const ElevenLabsProvider = ({ children }) => {
     } = useElevenLabs();
 
     return (
-        <ElevenLabsContext.Provider
-            value={{
-                elevenLabsLoading, elevenLabsError, audioFilePath, handleElevenLabsSubmit,
-                elevenLabsInput, setElevenLabsInput
-            }}
-        >
+        <ElevenLabsContext.Provider value={{
+            elevenLabsLoading, elevenLabsError, audioFilePath, handleElevenLabsSubmit,
+            elevenLabsInput, setElevenLabsInput
+        }}>
             {children}
         </ElevenLabsContext.Provider>
     );
+
 };
 
 export const useElevenLabsContext = () => {
