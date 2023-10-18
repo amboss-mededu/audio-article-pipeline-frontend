@@ -7,15 +7,13 @@ import './styles/App.css';
 import AudioRenderer from "./components/Pages/Episode/EpisodePage";
 import {OpenAiProvider} from "./context/OpenAiContext";
 import {PrimaryInputProvider} from "./context/PrimaryInputContext";
+import CreateEpisodeForm from "./components/Pages/Upload/CreateEpisodeForm";
+import UploadEpisodeForm from "./components/Pages/Upload/UploadEpisode";
+import Header from "./components/Header/Header";
 
 function App() {
     const { activeTab } = useAppContext();
     const [isNightTime, setNightTime] = useState(false)
-
-    const handleTabChange = (selectedIndex) => {
-        // Handle tab change based on selectedIndex
-        console.log(`Tab ${selectedIndex + 1} selected`);
-    };
 
     useEffect(() => {
         const currentTime = new Date().getHours();
@@ -25,15 +23,18 @@ function App() {
     return (
         <ThemeProvider theme={isNightTime ? dark : light}>
             <Container>
+                <div style={{height: "100vh"}}>
                 <PrimaryInputProvider>
                     <OpenAiProvider>
                         <Box className="App">
-                            <HeaderNavigation onTabChange={handleTabChange} />
+                            <Header />
                             {activeTab === 0 && <InputPage />}
+                            {activeTab === 1 && <UploadEpisodeForm />}
                             {activeTab === 2 && <AudioRenderer />}
                         </Box>
                     </OpenAiProvider>
                 </PrimaryInputProvider>
+                </div>
             </Container>
         </ThemeProvider>
   );

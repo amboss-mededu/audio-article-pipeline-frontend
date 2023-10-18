@@ -10,14 +10,32 @@ const HeaderNavigation = () => {
         setActiveTab(selectedIndex);
         setTimeout(() => {  // After a short timeout, hide the tabs
             setShowTabs(false);
-        }, 500); // 500ms timeout
+        }, 1500); // 500ms timeout
     };
+
+    const tabs = [
+        {
+            icon: 'flask',
+            label: 'Playground',
+            value: 'playground'
+        },
+        {
+            icon: 'headphones',
+            label: 'Create New',
+            value: 'create-new'
+        },
+        {
+            icon: 'grid',
+            label: 'Inventory',
+            value: 'inventory'
+        }
+    ]
 
     return (
         <div className={"header__navigation"}>
             <Container
                 id={"headerNavContainer"}
-                elevation={1}
+                elevation={2}
                 borderRadius="m"
                 overflow="hidden"
                 squareCorners={false}
@@ -28,20 +46,7 @@ const HeaderNavigation = () => {
                             <Tabs
                                 activeTab={activeTab}
                                 onTabSelect={handleTabChange}
-                                tabs={[
-                                    {
-                                        icon: 'book-open',
-                                        label: 'Transcript'
-                                    },
-                                    {
-                                        icon: 'headphones',
-                                        label: 'Audio'
-                                    },
-                                    {
-                                        icon: 'grid',
-                                        label: 'Inventory'
-                                    }
-                                ]}
+                                tabs={tabs}
                             />
                             :
                             <PictogramButton

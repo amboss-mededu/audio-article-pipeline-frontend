@@ -26,8 +26,6 @@ export const InputPage = () => {
 
     return (
         <div>
-            <H2> 📜 AI Text To Speech 🔉</H2>
-
             <PrimarySubmissionForm />
 
             {openAiLoading && (

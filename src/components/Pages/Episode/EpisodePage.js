@@ -1,6 +1,6 @@
 
 import React, { useState } from "react";
-import {Select, FormFieldGroup, Radio, Button, Box, Inline} from "@amboss/design-system";
+import {Select, FormFieldGroup, Radio, Button, Box, Inline, H2} from "@amboss/design-system";
 import axios from "axios";
 import {ArticleSelect} from "./ArticleSelect";
 import {useAppContext} from "../../../context/AppContext";
@@ -48,8 +48,6 @@ const AudioRenderer = () => {
 
     return (
         <div>
-            <h2>Audio Renderer</h2>
-
             <Box space={"zero"} vSpace={"l"}><Inline space={"l"} alignItems={"left"}>
                 <ArticleSelect />
                 <Select
