@@ -7,9 +7,8 @@ import {useOpenAiContext} from "../../context/OpenAiContext";
 export const PrimaryInputForm = () => {
     console.log("PrimaryInputForm mounted")
 
-    const { openAiInput, openAiInputType, loading, handleSubmit, selectedArticle } = useOpenAiContext();
+    const { openAiInput, openAiInputType, loading, handleSubmit, selectedArticle, model, setModel } = useOpenAiContext();
 
-    const [model, setModel] = useState('gpt-3.5-turbo');
     const [stream, setStream] = useState(false)
 
     const handleModelChange = (e) => {

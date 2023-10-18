@@ -5,7 +5,6 @@ import {PrimaryInputForm} from "./PrimaryInputForm";
 import {useOpenAiContext} from "../../context/OpenAiContext";
 
 export const PrimarySubmissionForm = () => {
-    console.log("PrimarySubmissionForm mounted")
 
     const {openAiInputType, setOpenAiInputType} = useOpenAiContext();
 

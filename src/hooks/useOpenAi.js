@@ -1,13 +1,9 @@
-// hooks/useOpenAiSubmission.js
 import { useState } from 'react';
-import axios from 'axios';
 import {useAppContext} from "../context/AppContext";
-import {usePrimaryInputContext} from "../context/PrimaryInputContext";
 import {Text} from "@amboss/design-system";
 
-const useOpenAiSubmission = () => {
+const useOpenAi = ({promptId}) => {
     const { setElevenLabsInput } = useAppContext();
-    const { promptId } = usePrimaryInputContext();
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -20,10 +16,7 @@ const useOpenAiSubmission = () => {
         setLoading(true);
         setError(null);
 
-
-        // const apiUrl = `http://localhost:7001/api/openai/request/stream?inputType=${openAiInputType}`;
-        const apiUrl = `http://localhost:7001/api/openai/request?inputType=${openAiInputType}&stream=${stream}`;
-        // const apiUrl = `https://automaticunitedmotion.domkoeln.repl.co/openai`;
+        const apiUrl = `${process.env.REACT_APP_API_URL}/api/openai/request?inputType=${openAiInputType}&stream=${stream}`;
 
         try {
 
@@ -122,4 +115,4 @@ const useOpenAiSubmission = () => {
     };
 };
 
-export default useOpenAiSubmission
+export default useOpenAi
