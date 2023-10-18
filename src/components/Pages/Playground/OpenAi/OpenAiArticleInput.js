@@ -1,5 +1,5 @@
 import {Textarea} from "@amboss/design-system";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useOpenAiContext} from "../../../../context/OpenAiContext";
 import {ArticleSelect} from "../../../Commons/ArticleSelect";
 

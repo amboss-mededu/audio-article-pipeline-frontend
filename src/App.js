@@ -7,6 +7,8 @@ import {OpenAiProvider} from "./context/OpenAiContext";
 import UploadEpisodeForm from "./components/Pages/Upload/UploadEpisode";
 import Header from "./components/Header/Header";
 import {Playground} from "./components/Pages/Playground/Playground";
+import {PlaygroundProvider} from "./context/PlaygroundContext";
+import {ElevenLabsProvider} from "./context/ElevenLabsContext";
 
 function App() {
     const { activeTab } = useAppContext();
@@ -21,14 +23,18 @@ function App() {
         <ThemeProvider theme={isNightTime ? dark : light}>
             <Container>
                 <div style={{height: "100vh"}}>
-                    <OpenAiProvider>
+                    <ElevenLabsProvider><OpenAiProvider>
                         <Box className="App">
                             <Header />
-                            {activeTab === 0 && <Playground />}
+                            {activeTab === 0 &&
+                                <PlaygroundProvider>
+                                    <Playground />
+                                </PlaygroundProvider>
+                            }
                             {activeTab === 1 && <UploadEpisodeForm />}
                             {activeTab === 2 && <AudioRenderer />}
                         </Box>
-                    </OpenAiProvider>
+                    </OpenAiProvider></ElevenLabsProvider>
                 </div>
             </Container>
         </ThemeProvider>

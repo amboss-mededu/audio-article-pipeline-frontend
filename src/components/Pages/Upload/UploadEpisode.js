@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import {Button, Input, Select, Box, Tabs, Tab, Text} from "@amboss/design-system";
-import {SecondarySubmissionForm} from "../../InputSecondary/SecondarySubmission";
 
 function UploadEpisodeForm() {
     const [formData, setFormData] = useState({
@@ -94,7 +93,6 @@ function UploadEpisodeForm() {
 
                     {activeTab === 1 && (
                         <>
-                        {/*<SecondarySubmissionForm />*/}
                             <Text>Hello Second</Text>
                         </>
                     )}

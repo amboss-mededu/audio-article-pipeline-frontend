@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 
-const useElevenLabsSubmission = () => {
+const useElevenLabs = () => {
     const [loading, setLoading] = useState(false);
     const [audioFilePath, setAudioFilePath] = useState(null);
     const [error, setError] = useState(null);
@@ -36,4 +36,4 @@ const useElevenLabsSubmission = () => {
     };
 };
 
-export default useElevenLabsSubmission
+export default useElevenLabs

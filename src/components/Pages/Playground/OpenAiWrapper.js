@@ -4,10 +4,12 @@ import {
 import {useState} from "react";
 import {useOpenAiContext} from "../../../context/OpenAiContext";
 import {OpenAiInput} from "./OpenAi/OpenAiInput";
+import {usePlaygroundContext} from "../../../context/PlaygroundContext";
 
 export const OpenAiWrapper = () => {
 
-    const { openAiInput, openAiInputType, setOpenAiInputType, handleSubmit, selectedArticle, model } = useOpenAiContext();
+    const { openAiInput, openAiInputType, setOpenAiInputType, handleOpenAiSubmit, selectedArticle, model } = useOpenAiContext();
+    const { setStep } = usePlaygroundContext();
 
     const [stream, setStream] = useState(false)
 
@@ -39,7 +41,10 @@ export const OpenAiWrapper = () => {
                 </Inline>
 
                 <div>
-                    <form onSubmit={(e) => handleSubmit(e, openAiInputType === 'xid' ? selectedArticle : openAiInput, openAiInputType, model, stream)}>
+                    <form onSubmit={(e) => {
+                        setStep(2);
+                        handleOpenAiSubmit(e, openAiInputType === 'xid' ? selectedArticle : openAiInput, openAiInputType, model, stream)
+                    }}>
                         <OpenAiInput stream={stream} setStream={setStream} />
                     </form>
                 </div>

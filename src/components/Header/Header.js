@@ -5,7 +5,6 @@ import {useAppContext} from "../../context/AppContext";
 
 const Header = () => {
     const { activeTab } = useAppContext();
-    console.log(activeTab)
 
     function getHeadline () {
         switch(activeTab) {

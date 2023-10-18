@@ -1,74 +1,71 @@
 import {Box, Divider, H2, LoadingSpinner, Stack} from "@amboss/design-system";
-import {SecondarySubmissionForm} from "../../InputSecondary/SecondarySubmission";
-import {PrimarySubmissionForm} from "../../InputPrimary/PrimarySubmission";
-import useElevenLabsSubmission from "../../../hooks/useElevenLabsSubmission";
-import {useAppContext} from "../../../context/AppContext";
 import {ProgressController} from "../../../context/ProgressController";
 import {useOpenAiContext} from "../../../context/OpenAiContext";
 import {OpenAiWrapper} from "./OpenAiWrapper";
+import {usePlaygroundContext} from "../../../context/PlaygroundContext";
+import {useElevenLabsContext} from "../../../context/ElevenLabsContext";
+import {ElevenLabsWrapper} from "./ElevenLabsWrapper";
 
 export const Playground = () => {
 
-    const { elevenLabsInput, setElevenLabsInput } = useAppContext();
+    const { step, setStep } = usePlaygroundContext();
 
     const {
-        loading: openAiLoading,
-        error: openAiError,
-        openAiCallId,
+        openAiLoading,
+        openAiError,
     } = useOpenAiContext();
 
     const {
-        loading: elevenLabsLoading,
-        audioFilePath,
-        error: elevenLabsError,
-        handleSubmit: handleElevenLabsSubmit
-    } = useElevenLabsSubmission();
+        elevenLabsLoading, elevenLabsError, audioFilePath
+    } = useElevenLabsContext();
 
-    return (
-        <div>
-            <OpenAiWrapper />
+    if ( step < 2 ) {
+        return (
+            <div>
+                <OpenAiWrapper />
+            </div>
+        )
+    } else {
+        return (
+            <div>
+                <OpenAiWrapper />
 
-            {openAiLoading && (
-                <Stack>
-                    <Divider />
-                    <LoadingSpinner screenReaderText="Loading" />
-                    <Box>
-                        <ProgressController />
+                {openAiLoading && (
+                    <Stack>
+                        <Divider />
+                        <LoadingSpinner screenReaderText="Loading" />
+                        <Box>
+                            <ProgressController />
+                        </Box>
+                    </Stack>
+                )}
+
+                {openAiError && <div>{openAiError}</div>}
+
+                <Divider />
+
+                <ElevenLabsWrapper canProceed={step >= 2} />
+
+                {elevenLabsLoading && (
+                    <Stack>
+                        <LoadingSpinner screenReaderText="Loading" />
+                        <Box>
+                            <ProgressController />
+                        </Box>
+                    </Stack>
+                )}
+
+                {elevenLabsError && <div>{elevenLabsError}</div>}
+
+                {audioFilePath && (
+                    <Box alignText={"center"}>
+                        <audio controls>
+                            <source src={audioFilePath} type="audio/mp3" />
+                            Your browser does not support the audio tag.
+                        </audio>
                     </Box>
-                </Stack>
-            )}
-
-            {openAiError && <div>{openAiError}</div>}
-
-            <Divider />
-
-            <SecondarySubmissionForm
-                elevenLabsInput={elevenLabsInput}
-                setElevenLabsInput={setElevenLabsInput}
-                handleSubmit={handleElevenLabsSubmit}
-                canProceed={true}
-                openAiCallId={openAiCallId}
-            />
-
-            {elevenLabsLoading && (
-                <Stack>
-                    <LoadingSpinner screenReaderText="Loading" />
-                    <Box>
-                        <ProgressController />
-                    </Box>
-                </Stack>
-            )}
-
-            {elevenLabsError && <div>{elevenLabsError}</div>}
-
-            {audioFilePath && (
-                <Box alignText={"center"}>
-                    <audio controls>
-                        <source src={audioFilePath} type="audio/mp3" />
-                        Your browser does not support the audio tag.
-                    </audio>
-                </Box>
-            )}
-        </div>
-    );
+                )}
+            </div>
+        );
+    }
 };

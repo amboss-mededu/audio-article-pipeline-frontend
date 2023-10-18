@@ -1,5 +1,6 @@
 import React, {createContext, useContext, useEffect, useState} from 'react';
 import useOpenAi from "../hooks/useOpenAi";
+import {useAppContext} from "./AppContext";
 
 const OpenAiContext = createContext();
 
@@ -31,17 +32,18 @@ export const OpenAiProvider = ({ children }) => {
             })
     }, [setPrompts]);
 
+
     const {
-        loading,
-        error,
+        loading: openAiLoading ,
+        error: openAiError,
         openAiCallId,
-        handleSubmit
+        handleSubmit: handleOpenAiSubmit
     } = useOpenAi({promptId});
 
     return (
         <OpenAiContext.Provider
             value={{
-                loading, error, openAiCallId, handleSubmit,
+                openAiLoading, openAiError, openAiCallId, handleOpenAiSubmit,
                 openAiInput, setOpenAiInput,
                 openAiInputType, setOpenAiInputType,
                 selectedArticle, setSelectedArticle,

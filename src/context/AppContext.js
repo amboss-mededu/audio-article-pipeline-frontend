@@ -1,4 +1,4 @@
-import React, {createContext, useState, useContext } from 'react';
+import React, {createContext, useState, useContext, useEffect} from 'react';
 
 // Create the context
 const AppContext = createContext();
@@ -6,7 +6,6 @@ const AppContext = createContext();
 const AppProvider = ({ children }) => {
     // Deployed:
     const [activeTab, setActiveTab] = useState(0); // default to the first tab
-    const [elevenLabsInput, setElevenLabsInput] = useState(null); // Umbrella state for the elevenlabs input
 
     // Not yet reviewed
     const [resultScript, setResultScript] = useState(null);
@@ -21,23 +20,15 @@ const AppProvider = ({ children }) => {
         <AppContext.Provider
             value={{
                 activeTab, setActiveTab,
-                elevenLabsInput, setElevenLabsInput,
 
                 // not deployed (yet)
-                resultScript,
-                setResultScript,
-                audioFilePath,
-                setAudioFilePath,
-                loading,
-                setLoading,
-                error,
-                setError,
-                progress,
-                setProgress,
-                canProceedToElevenLabs,
-                setCanProceedToElevenLabs,
-                openAiCallId,
-                setOpenAiCallId
+                resultScript, setResultScript,
+                audioFilePath, setAudioFilePath,
+                loading, setLoading,
+                error, setError,
+                progress, setProgress,
+                canProceedToElevenLabs, setCanProceedToElevenLabs,
+                openAiCallId, setOpenAiCallId,
             }}
         >
             {children}

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Select } from "@amboss/design-system";
-import {usePrimaryInputContext} from "../../context/PrimaryInputContext";
 import {useOpenAiContext} from "../../context/OpenAiContext";
 
 const PromptSelect = () => {

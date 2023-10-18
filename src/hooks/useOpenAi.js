@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import {useAppContext} from "../context/AppContext";
 import {Text} from "@amboss/design-system";
+import {useElevenLabsContext} from "../context/ElevenLabsContext";
 
 const useOpenAi = ({promptId}) => {
-    const { setElevenLabsInput } = useAppContext();
+    const { setElevenLabsInput } = useElevenLabsContext();
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -16,7 +17,9 @@ const useOpenAi = ({promptId}) => {
         setLoading(true);
         setError(null);
 
-        const apiUrl = `${process.env.REACT_APP_API_URL}/api/openai/request?inputType=${openAiInputType}&stream=${stream}`;
+        const apiUrl = process.env.NODE_ENV === 'development'
+            ? 'https://automaticunitedmotion.domkoeln.repl.co/openai'
+            : `${process.env.REACT_APP_API_URL}/api/openai/request?inputType=${openAiInputType}&stream=${stream}`;
 
         try {
 
