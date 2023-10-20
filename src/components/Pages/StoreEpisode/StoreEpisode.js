@@ -53,32 +53,35 @@ function StoreEpisode() {
             }} tabs={[{label: "Metadata", value: "meta"}, {label: "Audio", value: "audio"}, {label: "Submit", value: "submit"}]}>
             </Tabs>
 
-            <Box space={"m"} lSpace={"zero"}>
+            <Box space={"l"} lSpace={"zero"} rSpace={"zero"}>
                 {/* Shared Fields */}
                 <ArticleSelect />
                 <Divider />
 
-                {activeTab === 0 && (
-                    <>
-                        <Select name="stage" value={formData.stage} onChange={handleInputChange}>
-                            <option value="student">Student</option>
-                            <option value="physician">Physician</option>
-                        </Select>
-                        <Input
-                            name="xid"
-                            value={formData.xid}
-                            onChange={handleInputChange}
-                            placeholder="XID"
-                        />
-                        {/* ... other fields specific to StoreEpisodeForm */}
-                    </>
-                )}
+                <Box space={"m"} lSpace={"zero"} rSpace={"zero"}>
+                    {activeTab === 0 && (
+                        <>
+                            <Select name="stage" value={formData.stage} onChange={handleInputChange}>
+                                <option value="student">Student</option>
+                                <option value="physician">Physician</option>
+                            </Select>
+                            <Input
+                                name="xid"
+                                value={formData.xid}
+                                onChange={handleInputChange}
+                                placeholder="XID"
+                            />
+                            {/* ... other fields specific to StoreEpisodeForm */}
+                        </>
+                    )}
 
-                {activeTab === 1 && (
-                    <>
-                        <Text>Hello Second</Text>
-                    </>
-                )}
+                    {activeTab === 1 && (
+                        <>
+                            <Text>Hello Second</Text>
+                        </>
+
+                    )}
+                </Box>
             </Box>
         </Box>
     );
