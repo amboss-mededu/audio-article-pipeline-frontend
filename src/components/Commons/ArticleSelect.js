@@ -23,6 +23,7 @@ export const ArticleSelect = ({disabled = false}) => {
             value={selectedArticle}
             onChange={(e) => setSelectedArticle(e.target.value)}
             disabled={disabled}
+            hint={selectedArticle && `XID: ${selectedArticle}`}
         />
     )
 }

@@ -87,7 +87,7 @@ function UploadEpisodeForm() {
                                 onChange={handleInputChange}
                                 placeholder="XID"
                             />
-                            {/* ... other fields specific to CreateEpisodeForm */}
+                            {/* ... other fields specific to StoreEpisodeForm */}
                         </>
                     )}
 

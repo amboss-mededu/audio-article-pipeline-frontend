@@ -1,4 +1,4 @@
-import {Box, Container, H2, Inline} from "@amboss/design-system";
+import {Box, Container, H2, Inline, TextClamped} from "@amboss/design-system";
 import React from "react";
 import HeaderNavigation from "./Navigation";
 import {useAppContext} from "../../context/AppContext";
@@ -23,9 +23,15 @@ const Header = () => {
 
     return (
         <Container elevation={0}>
-            <Inline alignItems={"spaceBetween"} vAlignItems={"center"}>
+            <Inline alignItems={"spaceBetween"} vAlignItems={"center"} noWrap={true}>
                 <Box space={"zero"} lSpace={"m"} rSpace={"m"}>
-                    {Headline}
+                    <TextClamped
+                        align="left"
+                        as="h2"
+                        hyphens="none"
+                        transform="none"
+                        lines={1}
+                    >{Headline}</TextClamped>
                 </Box>
                 <HeaderNavigation />
             </Inline>
