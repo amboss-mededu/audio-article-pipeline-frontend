@@ -5,7 +5,8 @@ const ElevenLabsContext = createContext();
 
 export const ElevenLabsProvider = ({ children }) => {
 
-    const [elevenLabsInput, setElevenLabsInput] = useState([]); // Umbrella state for the elevenlabs input
+    const [elevenLabsInput, setElevenLabsInput] = useState(""); // Umbrella state for the elevenlabs input
+    const [elevenLabsInputXid, setElevenLabsInputXid] = useState(null)
 
     const {
         loading: elevenLabsLoading,
@@ -17,7 +18,8 @@ export const ElevenLabsProvider = ({ children }) => {
     return (
         <ElevenLabsContext.Provider value={{
             elevenLabsLoading, elevenLabsError, audioFilePath, handleElevenLabsSubmit,
-            elevenLabsInput, setElevenLabsInput
+            elevenLabsInput, setElevenLabsInput,
+            elevenLabsInputXid, setElevenLabsInputXid
         }}>
             {children}
         </ElevenLabsContext.Provider>

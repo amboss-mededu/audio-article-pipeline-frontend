@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import {Text} from "@amboss/design-system";
 import {useElevenLabsContext} from "../context/ElevenLabsContext";
+import {useOpenAiContext} from "../context/OpenAiContext";
 
 const useOpenAi = ({promptId}) => {
     const { setElevenLabsInput } = useElevenLabsContext();

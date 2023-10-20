@@ -9,9 +9,9 @@ const Header = () => {
     function getHeadline () {
         switch(activeTab) {
             case 0:
-                return <H2>Listen To Amboss</H2>
+                return <H2>Audio Playground</H2>
             case 1:
-                return <H2>Audio Renderer</H2>
+                return <H2>Store Episode</H2>
             case 2:
                 return <H2>No clue yet</H2>
             default:

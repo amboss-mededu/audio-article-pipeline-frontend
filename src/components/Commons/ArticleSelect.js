@@ -4,16 +4,8 @@ import React, {useEffect, useState} from "react";
 import {useOpenAiContext} from "../../context/OpenAiContext";
 
 export const ArticleSelect = ({disabled = false}) => {
-    const [articles, setArticles] = useState([]);
+    const {articles, setArticles} = useOpenAiContext();
     const {selectedArticle, setSelectedArticle} = useOpenAiContext();
-
-    useEffect(() => {
-        const formattedData = articlesData.map(article => ({
-            label: article.article_title,
-            value: article.article_xid,
-        }));
-        setArticles(formattedData);
-    }, [setArticles]);
 
     return(
         <Select

@@ -1,8 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {Box, Container, dark, light, ThemeProvider} from "@amboss/design-system";
 import { useAppContext} from './context/AppContext';
 import './styles/App.css';
-import AudioRenderer from "./components/Pages/Episode/EpisodePage";
 import {OpenAiProvider} from "./context/OpenAiContext";
 import UploadEpisodeForm from "./components/Pages/Upload/UploadEpisode";
 import Header from "./components/Header/Header";
@@ -15,6 +14,24 @@ import StoreEpisode from "./components/Pages/StoreEpisode/StoreEpisode";
 function App() {
     const { activeTab } = useAppContext();
     const [isNightTime, setNightTime] = useState(false)
+    const divRef = useRef(null);
+    const [maxHeight, setMaxHeight] = useState('100vh');
+
+    useEffect(() => {
+        const handleResize = () => {
+            const vh = window.innerHeight;
+            const parentHeight = divRef.current ? divRef.current.parentElement.offsetHeight : 0;
+            setMaxHeight(`${Math.max(vh, parentHeight)}px`);
+        };
+
+        handleResize(); // Call it once to set initial state
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
 
     useEffect(() => {
         const currentTime = new Date().getHours();
@@ -23,8 +40,8 @@ function App() {
 
     return (
         <ThemeProvider theme={isNightTime ? dark : light}>
-            <Container>
-                <div style={{height: "100vh"}}>
+            <Container borderRadius={0}>
+                <div ref={divRef} style={{ height: maxHeight, borderRadius: 0 }}>
                     <ElevenLabsProvider>
                     <OpenAiProvider>
                         <Box className="App">
@@ -39,7 +56,7 @@ function App() {
                                     <StoreEpisode />
                                 </StoreEpisodeProvider>
                             }
-                            {activeTab === 2 && <AudioRenderer />}
+                            {activeTab === 2 && <>{"Hello World"}</>}
                         </Box>
                     </OpenAiProvider>
                     </ElevenLabsProvider>

@@ -1,48 +1,21 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-import {Button, Input, Select, Box, Tabs, Tab, Text, Divider} from "@amboss/design-system";
-import {useStoreEpisodeContext} from "../../../context/StoreEpisodeContext";
+import {Box, Divider, Select, Input, Text, ChipInput, Tabs} from '@amboss/design-system';
 import {ArticleSelect} from "../../Commons/ArticleSelect";
+import {useStoreEpisodeContext} from "../../../context/StoreEpisodeContext";
+import {StoreEpisodeMetadata} from "./StoreEpisodeMetadata";
+import {StoreEpisodeAudio} from "./StoreEpisodeAudio"; // Import components from your design library
 
-function StoreEpisode() {
+const StoreEpisode = ({ onFormDataChange }) => {
     const {formData, setFormData} = useStoreEpisodeContext();
-    const [activeTab, setActiveTab] = useState(0);
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        let endPoint;
-
-        if (activeTab === "create") {
-            endPoint = '/api/episodes/create';
-        } else if (activeTab === "secondary") {
-            endPoint = '/api/episodes/secondary'; // replace with the correct endpoint for SecondarySubmissionForm
-        }
-
-        try {
-            const response = await axios.post(endPoint, formData);
-            console.log(response.data);
-        } catch (error) {
-            console.error('Error submitting form:', error);
-        }
-    };
+    const [activeTab, setActiveTab] = useState(0)
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setFormData(prevState => ({
-            ...prevState,
-            [name]: value
-        }));
-    };
-
-    const handleVoiceChange = (e) => {
-        const { name, value } = e.target;
-        setFormData(prevState => ({
-            ...prevState,
-            voice: {
-                ...prevState.voice,
-                [name]: value
-            }
-        }));
+        const updatedFormData = { ...formData, [name]: value };
+        setFormData(updatedFormData);
+        if (onFormDataChange) {
+            onFormDataChange(updatedFormData);
+        }
     };
 
     return (
@@ -60,26 +33,11 @@ function StoreEpisode() {
 
                 <Box space={"m"} lSpace={"zero"} rSpace={"zero"}>
                     {activeTab === 0 && (
-                        <>
-                            <Select name="stage" value={formData.stage} onChange={handleInputChange}>
-                                <option value="student">Student</option>
-                                <option value="physician">Physician</option>
-                            </Select>
-                            <Input
-                                name="xid"
-                                value={formData.xid}
-                                onChange={handleInputChange}
-                                placeholder="XID"
-                            />
-                            {/* ... other fields specific to StoreEpisodeForm */}
-                        </>
+                        <StoreEpisodeMetadata handleInputChange={handleInputChange}/>
                     )}
 
                     {activeTab === 1 && (
-                        <>
-                            <Text>Hello Second</Text>
-                        </>
-
+                        <StoreEpisodeAudio handleInputChange={handleInputChange}/>
                     )}
                 </Box>
             </Box>

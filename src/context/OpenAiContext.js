@@ -1,6 +1,7 @@
 import React, {createContext, useContext, useEffect, useState} from 'react';
 import useOpenAi from "../hooks/useOpenAi";
 import {useAppContext} from "./AppContext";
+import articlesData from "../helpers/xids.json";
 
 const OpenAiContext = createContext();
 
@@ -12,12 +13,23 @@ export const OpenAiProvider = ({ children }) => {
     const [promptId, setPromptId] = useState('1');
     const [prompts, setPrompts] = useState([])
     const [model, setModel] = useState('gpt-3.5-turbo');
+    const [articles, setArticles] = useState([]);
+
 
     const models = [
         {label: 'GPT-3.5-Turbo', value: 'gpt-3.5-turbo'},
         {label: 'GPT-3.5-16K', value: 'gpt-3.5-turbo-16k'},
         {label: 'GPT-4', value: 'gpt-4'}
     ]
+
+    useEffect(() => {
+        const formattedData = articlesData.map(article => ({
+            label: article.article_title,
+            value: article.article_xid,
+        }));
+        setArticles(formattedData);
+    }, [setArticles]);
+
 
     useEffect(() => {
         // Fetch prompts from backend
@@ -49,7 +61,8 @@ export const OpenAiProvider = ({ children }) => {
                 selectedArticle, setSelectedArticle,
                 promptId, setPromptId,
                 prompts, setPrompts,
-                model, setModel, models
+                model, setModel, models,
+                articles, setArticles
         }}
         >
             {children}
