@@ -1,4 +1,4 @@
-import articlesData from "../../helpers/xid.json";
+import articlesData from "../../helpers/xids.json";
 import {Select} from "@amboss/design-system";
 import React, {useEffect, useState} from "react";
 import {useOpenAiContext} from "../../context/OpenAiContext";
@@ -9,8 +9,8 @@ export const ArticleSelect = ({disabled = false}) => {
 
     useEffect(() => {
         const formattedData = articlesData.map(article => ({
-            label: article.title,
-            value: article.xid,
+            label: article.article_title,
+            value: article.article_xid,
         }));
         setArticles(formattedData);
     }, [setArticles]);

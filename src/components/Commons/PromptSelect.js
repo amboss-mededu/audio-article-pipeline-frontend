@@ -11,10 +11,10 @@ const PromptSelect = ({disabled = false}) => {
         setPromptId(e.target.value);
     };
 
-    const selectOptions = prompts.map(prompt => {
+    const selectOptions = prompts.filter(prompt => !prompt.disabled).map(prompt => {
         return ({
             label: prompt.title,
-            value: prompt.id
+            value: prompt.id,
         })
     })
 
