@@ -9,7 +9,7 @@ export const ElevenLabsInput = () => {
     return (
         <FormFieldGroup>
             <Textarea
-                key={elevenLabsInput}
+                /* key={elevenLabsInput} */
                 name={"eleven-labs-input"}
                 value={elevenLabsInput}
                 maxLength={20000}
