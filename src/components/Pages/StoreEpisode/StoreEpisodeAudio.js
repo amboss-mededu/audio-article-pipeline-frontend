@@ -1,16 +1,17 @@
-import React from "react";
-
-import {ElevenLabsInput} from "../Playground/ElevenLabs/ElevenLabsInput";
-import {Button, FormFieldGroup, Inline} from "@amboss/design-system";
+import {Box, Button, FormFieldGroup, Inline, LoadingSpinner, Stack, Text} from "@amboss/design-system";
+import React, {useEffect} from "react";
 import {useOpenAiContext} from "../../../context/OpenAiContext";
 import {useElevenLabsContext} from "../../../context/ElevenLabsContext";
+import StoreEpisodeArtwork from "./StoreEpisodeArtwork";
+import {ElevenLabsSubmit} from "../Playground/ElevenLabs/ElevenLabsSubmit";
+import {ProgressController} from "../../../context/ProgressController";
+import {useStoreEpisodeContext} from "../../../context/StoreEpisodeContext";
 
-export const StoreEpisodeAudio = ({nextTab, prevTab}) => {
+export const StoreEpisodeAudio = ({prevTab, nextTab}) => {
 
-    const { selectedArticle } = useOpenAiContext();
-    const { elevenLabsInput } = useElevenLabsContext();
-
-    const elevenLabsPlaceholder = `Check the Playground tab to generate a script or write something yourself.`
+    const { selectedArticle, openAiCallId } = useOpenAiContext();
+    const { elevenLabsInput, audioFilePath, elevenLabsLoading, elevenLabsError, handleElevenLabsSubmit } = useElevenLabsContext();
+    const { imageStatus } = useStoreEpisodeContext();
 
     const CustomButtonGroup = () => {
         return (
@@ -27,28 +28,52 @@ export const StoreEpisodeAudio = ({nextTab, prevTab}) => {
                 >
                     Back
                 </Button>
-                <Button
-                    name="next-tab"
-                    type={"button"}
-                    size={"m"}
-                    disabled={!elevenLabsInput || !selectedArticle}
-                    variant={"primary"}
-                    onClick={nextTab}
-                    ariaAttributes={{
-                        'aria-label': 'Next Tab'
-                    }}
-                >
-                    Next
-                </Button>
             </Inline></FormFieldGroup>
         )
     }
+
+    useEffect(() => {
+        handleElevenLabsSubmit(null, elevenLabsInput, openAiCallId)
+    },[elevenLabsInput])
+
     return (
-        <>
-            <FormFieldGroup>
-                <ElevenLabsInput elevenLabsPlaceholder={elevenLabsPlaceholder} />
+        <Box>
+            <Stack alignItems={"center"} space={"xl"}>
                 <CustomButtonGroup />
-            </FormFieldGroup>
-        </>
+                <StoreEpisodeArtwork />
+                {/* <ElevenLabsSubmit /> */}
+
+                <div className={"elevenLabsWrapper"}>
+                    {elevenLabsLoading && (
+                        <Stack>
+                            <LoadingSpinner screenReaderText="Loading" />
+                            <Box>
+                                <ProgressController />
+                            </Box>
+                        </Stack>
+                    )}
+
+                    {elevenLabsError && <div>{elevenLabsError}</div>}
+
+                    {audioFilePath && (
+                        <Box alignText={"center"}>
+                            <audio controls>
+                                <source src={audioFilePath} type="audio/mp3" />
+                                Your browser does not support the audio tag.
+                            </audio>
+                        </Box>
+                    )}
+                </div>
+                <Button
+                    type={"button"}
+                    variant={"primary"}
+                    disabled={ !audioFilePath || imageStatus !== "loaded" || !selectedArticle}
+                >
+                    Store to Database
+                </Button>
+
+            </Stack>
+        </Box>
+
     )
 }

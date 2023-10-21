@@ -17,9 +17,10 @@ const useElevenLabs = () => {
     };
 
     const handleSubmit = async (e, elevenLabsInput, openAiCallId) => {
-        e.preventDefault();
+        if(e) e.preventDefault();
         setLoading(true);
         setError(null);
+        setAudioFilePath(null)
 
         abortControllerRef.current = new AbortController();
 
@@ -43,8 +44,14 @@ const useElevenLabs = () => {
                 })
             });
 
-
-            setAudioFilePath(response.data.audioFile.location);
+            if (response.ok) {  // check if the response status is OK (status code 200-299)
+                const result = await response.json();  // parses the response body as JSON
+                console.log(result);
+                setAudioFilePath(result.audioFile.location);
+            } else {
+                // handle non-OK responses
+                throw new Error('Network response was not ok.');
+            }
         } catch (err) {
             if (err.name === 'AbortError') {
                 console.log("Fetch aborted");

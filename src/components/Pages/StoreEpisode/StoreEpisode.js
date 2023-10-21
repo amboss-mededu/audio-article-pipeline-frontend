@@ -3,9 +3,12 @@ import {Box, Divider, Select, Input, Text, Tabs} from '@amboss/design-system';
 import {ArticleSelect} from "../../Commons/ArticleSelect";
 import {useStoreEpisodeContext} from "../../../context/StoreEpisodeContext";
 import {StoreEpisodeMetadata} from "./StoreEpisodeMetadata";
-import {StoreEpisodeAudio} from "./StoreEpisodeAudio";
+import { StoreEpisodeScript} from "./StoreEpisodeScript";
 import {useOpenAiContext} from "../../../context/OpenAiContext";
-import {useElevenLabsContext} from "../../../context/ElevenLabsContext"; // Import components from your design library
+import {useElevenLabsContext} from "../../../context/ElevenLabsContext";
+import ProgressIndicator from "./StoreEpisodeProgress";
+import StoreEpisodeProgressIndicator from "./StoreEpisodeProgress";
+import {StoreEpisodeAudio} from "./StoreEpisodeAudio"; // Import components from your design library
 
 const StoreEpisode = ({ onFormDataChange }) => {
     const {formData, setFormData} = useStoreEpisodeContext();
@@ -56,16 +59,15 @@ const StoreEpisode = ({ onFormDataChange }) => {
         setActiveTab(activeTab-1)
     }
 
+    const tabs = [{label: "Metadata", value: "meta"}, {label: "Audio", value: "audio"}, {label: "Submit", value: "submit"}]
+
     return (
-        <Box lSpace={"zero"}>
-            <Tabs activeTab={activeTab} onTabSelect={(i) => {
-                switchTab(i)
-            }} tabs={[{label: "Metadata", value: "meta"}, {label: "Audio", value: "audio"}, {label: "Submit", value: "submit"}]}>
-            </Tabs>
+        <Box space={"zero"} lSpace={"m"} rSpace={"m"}>
+            <StoreEpisodeProgressIndicator activeTab={activeTab} />
 
             <Box space={"l"} lSpace={"zero"} rSpace={"zero"}>
                 {/* Shared Fields */}
-                <ArticleSelect />
+                <ArticleSelect disabled={activeTab} />
                 <Divider />
 
                 <Box space={"m"} lSpace={"zero"} rSpace={"zero"}>
@@ -74,11 +76,11 @@ const StoreEpisode = ({ onFormDataChange }) => {
                     )}
 
                     {activeTab === 1 && (
-                        <StoreEpisodeAudio handleInputChange={handleInputChange} nextTab={nextTab} prevTab={prevTab} />
+                        <StoreEpisodeScript handleInputChange={handleInputChange} nextTab={nextTab} prevTab={prevTab} />
                     )}
 
                     {(activeTab === 2 && selectedArticle && elevenLabsInput) && (
-                        <Text>Ready to Submit</Text>
+                        <StoreEpisodeAudio nextTab={nextTab} prevTab={prevTab} />
                     )}
                 </Box>
             </Box>

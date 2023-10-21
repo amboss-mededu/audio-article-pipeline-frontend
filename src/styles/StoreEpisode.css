@@ -1,0 +1,7 @@
+div.store-episode-progress div[data-ds-id="Inline"] > div:not(:last-child)::before {
+    content: '';
+    flex: 1;
+    height: 2px;
+    backgroundColor: gray;
+    margin: 0 10px;
+}
