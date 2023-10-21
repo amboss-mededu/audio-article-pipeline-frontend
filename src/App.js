@@ -3,7 +3,6 @@ import {Box, Container, dark, light, ThemeProvider} from "@amboss/design-system"
 import { useAppContext} from './context/AppContext';
 import './styles/App.css';
 import {OpenAiProvider} from "./context/OpenAiContext";
-import UploadEpisodeForm from "./components/Pages/Upload/UploadEpisode";
 import Header from "./components/Header/Header";
 import {Playground} from "./components/Pages/Playground/Playground";
 import {PlaygroundProvider} from "./context/PlaygroundContext";
