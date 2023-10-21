@@ -14,23 +14,35 @@ function App() {
     const { activeTab } = useAppContext();
     const [isNightTime, setNightTime] = useState(false)
     const divRef = useRef(null);
+    const boxRef = useRef(null);
     const [maxHeight, setMaxHeight] = useState('100vh');
 
     useEffect(() => {
         const handleResize = () => {
             const vh = window.innerHeight;
-            const parentHeight = divRef.current ? divRef.current.parentElement.offsetHeight : 0;
+            const parentHeight = divRef.current ? divRef.current.childNodes[0].offsetHeight : 0;
             setMaxHeight(`${Math.max(vh, parentHeight)}px`);
+            console.log(parentHeight)
         };
 
-        handleResize(); // Call it once to set initial state
+        // Initial call
+        handleResize();
 
+        // Setup event listener for window resize
         window.addEventListener('resize', handleResize);
+
+        // Setup MutationObserver
+        const observer = new MutationObserver(handleResize);
+        if (boxRef.current) {
+            observer.observe(boxRef.current, { attributes: true, childList: true, subtree: true });
+        }
 
         return () => {
             window.removeEventListener('resize', handleResize);
+            observer.disconnect();
         };
     }, []);
+
 
     useEffect(() => {
         const currentTime = new Date().getHours();
@@ -43,7 +55,7 @@ function App() {
                 <div ref={divRef} style={{ height: maxHeight, borderRadius: 0 }}>
                     <ElevenLabsProvider>
                     <OpenAiProvider>
-                        <Box className="App">
+                        <div ref={boxRef}><Box className="App">
                             <Header />
                             {activeTab === 0 &&
                                 <PlaygroundProvider>
@@ -56,7 +68,7 @@ function App() {
                                 </StoreEpisodeProvider>
                             }
                             {activeTab === 2 && <>{"Hello World"}</>}
-                        </Box>
+                        </Box></div>
                     </OpenAiProvider>
                     </ElevenLabsProvider>
                 </div>

@@ -42,7 +42,7 @@ const HeaderNavigation = () => {
         }
     ];
 
-    const modifiedTabs = windowWidth < 500 ?
+    const modifiedTabs = windowWidth < 768 ?
         tabs.map(e => ({icon: e.icon, label: "", value: e.value, key: e.value})) :
         tabs;
 

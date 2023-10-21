@@ -22,8 +22,8 @@ const Header = () => {
     const Headline = getHeadline()
 
     return (
-        <Container elevation={0}>
-            <Inline alignItems={"spaceBetween"} vAlignItems={"center"} noWrap={true}>
+        <Container className={"header"} data-ds-id={"HeaderContainer"} elevation={0}>
+            <Inline alignItems={"spaceBetween"} vAlignItems={"center"} noWrap={true} space={"zero"}>
                 <Box space={"zero"} lSpace={"m"} rSpace={"m"}>
                     <TextClamped
                         align="left"
