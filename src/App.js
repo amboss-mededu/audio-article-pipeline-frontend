@@ -54,20 +54,22 @@ function App() {
                 <div ref={divRef} style={{ height: maxHeight, borderRadius: 0 }}>
                     <ElevenLabsProvider>
                     <OpenAiProvider>
-                        <div ref={boxRef}><Box className="App">
+                        <div ref={boxRef}>
                             <Header />
-                            {activeTab === 0 &&
-                                <PlaygroundProvider>
-                                    <Playground />
-                                </PlaygroundProvider>
-                            }
-                            {activeTab === 1 &&
-                                <StoreEpisodeProvider>
-                                    <StoreEpisode />
-                                </StoreEpisodeProvider>
-                            }
-                            {activeTab === 2 && <>{"Hello World"}</>}
-                        </Box></div>
+                            <Box tSpace={"zero"} className="App">
+                                {activeTab === 0 &&
+                                    <PlaygroundProvider>
+                                        <Playground />
+                                    </PlaygroundProvider>
+                                }
+                                {activeTab === 1 &&
+                                    <StoreEpisodeProvider>
+                                        <StoreEpisode />
+                                    </StoreEpisodeProvider>
+                                }
+                                {activeTab === 2 && <>{"Hello World"}</>}
+                            </Box>
+                        </div>
                     </OpenAiProvider>
                     </ElevenLabsProvider>
                 </div>

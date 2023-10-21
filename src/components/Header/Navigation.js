@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import { Tabs, Container, Stack, PictogramButton } from "@amboss/design-system";
+import {Tabs, Container, Stack, PictogramButton, Inline} from "@amboss/design-system";
 import { useAppContext } from '../../context/AppContext';
 
 const HeaderNavigation = () => {
     const { activeTab, setActiveTab } = useAppContext();
-    const [showTabs, setShowTabs] = useState(false); // New state to determine if tabs should be displayed
+    const [showTabs, setShowTabs] = useState(true); // New state to determine if tabs should be displayed
 
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
@@ -20,24 +20,24 @@ const HeaderNavigation = () => {
     const handleTabChange = (selectedIndex) => {
         setActiveTab(selectedIndex);
         setTimeout(() => {  // After a short timeout, hide the tabs
-            setShowTabs(false);
+            setShowTabs(true);
         }, 1500); // 500ms timeout
     };
 
     const tabs = [
         {
             icon: 'flask',
-            label: 'Playground',
+            label: 'Audio Playground',
             value: 'playground'
         },
         {
             icon: 'headphones',
-            label: 'Create New',
+            label: 'Create New Audio',
             value: 'create-new'
         },
         {
             icon: 'grid',
-            label: 'Inventory',
+            label: 'Your Audios',
             value: 'inventory'
         }
     ];
@@ -53,9 +53,9 @@ const HeaderNavigation = () => {
                 elevation={2}
                 borderRadius="m"
                 overflow="hidden"
-                squareCorners={false}
+                squareCorners={true}
             >
-                <Stack className={"nav-bar"} alignItems={"center"} space={["l", "xl", "xxl"]}>
+                <Inline className={"nav-bar"} alignItems={"center"} space={"zero"} vAlignItems={"bottom"}>
                     {
                         showTabs ?
                             <Tabs
@@ -76,7 +76,7 @@ const HeaderNavigation = () => {
                                 onClick={() => setShowTabs(true)} // Show tabs when the hamburger menu is clicked
                             />
                     }
-                </Stack>
+                </Inline>
             </Container>
         </div>
     );

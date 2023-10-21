@@ -2,6 +2,7 @@ import {Box, Container, H2, Inline, Logo, TextClamped} from "@amboss/design-syst
 import React from "react";
 import HeaderNavigation from "./Navigation";
 import {useAppContext} from "../../context/AppContext";
+import '../../styles/Header.css';
 
 const Header = () => {
     const { activeTab } = useAppContext();
@@ -23,8 +24,8 @@ const Header = () => {
 
     return (
         <Container className={"header"} data-ds-id={"HeaderContainer"} elevation={0}>
-            <Inline alignItems={"spaceBetween"} vAlignItems={"center"} noWrap={true} space={"zero"}>
-                <Box space={"zero"} lSpace={"m"} rSpace={"m"}>
+            <Inline alignItems={"center"} vAlignItems={"stretch"} noWrap={true} space={"zero"}>
+                {/*<Box space={"zero"} lSpace={"m"} rSpace={"m"}>
                     <TextClamped
                         align="left"
                         as="h2"
@@ -33,7 +34,7 @@ const Header = () => {
                         lines={1}
                     >{Headline}</TextClamped>
 
-                </Box>
+                </Box>*/}
                 <HeaderNavigation />
             </Inline>
         </Container>

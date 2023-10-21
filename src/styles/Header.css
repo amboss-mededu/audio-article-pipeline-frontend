@@ -1,0 +1,47 @@
+/*
+Sticky header
+ */
+div[data-ds-id="HeaderContainer"] {
+    height: 82px;
+    position: sticky;
+    z-index: 10;
+}
+
+div[data-ds-id="HeaderContainer"]::before {
+    content: "";
+    position: absolute;
+    top: -1rem; /* Adjust based on the desired blur height */
+    left: -1rem;
+    right: -1rem;
+    height: calc(100% + 1.5rem); /* Adjust the height to extend the pseudo-element to the bottom of the header */
+    z-index: -1;
+    background-color: inherit;
+}
+
+
+.header__navigation > div {
+    width: 100vw;
+    height: 82px;
+}
+
+/*
+Custom style to center hamburger menu
+ */
+.header__navigation > div[data-ds-id="Container"] > div[data-ds-id="Inline"] {
+    height: inherit;
+    margin: 0 auto;
+}
+
+div[data-ds-id="Tabs"] button {
+    padding-bottom: 24px;
+}
+
+h2[data-ds-id="TextClamped"] > span {
+    max-height: 28px;
+}
+
+@media (max-width: 768px) {
+    div.header__navigation div[data-ds-id="Tabs"] button div[data-ds-id="Icon"] {
+        padding: 0 10px; /* Set whitespace around SVG */
+    }
+}
