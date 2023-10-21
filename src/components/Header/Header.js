@@ -1,4 +1,4 @@
-import {Box, Container, H2, Inline, TextClamped} from "@amboss/design-system";
+import {Box, Container, H2, Inline, Logo, TextClamped} from "@amboss/design-system";
 import React from "react";
 import HeaderNavigation from "./Navigation";
 import {useAppContext} from "../../context/AppContext";
@@ -32,6 +32,7 @@ const Header = () => {
                         transform="none"
                         lines={1}
                     >{Headline}</TextClamped>
+
                 </Box>
                 <HeaderNavigation />
             </Inline>

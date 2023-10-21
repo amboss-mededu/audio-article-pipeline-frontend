@@ -3,6 +3,12 @@ import {createContext, useContext, useState} from "react";
 const StoreEpisodeContext = createContext();
 
 const StoreEpisodeProvider = ({ children }) => {
+
+    const [imageStatus, setImageStatus] = useState('initial');
+    const [imageReload, setImageReload] = useState(false)
+    const [imageSrc, setImageSrc] = useState('');
+    const [imageXid, setImageXid] = useState(null)
+
     const [formData, setFormData] = useState({
         gcsUrl: "",
         stage: "student",
@@ -21,7 +27,11 @@ const StoreEpisodeProvider = ({ children }) => {
     return (
         <StoreEpisodeContext.Provider
             value={{
-                formData, setFormData
+                formData, setFormData,
+                imageStatus, setImageStatus,
+                imageReload, setImageReload,
+                imageSrc, setImageSrc,
+                imageXid, setImageXid
             }}
         >
             {children}

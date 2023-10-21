@@ -22,7 +22,6 @@ function App() {
             const vh = window.innerHeight;
             const parentHeight = divRef.current ? divRef.current.childNodes[0].offsetHeight : 0;
             setMaxHeight(`${Math.max(vh, parentHeight)}px`);
-            console.log(parentHeight)
         };
 
         // Initial call

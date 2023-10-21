@@ -8,6 +8,8 @@ export const OpenAiArticleInput = () => {
     const [tokenCount, setTokenCount] = useState(0);
     const { openAiInput, setOpenAiInput, openAiInputType, openAiLoading } = useOpenAiContext();
 
+    const openAiInputPlaceholder = `Enter your HTML here...`
+
     const handleInputChange = (e) => {
         setOpenAiInput(e.target.value);
 
@@ -23,7 +25,7 @@ export const OpenAiArticleInput = () => {
                 onChange={handleInputChange}
                 resize="both"
                 maxLength={100000}
-                placeholder="Enter your HTML here..."
+                placeholder={openAiInputPlaceholder}
                 disabled={openAiLoading}
             />
             :
