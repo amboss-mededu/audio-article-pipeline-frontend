@@ -4,9 +4,6 @@ div[data-ds-id="Toggle"] div[data-ds-id="Inline"] {
   flex-direction: row-reverse;
 }
 
-h2[data-ds-id="H2"] {
-  text-decoration: underline;
-}
 
 .App {
   text-align: center;

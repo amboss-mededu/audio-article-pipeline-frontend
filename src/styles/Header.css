@@ -1,35 +1,45 @@
+:root {
+    --breakpoint-sm: 560px;
+    --breakpoint-md: 768px;
+}
+
 /*
 Sticky header
  */
 div[data-ds-id="HeaderContainer"] {
     height: 82px;
+    top: 0px;
     position: sticky;
     z-index: 10;
 }
 
-div[data-ds-id="HeaderContainer"]::before {
-    content: "";
-    position: absolute;
-    top: -1rem; /* Adjust based on the desired blur height */
-    left: -1rem;
-    right: -1rem;
-    height: calc(100% + 1.5rem); /* Adjust the height to extend the pseudo-element to the bottom of the header */
-    z-index: -1;
-    background-color: inherit;
+div[data-ds-id="HeaderContainer"] > div[data-ds-id="Box"] {
+
 }
 
-
-.header__navigation > div {
+.header__navigation.expandedNavMenu > div {
     width: 100vw;
-    height: 82px;
 }
+
+@media (max-width: 560px) {
+    div[data-ds-id="HeaderContainer"] > div {
+
+    }
+
+    div[data-ds-id="HeaderContainer"] div[data-ds-id="Tabs"] button {
+        width: 2rem;
+        justify-content: center;
+    }
+}
+
 
 /*
 Custom style to center hamburger menu
  */
 .header__navigation > div[data-ds-id="Container"] > div[data-ds-id="Inline"] {
     height: inherit;
-    margin: 0 auto;
+    margin: auto;
+    padding: 1rem 0 0;
 }
 
 div[data-ds-id="Tabs"] button {
@@ -40,7 +50,7 @@ h2[data-ds-id="TextClamped"] > span {
     max-height: 28px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: var(--breakpoint-md)) {
     div.header__navigation div[data-ds-id="Tabs"] button div[data-ds-id="Icon"] {
         padding: 0 10px; /* Set whitespace around SVG */
     }

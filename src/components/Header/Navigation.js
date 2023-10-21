@@ -1,28 +1,30 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {Tabs, Container, Stack, PictogramButton, Inline} from "@amboss/design-system";
 import { useAppContext } from '../../context/AppContext';
+import {BREAKPOINTS} from "../../helpers/constants";
 
-const HeaderNavigation = () => {
+const HeaderNavigation = ({windowWidth, showTabs, setShowTabs}) => {
     const { activeTab, setActiveTab } = useAppContext();
-    const [showTabs, setShowTabs] = useState(true); // New state to determine if tabs should be displayed
+    const navRef = useRef(null);
 
-    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-
-    useEffect(() => {
-        const handleResize = () => setWindowWidth(window.innerWidth);
-
-        window.addEventListener('resize', handleResize);
-
-        // Cleanup event listener on component unmount
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
+    const navClass = (showTabs || windowWidth > BREAKPOINTS.md) ? 'header__navigation expandedNavMenu' : 'header__navigation';
 
     const handleTabChange = (selectedIndex) => {
         setActiveTab(selectedIndex);
         setTimeout(() => {  // After a short timeout, hide the tabs
-            setShowTabs(true);
+            windowWidth < BREAKPOINTS.md && setShowTabs(false);
         }, 1500); // 500ms timeout
     };
+
+    useEffect(() => {
+        if (navRef.current) {
+            if (showTabs || windowWidth > BREAKPOINTS.md) {
+                navRef.current.classList.add("expandedNavMenu");
+            } else {
+                navRef.current.classList.remove("expandedNavMenu");
+            }
+        }
+    }, [showTabs, windowWidth, navRef]);
 
     const tabs = [
         {
@@ -42,20 +44,21 @@ const HeaderNavigation = () => {
         }
     ];
 
-    const modifiedTabs = windowWidth < 768 ?
+    // Set label-less tabs for RWD below 360px
+    const modifiedTabs = windowWidth < BREAKPOINTS.sm ?
         tabs.map(e => ({icon: e.icon, label: "", value: e.value, key: e.value})) :
         tabs;
 
     return (
-        <div className={"header__navigation"}>
+        <div className={navClass} ref={navRef}>
             <Container
                 id={"headerNavContainer"}
-                elevation={2}
+                elevation={showTabs ? 2 : 0}
                 borderRadius="m"
                 overflow="hidden"
                 squareCorners={true}
             >
-                <Inline className={"nav-bar"} alignItems={"center"} space={"zero"} vAlignItems={"bottom"}>
+                <Inline className={"nav-bar"} alignItems={"center"} space={"zero"} vAlignItems={showTabs ? "bottom" : "center"}>
                     {
                         showTabs ?
                             <Tabs
