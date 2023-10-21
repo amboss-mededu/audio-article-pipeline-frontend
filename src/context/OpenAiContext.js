@@ -10,9 +10,9 @@ export const OpenAiProvider = ({ children }) => {
     const [openAiInput, setOpenAiInput] = useState(''); // stores the input to openAi call
     const [openAiInputType, setOpenAiInputType] = useState("text")
     const [selectedArticle, setSelectedArticle] = useState(null);
-    const [promptId, setPromptId] = useState('1');
+    const [promptId, setPromptId] = useState('3');
     const [prompts, setPrompts] = useState([])
-    const [model, setModel] = useState('gpt-3.5-turbo');
+    const [model, setModel] = useState('gpt-3.5-turbo-16k');
     const [articles, setArticles] = useState([]);
 
 
@@ -49,13 +49,14 @@ export const OpenAiProvider = ({ children }) => {
         loading: openAiLoading ,
         error: openAiError,
         openAiCallId,
-        handleSubmit: handleOpenAiSubmit
+        handleSubmit: handleOpenAiSubmit,
+        handleAbort: handleOpenAiAbort
     } = useOpenAi({promptId});
 
     return (
         <OpenAiContext.Provider
             value={{
-                openAiLoading, openAiError, openAiCallId, handleOpenAiSubmit,
+                openAiLoading, openAiError, openAiCallId, handleOpenAiSubmit, handleOpenAiAbort,
                 openAiInput, setOpenAiInput,
                 openAiInputType, setOpenAiInputType,
                 selectedArticle, setSelectedArticle,

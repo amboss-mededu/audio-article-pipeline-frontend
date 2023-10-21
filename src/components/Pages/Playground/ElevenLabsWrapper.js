@@ -13,7 +13,7 @@ export const ElevenLabsWrapper = ({canProceed}) => {
              space={"zero"} vSpace={"l"}
         >
             <Stack alignItems={"spaceBetween"}>
-                <form onSubmit={(e) => handleElevenLabsSubmit(e, elevenLabsInput, openAiCallId)}>
+                <form>
                     <ElevenLabsInput />
                     {canProceed && ( // Only show second button when user can proceed
                         <ElevenLabsSubmit />

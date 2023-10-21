@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import {useRef, useState} from 'react';
 import {Text} from "@amboss/design-system";
 import {useElevenLabsContext} from "../context/ElevenLabsContext";
 import {useOpenAiContext} from "../context/OpenAiContext";
@@ -10,11 +10,21 @@ const useOpenAi = ({promptId}) => {
     const [error, setError] = useState(null);
     const [openAiCallId, setOpenAiCallId] = useState(null);
 
+    const abortControllerRef = useRef(null);
+
+    const handleAbort = () => {
+        if (abortControllerRef.current) {
+            abortControllerRef.current.abort();
+        }
+    };
+
     const handleSubmit = async (e, openAiInput, openAiInputType, model, stream) => {
         e.preventDefault();
         setElevenLabsInput(" ");
         setLoading(true);
         setError(null);
+
+        abortControllerRef.current = new AbortController();
 
         const apiUrl = process.env.NODE_ENV === '_development'
             ? 'https://automaticunitedmotion.domkoeln.repl.co/openai'
@@ -30,6 +40,7 @@ const useOpenAi = ({promptId}) => {
                         'Content-Type': 'application/json',
                         'Accept': 'text/event-stream'
                     },
+                    signal: abortControllerRef.current.signal,
                     body: JSON.stringify({
                         promptId,
                         userMessage: openAiInput,
@@ -76,6 +87,7 @@ const useOpenAi = ({promptId}) => {
                     headers: {
                         'Content-Type': 'application/json',
                     },
+                    signal: abortControllerRef.current.signal,
                     body: JSON.stringify({
                         promptId,
                         userMessage: openAiInput,
@@ -95,13 +107,21 @@ const useOpenAi = ({promptId}) => {
             }
 
         } catch (err) {
-            console.log(err.message);
-            setError(
-                <div style={{whiteSpace: "pre-line"}}>
-                    <Text>{`An error occurred while processing your request: \n ${err.message}`}</Text>
-                </div>
-            );
-
+            if (err.name === 'AbortError') {
+                console.log("Fetch aborted");
+                setError(
+                    <div style={{whiteSpace: "pre-line"}}>
+                        <Text>{`The request was cancelled.`}</Text>
+                    </div>
+                );
+            } else {
+                console.log(err.message);
+                setError(
+                    <div style={{whiteSpace: "pre-line"}}>
+                        <Text>{`An error occurred while processing your request: \n ${err.message}`}</Text>
+                    </div>
+                );
+            }
         } finally {
             setLoading(false)
         }
@@ -112,6 +132,7 @@ const useOpenAi = ({promptId}) => {
         loading, error,
         openAiCallId,
         handleSubmit,
+        handleAbort
     };
 };
 

@@ -29,7 +29,7 @@ export const ElevenLabsInput = ({elevenLabsPlaceholder}) => {
                 maxLength={20000}
                 rows={20}
                 placeholder={elevenLabsPlaceholder}
-                label={"ElevenLabs Script"}
+                label={"Article Script for Text To Speech"}
                 tabIndex={0}
                 onChange={(e) => setElevenLabsInput(e.target.value)}
             />

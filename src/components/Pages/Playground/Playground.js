@@ -45,25 +45,27 @@ export const Playground = () => {
 
                 <ElevenLabsWrapper canProceed={step >= 2} />
 
-                {elevenLabsLoading && (
-                    <Stack>
-                        <LoadingSpinner screenReaderText="Loading" />
-                        <Box>
-                            <ProgressController />
+                <div className={"elevenLabsWrapper"}>
+                    {elevenLabsLoading && (
+                        <Stack>
+                            <LoadingSpinner screenReaderText="Loading" />
+                            <Box>
+                                <ProgressController />
+                            </Box>
+                        </Stack>
+                    )}
+
+                    {elevenLabsError && <div>{elevenLabsError}</div>}
+
+                    {audioFilePath && (
+                        <Box alignText={"center"}>
+                            <audio controls>
+                                <source src={audioFilePath} type="audio/mp3" />
+                                Your browser does not support the audio tag.
+                            </audio>
                         </Box>
-                    </Stack>
-                )}
-
-                {elevenLabsError && <div>{elevenLabsError}</div>}
-
-                {audioFilePath && (
-                    <Box alignText={"center"}>
-                        <audio controls>
-                            <source src={audioFilePath} type="audio/mp3" />
-                            Your browser does not support the audio tag.
-                        </audio>
-                    </Box>
-                )}
+                    )}
+                </div>
             </div>
         );
     }

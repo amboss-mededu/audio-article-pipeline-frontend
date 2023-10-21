@@ -3,9 +3,9 @@ import React from "react";
 import {useOpenAiContext} from "../../../../context/OpenAiContext";
 import {usePlaygroundContext} from "../../../../context/PlaygroundContext";
 
-export const OpenAiButtons = () => {
+export const OpenAiButtons = ({stream}) => {
 
-    const { openAiLoading, openAiInputType, promptId } = useOpenAiContext();
+    const { openAiLoading, openAiInputType, promptId, handleOpenAiAbort, handleOpenAiSubmit, selectedArticle, openAiInput, model } = useOpenAiContext();
     const { step, setStep } = usePlaygroundContext();
 
     const buttonIsDisabled = () => {
@@ -20,19 +20,23 @@ export const OpenAiButtons = () => {
                         <Button
                             variant="primary"
                             destructive={true}
-                            onClick={() => console.error("Function not yet implemented.")}
+                            onClick={handleOpenAiAbort}
                         >
                             Cancel Request
                         </Button>
                     )
                     : (
                         <Button
-                            type="submit"
+                            onClick={(e) => {
+                                setStep(2);
+                                handleOpenAiSubmit(e, openAiInputType === 'xid' ? selectedArticle : openAiInput, openAiInputType, model, stream)
+                            }}
                             variant="primary"
                             loading={openAiLoading}
                             disabled={buttonIsDisabled()}
+                            leftIcon={"zap"}
                         >
-                            Send to OpenAI
+                            Accio Script
                         </Button>
                     )
                 }

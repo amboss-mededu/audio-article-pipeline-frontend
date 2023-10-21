@@ -13,14 +13,14 @@ export const OpenAiInput = ({ stream, setStream}) => {
     const { step } = usePlaygroundContext();
 
     return (
-        <FormFieldGroup label="Input" labelHint="Supports plain text">
+        <FormFieldGroup>
             <OpenAiArticleInput />
 
             { step > 0
                 ?   <OpenAiInputOptions stream={stream} setStream={setStream} />
                 :   null
             }
-            <OpenAiButtons />
+            <OpenAiButtons stream={stream} />
         </FormFieldGroup>
     )
 }

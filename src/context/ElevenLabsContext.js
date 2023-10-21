@@ -12,12 +12,13 @@ export const ElevenLabsProvider = ({ children }) => {
         loading: elevenLabsLoading,
         audioFilePath,
         error: elevenLabsError,
-        handleSubmit: handleElevenLabsSubmit
+        handleSubmit: handleElevenLabsSubmit,
+        handleAbort: handleElevenLabsAbort
     } = useElevenLabs();
 
     return (
         <ElevenLabsContext.Provider value={{
-            elevenLabsLoading, elevenLabsError, audioFilePath, handleElevenLabsSubmit,
+            elevenLabsLoading, elevenLabsError, audioFilePath, handleElevenLabsSubmit, handleElevenLabsAbort,
             elevenLabsInput, setElevenLabsInput,
             elevenLabsInputXid, setElevenLabsInputXid
         }}>

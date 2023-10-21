@@ -8,7 +8,7 @@ export const OpenAiArticleInput = () => {
     const [tokenCount, setTokenCount] = useState(0);
     const { openAiInput, setOpenAiInput, openAiInputType, openAiLoading } = useOpenAiContext();
 
-    const openAiInputPlaceholder = `Enter your HTML here...`
+    const openAiInputPlaceholder = `Enter article or medical condition here...`
 
     const handleInputChange = (e) => {
         setOpenAiInput(e.target.value);
@@ -20,6 +20,7 @@ export const OpenAiArticleInput = () => {
     return (
         openAiInputType === "text" ?
             <Textarea
+                label={"Article Text"}
                 value={openAiInput}
                 hint={`Token count: ${tokenCount}`}
                 onChange={handleInputChange}

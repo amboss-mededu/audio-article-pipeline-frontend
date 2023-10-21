@@ -8,19 +8,19 @@ import {usePlaygroundContext} from "../../../context/PlaygroundContext";
 
 export const OpenAiWrapper = () => {
 
-    const { openAiInput, openAiInputType, setOpenAiInputType, handleOpenAiSubmit, selectedArticle, model, openAiLoading } = useOpenAiContext();
+    const { openAiInput, openAiInputType, setOpenAiInputType, handleOpenAiSubmit, selectedArticle, model, openAiLoading, handleOpenAiAbort } = useOpenAiContext();
     const { setStep } = usePlaygroundContext();
 
     const [stream, setStream] = useState(false)
 
     const options = [
         {
-            label: 'HTML or Markdown',
+            label: 'Enter Text',
             name: 'text',
             value: 'text'
         },
         {
-            label: 'Article',
+            label: 'Select Article',
             name: 'xid',
             value: 'xid'
         }
@@ -43,8 +43,6 @@ export const OpenAiWrapper = () => {
 
                 <div>
                     <form onSubmit={(e) => {
-                        setStep(2);
-                        handleOpenAiSubmit(e, openAiInputType === 'xid' ? selectedArticle : openAiInput, openAiInputType, model, stream)
                     }}>
                         <OpenAiInput stream={stream} setStream={setStream} />
                     </form>
