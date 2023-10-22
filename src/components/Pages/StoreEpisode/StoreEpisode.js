@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Box, Divider, Select, Input, Text, Tabs} from '@amboss/design-system';
+import {Box, Divider, Select, Input, Text, Tabs, Column, Columns} from '@amboss/design-system';
 import {ArticleSelect} from "../../Commons/ArticleSelect";
 import {useStoreEpisodeContext} from "../../../context/StoreEpisodeContext";
 import {StoreEpisodeMetadata} from "./StoreEpisodeMetadata";
@@ -65,10 +65,17 @@ const StoreEpisode = ({ onFormDataChange }) => {
         <Box space={"zero"} lSpace={"m"} rSpace={"m"}>
             <StoreEpisodeProgressIndicator activeTab={activeTab} />
 
-            <Box space={"l"} lSpace={"zero"} rSpace={"zero"}>
+            <Box space={"s"} lSpace={"zero"} rSpace={"zero"}>
                 {/* Shared Fields */}
-                <ArticleSelect disabled={activeTab} />
-                <Divider />
+                <Columns alwaysFillSpace={false}>
+                    <Column alignSelf={"start"} size={["12","8","4"]}>
+                        <ArticleSelect disabled={activeTab} />
+
+                        <br />
+                        <Divider />
+                    </Column>
+                </Columns>
+
 
                 <Box space={"m"} lSpace={"zero"} rSpace={"zero"}>
                     {activeTab === 0 && (

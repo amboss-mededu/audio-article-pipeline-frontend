@@ -11,7 +11,7 @@ const StoreEpisodeProgressIndicator = ({ activeTab }) => {
 
     return (
         <div className={"store-episode-progress"}>
-            <Box display="flex" justifyContent="space-between" alignItems="center" rSpace={["l","xl","xxl"]} lSpace={["l","xl","xxl"]}>
+            <Box display="flex" justifyContent="space-between" alignItems="center" space={"s"} rSpace={["l","xl","xxl"]} lSpace={["l","xl","xxl"]}>
                 <Inline space={"xxl"} alignItems={"center"} vAlignItems={"center"} noWrap={"true"}>
                     {steps.map((step, index) => {
                         console.log(activeTab === 2 , selectedArticle , imageStatus === "loaded" , audioFilePath)

@@ -27,7 +27,7 @@ div[data-ds-id="HeaderContainer"] > div[data-ds-id="Box"] {
     }
 
     div[data-ds-id="HeaderContainer"] div[data-ds-id="Tabs"] button {
-        width: 2rem;
+        width: 3rem;
         justify-content: center;
     }
 }

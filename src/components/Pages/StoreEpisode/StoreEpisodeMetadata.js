@@ -22,7 +22,8 @@ export const StoreEpisodeMetadata = ({nextTab, handleInputChange}) => {
     return (
         <>
             <FormFieldGroup>
-                <Inline alignItems={"spaceBetween"}>
+                <Columns gap={"xl"} vAlignItems={["bottom", "center"]}>
+                    <Column size={[12, 6, 4]}>
                     <Select
                         name="stage"
                         value={formData.stage}
@@ -31,6 +32,8 @@ export const StoreEpisodeMetadata = ({nextTab, handleInputChange}) => {
                         options={stageOptions}
                         label="Stage" hint="Select either Student or Physician"
                     />
+                    </Column>
+                    <Column size={[12, 6, 4]}>
                     <Input
                         name="tags"
                         value={formData.tags}
@@ -38,7 +41,8 @@ export const StoreEpisodeMetadata = ({nextTab, handleInputChange}) => {
                         placeholder="Tags, separated, by comma"
                         label="Tags" hint="Add tags related to the content"
                     />
-                </Inline>
+                    </Column>
+                </Columns>
                 <Textarea
                     name="description"
                     value={formData.description}
