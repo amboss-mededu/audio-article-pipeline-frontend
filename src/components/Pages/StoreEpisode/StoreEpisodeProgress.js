@@ -2,6 +2,11 @@ import {Box, Inline, Text, Icon, Stack} from "@amboss/design-system";
 import {useOpenAiContext} from "../../../context/OpenAiContext";
 import {useElevenLabsContext} from "../../../context/ElevenLabsContext";
 import {useStoreEpisodeContext} from "../../../context/StoreEpisodeContext";
+import Stepper from '@mui/material/Stepper';
+import Step from '@mui/material/Step';
+import StepLabel from '@mui/material/StepLabel';
+import {useEffect, useState} from "react";
+
 
 const StoreEpisodeProgressIndicator = ({ activeTab }) => {
     const steps = ["Metadata", "Script", "Audio"];
@@ -9,22 +14,21 @@ const StoreEpisodeProgressIndicator = ({ activeTab }) => {
     const { audioFilePath } = useElevenLabsContext();
     const { imageStatus } = useStoreEpisodeContext();
 
+    const [status, setStatus] = useState(0)
+
+    useEffect(() => {
+        const percentage =
+            (selectedArticle ? 0.1 : 0) +
+            (Number(activeTab) * 0.3) +
+            (imageStatus === "loaded" ? 0.1 : 0) +
+            (audioFilePath ? 0.1 : 0);
+        setStatus(percentage)
+    }, [selectedArticle, activeTab, imageStatus, audioFilePath])
+
     return (
         <div className={"store-episode-progress"}>
-            <Box display="flex" justifyContent="space-between" alignItems="center" space={"s"} rSpace={["l","xl","xxl"]} lSpace={["l","xl","xxl"]}>
-                <Inline space={"xxl"} alignItems={"center"} vAlignItems={"center"} noWrap={"true"}>
-                    {steps.map((step, index) => {
-                        console.log(activeTab === 2 , selectedArticle , imageStatus === "loaded" , audioFilePath)
-                        return (
-                            <Inline>
-                            <Stack alignItems={"center"}>
-                                <Text weight={activeTab === index && "bold"}>{step}</Text>
-                                <Text weight={activeTab === index && "bold"}><Icon inline name={activeTab > index ? "checkmark-circle-filled" : ( activeTab === 2 && selectedArticle && imageStatus === "loaded" && audioFilePath ) ? "check-circle" : "circle"} size="m" /></Text>
-                            </Stack>
-                            </Inline>
-                        )
-                    })}
-                </Inline>
+            <Box alignText={"center"} alignItems="center" space={"s"} rSpace={["l","xl","xxl"]} lSpace={["l","xl","xxl"]}>
+                <progress className={"store-episode-progress__bar"} value={status} max="1" />
             </Box>
         </div>
     );

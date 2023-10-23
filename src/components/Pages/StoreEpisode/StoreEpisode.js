@@ -10,6 +10,8 @@ import ProgressIndicator from "./StoreEpisodeProgress";
 import StoreEpisodeProgressIndicator from "./StoreEpisodeProgress";
 import {StoreEpisodeAudio} from "./StoreEpisodeAudio"; // Import components from your design library
 
+import '../../../styles/StoreEpisode.css'
+
 const StoreEpisode = ({ onFormDataChange }) => {
     const {formData, setFormData} = useStoreEpisodeContext();
     const [activeTab, setActiveTab] = useState(0)

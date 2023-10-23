@@ -1,7 +1,25 @@
-div.store-episode-progress div[data-ds-id="Inline"] > div:not(:last-child)::before {
-    content: '';
-    flex: 1;
-    height: 2px;
-    backgroundColor: gray;
-    margin: 0 10px;
+
+.store-episode-progress__bar {
+    width: 80%;
+    height: 1rem;
+    appearance: none; /* remove default appearance */
+    background: #eee; /* Desired progress bar color */
+    border: 1px solid gray;
+    color: #0fa980; /* may not have an effect but worth adding */
+    border-radius: 1rem;
+}
+
+.store-episode-progress__bar::-webkit-progress-bar {
+    background: transparent; /* remove default background in chrome */
+    border-radius: 1rem;
+}
+
+.store-episode-progress__bar::-webkit-progress-value {
+    background: #0fa980;
+    border-radius: 1rem;
+}
+
+.store-episode-progress__bar::-moz-progress-bar {
+    background: #0fa980;
+    border-radius: 1rem;
 }
