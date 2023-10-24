@@ -7,6 +7,8 @@ export const ArticleSelect = ({disabled = false}) => {
     const {articles, setArticles} = useOpenAiContext();
     const {selectedArticle, setSelectedArticle} = useOpenAiContext();
 
+    console.log(selectedArticle)
+
     return(
         <Select
             label="Select Article"

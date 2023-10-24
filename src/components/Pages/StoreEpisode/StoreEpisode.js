@@ -8,6 +8,7 @@ import {useOpenAiContext} from "../../../context/OpenAiContext";
 import {useElevenLabsContext} from "../../../context/ElevenLabsContext";
 import ProgressIndicator from "./StoreEpisodeProgress";
 import StoreEpisodeProgressIndicator from "./StoreEpisodeProgress";
+import _StoreEpisodeProgressIndicator from "./_StoreEpisodeProgress";
 import {StoreEpisodeAudio} from "./StoreEpisodeAudio"; // Import components from your design library
 
 import '../../../styles/StoreEpisode.css'
