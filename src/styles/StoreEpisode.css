@@ -2,9 +2,9 @@
 .store-episode-progress__bar {
     width: 80%;
     height: 1rem;
-    appearance: none; /* remove default appearance */
-    background: #eee; /* Desired progress bar color */
-    border: 1px solid gray;
+    appearance: none;
+    background: rgb(255,255,255,0.2);
+    border: 0.3px solid gray;
     color: #0fa980; /* may not have an effect but worth adding */
     border-radius: 1rem;
 }

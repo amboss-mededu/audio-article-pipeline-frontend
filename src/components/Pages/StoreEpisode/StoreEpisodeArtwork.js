@@ -1,7 +1,8 @@
 import React, {useEffect, useRef, useState} from 'react';
 import { Button, LoadingSpinner } from '@amboss/design-system';
 import {useStoreEpisodeContext} from "../../../context/StoreEpisodeContext";
-import {useOpenAiContext} from "../../../context/OpenAiContext"; // Assuming your design system has these components
+import {useOpenAiContext} from "../../../context/OpenAiContext";
+import {isValidArticle} from "../../../helpers/utils"; // Assuming your design system has these components
 
 const StoreEpisodeArtwork = () => {
     const { imageStatus, setImageStatus,
@@ -16,21 +17,23 @@ const StoreEpisodeArtwork = () => {
     useEffect(() => {
         console.log(selectedArticle, imageXid)
 
-        if (selectedArticle !== imageXid) {
+        if (isValidArticle(selectedArticle) && (selectedArticle.xid !== imageXid)) {
             setImageStatus('initial');
         }
-    }, [selectedArticle])
+    }, [setImageStatus, imageXid, selectedArticle])
 
     useEffect(() => {
-        if ( imageStatus === "initial" && selectedArticle) {
-            fetchImageFromBackend(selectedArticle);
+        if ( imageStatus === "initial" && isValidArticle(selectedArticle)) {
+            fetchImageFromBackend(selectedArticle.xid);
         }
-    }, [selectedArticle, imageStatus])
+    }, [selectedArticle, imageStatus, fetchImageFromBackend])
 
     const fetchImageFromBackend = async () => {
         setImageStatus('loading');
 
-        const apiUrl = `${process.env.REACT_APP_API_URL}/api/episodes/artwork/random`
+        // const apiUrl = `${process.env.REACT_APP_API_URL}/api/episodes/artwork/random`
+        const apiUrl = `${process.env.REACT_APP_API_URL}/api/episodes/artwork/magic`
+
         try {
             // Fetch your image from the backend
             const response = await fetch(apiUrl);
@@ -45,7 +48,7 @@ const StoreEpisodeArtwork = () => {
             setImageSrc(url);
             setImageStatus('loaded');
             setImageReload(true)
-            setImageXid(selectedArticle)
+            isValidArticle(selectedArticle) && setImageXid(selectedArticle.xid)
         } catch (error) {
             console.error('Error fetching image:', error);
             setImageStatus('initial'); // Revert to the initial state in case of an error
@@ -85,7 +88,7 @@ const StoreEpisodeArtwork = () => {
                 )}
             </div>
             {(imageStatus === 'loaded' || imageReload) && (
-                    <Button type={"button"} variant={"secondary"} disabled={imageStatus === "loading" || !selectedArticle} onClick={fetchImageFromBackend} fullWidth={false}>
+                    <Button type={"button"} variant={"secondary"} disabled={imageStatus === "loading" || !isValidArticle(selectedArticle)} onClick={fetchImageFromBackend} fullWidth={false}>
                         Fetch Different Image
                     </Button>
             )}

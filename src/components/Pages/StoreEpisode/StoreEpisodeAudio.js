@@ -6,6 +6,7 @@ import StoreEpisodeArtwork from "./StoreEpisodeArtwork";
 import {ElevenLabsSubmit} from "../Playground/ElevenLabs/ElevenLabsSubmit";
 import {ProgressController} from "../../../context/ProgressController";
 import {useStoreEpisodeContext} from "../../../context/StoreEpisodeContext";
+import {isValidArticle} from "../../../helpers/utils";
 
 export const StoreEpisodeAudio = ({prevTab, nextTab}) => {
 
@@ -48,7 +49,7 @@ export const StoreEpisodeAudio = ({prevTab, nextTab}) => {
                     <Button
                         type={"button"}
                         variant={"primary"}
-                        disabled={ !audioFilePath || imageStatus !== "loaded" || !selectedArticle}
+                        disabled={ !audioFilePath || imageStatus !== "loaded" || !isValidArticle(selectedArticle)}
                     >
                         Store to Database
                     </Button>

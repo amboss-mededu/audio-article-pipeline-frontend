@@ -4,6 +4,7 @@ import {useStoreEpisodeContext} from "../../../context/StoreEpisodeContext";
 import {useOpenAiContext} from "../../../context/OpenAiContext";
 import StoreEpisode from "./StoreEpisode";
 import StoreEpisodeArtwork from "./StoreEpisodeArtwork";
+import {isValidArticle} from "../../../helpers/utils";
 
 export const StoreEpisodeMetadata = ({nextTab, handleInputChange}) => {
     const {formData, setFormData, imageStatus} = useStoreEpisodeContext();
@@ -55,8 +56,8 @@ export const StoreEpisodeMetadata = ({nextTab, handleInputChange}) => {
                     name="next-tab"
                     type={"button"}
                     size={"m"}
-                    disabled={!selectedArticle}
-                    variant={(selectedArticle && formData.stage && formData.description && formData.tags) ? "primary" : "secondary"}
+                    disabled={!isValidArticle(selectedArticle)}
+                    variant={(isValidArticle(selectedArticle) && formData.stage && formData.description && formData.tags) ? "primary" : "secondary"}
                     onClick={nextTab}
                     ariaAttributes={{
                         'aria-label': 'Next Tab'

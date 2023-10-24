@@ -6,6 +6,7 @@ import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import {useEffect, useState} from "react";
+import {isValidArticle} from "../../../helpers/utils";
 
 
 const StoreEpisodeProgressIndicator = ({ activeTab }) => {
@@ -16,9 +17,11 @@ const StoreEpisodeProgressIndicator = ({ activeTab }) => {
 
     const [status, setStatus] = useState(0)
 
+    console.log(isValidArticle(selectedArticle), selectedArticle)
+
     useEffect(() => {
         const percentage =
-            (selectedArticle ? 0.1 : 0) +
+            (isValidArticle(selectedArticle) ? 0.1 : 0) +
             (Number(activeTab) * 0.3) +
             (imageStatus === "loaded" ? 0.1 : 0) +
             (audioFilePath ? 0.1 : 0);
@@ -28,7 +31,10 @@ const StoreEpisodeProgressIndicator = ({ activeTab }) => {
     return (
         <div className={"store-episode-progress"}>
             <Box alignText={"center"} alignItems="center" space={"s"} rSpace={["l","xl","xxl"]} lSpace={["l","xl","xxl"]}>
-                <progress className={"store-episode-progress__bar"} value={status} max="1" />
+                <Stack space={"m"}>
+                    <progress className={"store-episode-progress__bar"} value={status} max="1" />
+                    <Text as={"p"} size={"m"} weight={"bold"} align={"center"}>{Math.floor(status * 100)}&nbsp;%</Text>
+                </Stack>
             </Box>
         </div>
     );

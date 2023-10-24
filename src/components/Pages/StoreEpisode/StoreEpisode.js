@@ -12,6 +12,7 @@ import _StoreEpisodeProgressIndicator from "./_StoreEpisodeProgress";
 import {StoreEpisodeAudio} from "./StoreEpisodeAudio"; // Import components from your design library
 
 import '../../../styles/StoreEpisode.css'
+import {isValidArticle} from "../../../helpers/utils";
 
 const StoreEpisode = ({ onFormDataChange }) => {
     const {formData, setFormData} = useStoreEpisodeContext();
@@ -24,7 +25,7 @@ const StoreEpisode = ({ onFormDataChange }) => {
         // Find the "Submit" button and set its opacity based on the formData conditions
         const submitButton = document.querySelector('button[value="submit"]');
         if (submitButton) {
-            if (elevenLabsInput && selectedArticle) {
+            if (elevenLabsInput && isValidArticle(selectedArticle)) {
                 submitButton.style.opacity = '1';
                 submitButton.style.cursor = 'pointer';
                 submitButton.ariaDisabled = false;
@@ -48,7 +49,7 @@ const StoreEpisode = ({ onFormDataChange }) => {
     };
 
     const switchTab = (i) => {
-        if (i === 2 && (!elevenLabsInput || !selectedArticle)) {
+        if (i === 2 && (!elevenLabsInput || !isValidArticle(selectedArticle))) {
             // Prevent moving to the last tab if conditions are not met
             return;
         }
@@ -89,7 +90,7 @@ const StoreEpisode = ({ onFormDataChange }) => {
                         <StoreEpisodeScript handleInputChange={handleInputChange} nextTab={nextTab} prevTab={prevTab} />
                     )}
 
-                    {(activeTab === 2 && selectedArticle && elevenLabsInput) && (
+                    {(activeTab === 2 && isValidArticle(selectedArticle) && elevenLabsInput) && (
                         <StoreEpisodeAudio nextTab={nextTab} prevTab={prevTab} />
                     )}
                 </Box>
