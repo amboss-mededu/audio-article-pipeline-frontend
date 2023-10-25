@@ -1,4 +1,9 @@
 
+.store-episode__main-box {
+    max-width: 960px;
+    margin: 0 auto;
+}
+
 .store-episode-progress__bar {
     width: 80%;
     height: 1rem;

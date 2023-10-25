@@ -69,32 +69,34 @@ const StoreEpisode = ({ onFormDataChange }) => {
             {/*<StoreEpisodeProgressIndicator activeTab={activeTab} />*/}
             <Stepper activeTab={activeTab} />
 
-            <Box space={"s"} lSpace={"zero"} rSpace={"zero"}>
-                {/* Shared Fields */}
-                <Columns alwaysFillSpace={false}>
-                    <Column alignSelf={"start"} size={["12","8","4"]}>
-                        <ArticleSelect disabled={activeTab} />
+            <div className={"store-episode__main-box"}>
+                <Box space={"s"} lSpace={"zero"} rSpace={"zero"}>
+                    {/* Shared Fields */}
+                    <Columns alwaysFillSpace={false}>
+                        <Column alignSelf={"start"} size={["12","12","12"]}>
+                            <ArticleSelect disabled={activeTab} />
 
-                        <br />
-                        <Divider />
-                    </Column>
-                </Columns>
+                            <br />
+                            <Divider />
+                        </Column>
+                    </Columns>
 
 
-                <Box space={"m"} lSpace={"zero"} rSpace={"zero"}>
-                    {activeTab === 0 && (
-                        <StoreEpisodeMetadata handleInputChange={handleInputChange} nextTab={nextTab} />
-                    )}
+                    <Box space={"m"} lSpace={"zero"} rSpace={"zero"}>
+                        {activeTab === 0 && (
+                            <StoreEpisodeMetadata handleInputChange={handleInputChange} nextTab={nextTab} />
+                        )}
 
-                    {activeTab === 1 && (
-                        <StoreEpisodeScript handleInputChange={handleInputChange} nextTab={nextTab} prevTab={prevTab} />
-                    )}
+                        {activeTab === 1 && (
+                            <StoreEpisodeScript handleInputChange={handleInputChange} nextTab={nextTab} prevTab={prevTab} />
+                        )}
 
-                    {(activeTab === 2 && isValidArticle(selectedArticle) && elevenLabsInput) && (
-                        <StoreEpisodeAudio nextTab={nextTab} prevTab={prevTab} />
-                    )}
+                        {(activeTab === 2 && isValidArticle(selectedArticle) && elevenLabsInput) && (
+                            <StoreEpisodeAudio nextTab={nextTab} prevTab={prevTab} />
+                        )}
+                    </Box>
                 </Box>
-            </Box>
+            </div>
         </Box>
     );
 }

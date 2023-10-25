@@ -24,24 +24,24 @@ export const StoreEpisodeMetadata = ({nextTab, handleInputChange}) => {
         <>
             <FormFieldGroup>
                 <Columns gap={"xl"} vAlignItems={["bottom", "center"]}>
-                    <Column size={[12, 6, 4]}>
-                    <Select
-                        name="stage"
-                        value={formData.stage}
-                        onChange={handleInputChange}
-                        placeholder="Select stage"
-                        options={stageOptions}
-                        label="Stage" hint="Select either Student or Physician"
-                    />
+                    <Column size={[12, 6, 6]}>
+                        <Select
+                            name="stage"
+                            value={formData.stage}
+                            onChange={handleInputChange}
+                            placeholder="Select stage"
+                            options={stageOptions}
+                            label="Stage" hint="Select either Student or Physician"
+                        />
                     </Column>
-                    <Column size={[12, 6, 4]}>
-                    <Input
-                        name="tags"
-                        value={formData.tags}
-                        onChange={handleInputChange}
-                        placeholder="Tags, separated, by comma"
-                        label="Tags" hint="Add tags related to the content"
-                    />
+                    <Column size={[12, 6, 6]}>
+                        <Input
+                            name="tags"
+                            value={formData.tags}
+                            onChange={handleInputChange}
+                            placeholder="Tags, separated, by comma"
+                            label="Tags" hint="Add tags related to the content"
+                        />
                     </Column>
                 </Columns>
                 <Textarea

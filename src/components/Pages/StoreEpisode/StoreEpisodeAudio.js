@@ -34,7 +34,7 @@ export const StoreEpisodeAudio = ({prevTab, nextTab}) => {
                         </Stack>
                     )}
 
-                    {elevenLabsError && <div>{elevenLabsError}</div>}
+                    {elevenLabsError && <Text>{elevenLabsError}</Text>}
 
                     {audioFilePath && (
                         <Box alignText={"center"}>
