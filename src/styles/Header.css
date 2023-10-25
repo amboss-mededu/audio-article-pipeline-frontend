@@ -50,8 +50,11 @@ h2[data-ds-id="TextClamped"] > span {
     max-height: 28px;
 }
 
-@media (max-width: var(--breakpoint-md)) {
-    div.header__navigation div[data-ds-id="Tabs"] button div[data-ds-id="Icon"] {
-        padding: 0 10px; /* Set whitespace around SVG */
+@media (max-width: 560px) {
+    div.header__navigation.expandedNavMenu div[data-ds-id="Tabs12334"] button {
+        padding-left: 10px;
+        padding-right: 10px;
     }
+
+
 }

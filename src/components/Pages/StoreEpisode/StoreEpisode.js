@@ -1,18 +1,17 @@
 import React, {useEffect, useState} from 'react';
-import {Box, Divider, Select, Input, Text, Tabs, Column, Columns} from '@amboss/design-system';
+import {Box, Divider, Column, Columns} from '@amboss/design-system';
 import {ArticleSelect} from "../../Commons/ArticleSelect";
 import {useStoreEpisodeContext} from "../../../context/StoreEpisodeContext";
 import {StoreEpisodeMetadata} from "./StoreEpisodeMetadata";
 import { StoreEpisodeScript} from "./StoreEpisodeScript";
 import {useOpenAiContext} from "../../../context/OpenAiContext";
 import {useElevenLabsContext} from "../../../context/ElevenLabsContext";
-import ProgressIndicator from "./StoreEpisodeProgress";
 import StoreEpisodeProgressIndicator from "./StoreEpisodeProgress";
-import _StoreEpisodeProgressIndicator from "./_StoreEpisodeProgress";
 import {StoreEpisodeAudio} from "./StoreEpisodeAudio"; // Import components from your design library
 
 import '../../../styles/StoreEpisode.css'
 import {isValidArticle} from "../../../helpers/utils";
+import Stepper from "../../Commons/Stepper";
 
 const StoreEpisode = ({ onFormDataChange }) => {
     const {formData, setFormData} = useStoreEpisodeContext();
@@ -67,7 +66,8 @@ const StoreEpisode = ({ onFormDataChange }) => {
 
     return (
         <Box space={"zero"} lSpace={"m"} rSpace={"m"}>
-            <StoreEpisodeProgressIndicator activeTab={activeTab} />
+            {/*<StoreEpisodeProgressIndicator activeTab={activeTab} />*/}
+            <Stepper activeTab={activeTab} />
 
             <Box space={"s"} lSpace={"zero"} rSpace={"zero"}>
                 {/* Shared Fields */}

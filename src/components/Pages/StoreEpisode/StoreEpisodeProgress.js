@@ -17,7 +17,6 @@ const StoreEpisodeProgressIndicator = ({ activeTab }) => {
 
     const [status, setStatus] = useState(0)
 
-    console.log(isValidArticle(selectedArticle), selectedArticle)
 
     useEffect(() => {
         const percentage =
@@ -33,7 +32,7 @@ const StoreEpisodeProgressIndicator = ({ activeTab }) => {
             <Box alignText={"center"} alignItems="center" space={"s"} rSpace={["l","xl","xxl"]} lSpace={["l","xl","xxl"]}>
                 <Stack space={"m"}>
                     <progress className={"store-episode-progress__bar"} value={status} max="1" />
-                    <Text as={"p"} size={"m"} weight={"bold"} align={"center"}>{Math.floor(status * 100)}&nbsp;%</Text>
+                    <Text as={"p"} size={"m"} weight={"bold"} align={"center"}>{Math.round(status * 100)}&nbsp;%</Text>
                 </Stack>
             </Box>
         </div>

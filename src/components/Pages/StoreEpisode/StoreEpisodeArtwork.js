@@ -14,25 +14,11 @@ const StoreEpisodeArtwork = () => {
 
     const prevSelectedArticleRef = useRef();
 
-    useEffect(() => {
-        console.log(selectedArticle, imageXid)
-
-        if (isValidArticle(selectedArticle) && (selectedArticle.xid !== imageXid)) {
-            setImageStatus('initial');
-        }
-    }, [setImageStatus, imageXid, selectedArticle])
-
-    useEffect(() => {
-        if ( imageStatus === "initial" && isValidArticle(selectedArticle)) {
-            fetchImageFromBackend(selectedArticle.xid);
-        }
-    }, [selectedArticle, imageStatus, fetchImageFromBackend])
-
     const fetchImageFromBackend = async () => {
         setImageStatus('loading');
 
-        // const apiUrl = `${process.env.REACT_APP_API_URL}/api/episodes/artwork/random`
-        const apiUrl = `${process.env.REACT_APP_API_URL}/api/episodes/artwork/magic`
+        const apiUrl = `${process.env.REACT_APP_API_URL}/api/episodes/artwork/random`
+        // const apiUrl = `${process.env.REACT_APP_API_URL}/api/episodes/artwork/magic`
 
         try {
             // Fetch your image from the backend
@@ -55,6 +41,18 @@ const StoreEpisodeArtwork = () => {
         }
     };
 
+
+    useEffect(() => {
+        if (isValidArticle(selectedArticle) && (selectedArticle.xid !== imageXid)) {
+            setImageStatus('initial');
+        }
+    }, [setImageStatus, imageXid, selectedArticle])
+
+    useEffect(() => {
+        if ( imageStatus === "initial" && isValidArticle(selectedArticle)) {
+            fetchImageFromBackend(selectedArticle.xid);
+        }
+    }, [selectedArticle, imageStatus, fetchImageFromBackend])
 
     const contentDivStyle = {
         display: 'grid',
