@@ -4,6 +4,7 @@ import {ElevenLabsInput} from "../Playground/ElevenLabs/ElevenLabsInput";
 import {Button, FormFieldGroup, Inline} from "@amboss/design-system";
 import {useOpenAiContext} from "../../../context/OpenAiContext";
 import {useElevenLabsContext} from "../../../context/ElevenLabsContext";
+import {isValidArticle} from "../../../helpers/utils";
 
 export const StoreEpisodeScript = ({nextTab, prevTab}) => {
 
@@ -31,7 +32,7 @@ export const StoreEpisodeScript = ({nextTab, prevTab}) => {
                     name="next-tab"
                     type={"button"}
                     size={"m"}
-                    disabled={!elevenLabsInput || !selectedArticle}
+                    disabled={!elevenLabsInput || !isValidArticle(selectedArticle)}
                     variant={"primary"}
                     onClick={nextTab}
                     ariaAttributes={{

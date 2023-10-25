@@ -2,6 +2,7 @@ import {Button, Inline} from "@amboss/design-system";
 import React from "react";
 import {useOpenAiContext} from "../../../../context/OpenAiContext";
 import {usePlaygroundContext} from "../../../../context/PlaygroundContext";
+import {isValidArticle} from "../../../../helpers/utils";
 
 export const OpenAiButtons = ({stream}) => {
 
@@ -29,7 +30,7 @@ export const OpenAiButtons = ({stream}) => {
                         <Button
                             onClick={(e) => {
                                 setStep(2);
-                                handleOpenAiSubmit(e, openAiInputType === 'xid' ? selectedArticle : openAiInput, openAiInputType, model, stream)
+                                handleOpenAiSubmit(e, (openAiInputType === 'xid' && isValidArticle(selectedArticle) ) ? selectedArticle.xid : openAiInput, openAiInputType, model, stream)
                             }}
                             variant="primary"
                             loading={openAiLoading}

@@ -1,5 +1,6 @@
 import React, {createContext, useState, useContext, useEffect} from 'react';
 import {useOpenAiContext} from "./OpenAiContext";
+import {isValidArticle} from "../helpers/utils";
 
 // Create the context
 const PlaygroundContext = createContext();
@@ -17,10 +18,10 @@ const PlaygroundProvider = ({ children }) => {
     useEffect(() => {
         console.log(step)
         if (step >= 2) return ;
-        else if ( (openAiInputType === "text" && !openAiInput.length) || (openAiInputType === "xid" && !selectedArticle)) {
+        else if ( (openAiInputType === "text" && !openAiInput.length) || (openAiInputType === "xid" && !isValidArticle(selectedArticle))) {
             setStep(0)
         }
-        else if ((openAiInputType === "text" && openAiInput.length > 0) || (openAiInputType === "xid" && selectedArticle)) {
+        else if ((openAiInputType === "text" && openAiInput.length > 0) || (openAiInputType === "xid" && isValidArticle(selectedArticle))) {
             setStep(1)
         }
     }, [step, setStep, openAiInputType, openAiInput, selectedArticle])

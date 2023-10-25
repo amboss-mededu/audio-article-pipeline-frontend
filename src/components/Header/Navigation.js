@@ -2,6 +2,8 @@ import React, {useEffect, useRef, useState} from 'react';
 import {Tabs, Container, Stack, PictogramButton, Inline} from "@amboss/design-system";
 import { useAppContext } from '../../context/AppContext';
 import {BREAKPOINTS} from "../../helpers/constants";
+import '../../styles/Header.css';
+
 
 const HeaderNavigation = ({windowWidth, showTabs, setShowTabs}) => {
     const { activeTab, setActiveTab } = useAppContext();
@@ -62,6 +64,7 @@ const HeaderNavigation = ({windowWidth, showTabs, setShowTabs}) => {
                     {
                         showTabs ?
                             <Tabs
+                                horizontalPadding={["xxl","xl","xxl"]}
                                 className={"nav-bar__tabs"}
                                 activeTab={activeTab}
                                 onTabSelect={handleTabChange}

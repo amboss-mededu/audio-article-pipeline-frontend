@@ -1,0 +1,31 @@
+// @import '@amboss/design-system/build/scss/theming';
+// @import '@amboss/design-system/build/scss/variables';
+@import '@amboss/design-system/build/scss/themes';
+
+@include theming(); // for default theming
+
+
+.store-episode-progress__bar {
+  width: 80%;
+  height: 1rem;
+  appearance: none;
+  background: var(--color-background-light); // Change this according to the desired variable for light theme
+  border: 1px solid gray;
+  color: var(--color-text-primary-default);
+  border-radius: 1rem;
+
+  &::-webkit-progress-bar {
+    background: transparent;
+    border-radius: 1rem;
+  }
+
+  &::-webkit-progress-value {
+    background: var(--color-text-primary-default);
+    border-radius: 1rem;
+  }
+
+  &::-moz-progress-bar {
+    background: var(--color-text-primary-default);
+    border-radius: 1rem;
+  }
+}

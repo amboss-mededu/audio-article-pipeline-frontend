@@ -6,31 +6,13 @@ import StoreEpisodeArtwork from "./StoreEpisodeArtwork";
 import {ElevenLabsSubmit} from "../Playground/ElevenLabs/ElevenLabsSubmit";
 import {ProgressController} from "../../../context/ProgressController";
 import {useStoreEpisodeContext} from "../../../context/StoreEpisodeContext";
+import {isValidArticle} from "../../../helpers/utils";
 
 export const StoreEpisodeAudio = ({prevTab, nextTab}) => {
 
     const { selectedArticle, openAiCallId } = useOpenAiContext();
     const { elevenLabsInput, audioFilePath, elevenLabsLoading, elevenLabsError, handleElevenLabsSubmit } = useElevenLabsContext();
     const { imageStatus } = useStoreEpisodeContext();
-
-    const CustomButtonGroup = () => {
-        return (
-            <FormFieldGroup><Inline>
-                <Button
-                    name="previous-tab"
-                    type={"button"}
-                    size={"m"}
-                    variant={"secondary"}
-                    onClick={prevTab}
-                    ariaAttributes={{
-                        'aria-label': 'Previous Tab'
-                    }}
-                >
-                    Back
-                </Button>
-            </Inline></FormFieldGroup>
-        )
-    }
 
     useEffect(() => {
         handleElevenLabsSubmit(null, elevenLabsInput, openAiCallId)
@@ -39,7 +21,6 @@ export const StoreEpisodeAudio = ({prevTab, nextTab}) => {
     return (
         <Box>
             <Stack alignItems={"center"} space={"xl"}>
-                <CustomButtonGroup />
                 <StoreEpisodeArtwork />
                 {/* <ElevenLabsSubmit /> */}
 
@@ -64,13 +45,27 @@ export const StoreEpisodeAudio = ({prevTab, nextTab}) => {
                         </Box>
                     )}
                 </div>
-                <Button
-                    type={"button"}
-                    variant={"primary"}
-                    disabled={ !audioFilePath || imageStatus !== "loaded" || !selectedArticle}
-                >
-                    Store to Database
-                </Button>
+                <Inline alignItems={"center"} space={"m"}>
+                    <Button
+                        type={"button"}
+                        variant={"primary"}
+                        disabled={ !audioFilePath || imageStatus !== "loaded" || !isValidArticle(selectedArticle)}
+                    >
+                        Store to Database
+                    </Button>
+                    <Button
+                        name="previous-tab"
+                        type={"button"}
+                        size={"m"}
+                        variant={"secondary"}
+                        onClick={prevTab}
+                        ariaAttributes={{
+                            'aria-label': 'Previous Tab'
+                        }}
+                    >
+                        Back
+                    </Button>
+                </Inline>
 
             </Stack>
         </Box>
