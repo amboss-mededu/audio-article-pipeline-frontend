@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import '../../styles/Stepper.css';
-import {Text, Icon} from "@amboss/design-system";
+import {Text, Icon, Container} from "@amboss/design-system";
 import {isValidArticle} from "../../helpers/utils";
 import {useOpenAiContext} from "../../context/OpenAiContext";
 import {useElevenLabsContext} from "../../context/ElevenLabsContext";
@@ -54,20 +54,24 @@ const Stepper = ({activeTab}) => {
     };
 
     return (
-        <div className="progress-container">
-            {Array.from({ length: 3 }).map((_, i) => {
-                const isCompleted = i < activeTab;
-                const isCurrent = i === activeTab;
-                const isCheckCondition = isCompleted || (isCurrent && i === 2 && audioFilePath && imageStatus === "loaded" && isValidArticle(selectedArticle));
+        <div style={{ position: "sticky", top: "82px", zIndex: 5 }}>
+            <Container borderRadius={"zero"} elevation={0}>
+            <div className="progress-container">
+                {Array.from({ length: 3 }).map((_, i) => {
+                    const isCompleted = i < activeTab;
+                    const isCurrent = i === activeTab;
+                    const isCheckCondition = isCompleted || (isCurrent && i === 2 && audioFilePath && imageStatus === "loaded" && isValidArticle(selectedArticle));
 
-                return (
-                    <div key={i} className={`step${isCompleted ? ' completed' : ''}${isCurrent ? ' current' : ''}`}>
-                        <Text weight="bold" size="m" as="span" className="step-number">
-                            {isCompleted ? <CustomIcon i={i} /> : i + 1}
-                        </Text>
-                    </div>
-                );
-            })}
+                    return (
+                        <div key={i} className={`step${isCompleted ? ' completed' : ''}${isCurrent ? ' current' : ''}`}>
+                            <Text weight="bold" size="m" as="span" className="step-number">
+                                {isCompleted ? <CustomIcon i={i} /> : i + 1}
+                            </Text>
+                        </div>
+                    );
+                })}
+            </div>
+            </Container>
         </div>
     );
 };
