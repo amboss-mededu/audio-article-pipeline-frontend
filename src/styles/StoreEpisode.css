@@ -28,3 +28,38 @@
     background: #0fa980;
     border-radius: 1rem;
 }
+
+.article-selector__readonly-form > div[data-ds-id="FormFieldGroup"] > div[data-ds-id="Stack"] > div {
+    margin-top: unset;
+}
+
+.article-selector__readonly-form > div[data-ds-id="FormFieldGroup"] > div[data-ds-id="Stack"] > div:last-child {
+    margin-top: 8px;
+}
+
+.store-episode__article {
+    position: relative;
+}
+
+.store-episode__article textarea {
+    padding-bottom: 5rem;
+}
+
+.store-episode__article-button {
+    position: absolute;
+    bottom: 0;
+    z-index: 10;
+    left: 50%;
+    transform: translate(-50%, -1px);
+    max-width: 250px;
+    padding: 0.5rem 0.5rem 1rem 0.5rem;
+    border-radius: 10px;
+}
+
+.store-episode__article-button--light {
+background: #ffffff;
+}
+
+.store-episode__article-button--dark {
+background: #24282d;
+}

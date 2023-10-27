@@ -1,24 +1,36 @@
 import React, {useEffect, useState} from 'react';
-import {Box, Divider, Column, Columns} from '@amboss/design-system';
-import {ArticleSelect} from "../../Commons/ArticleSelect";
+import {
+    Box
+} from '@amboss/design-system';
 import {useStoreEpisodeContext} from "../../../context/StoreEpisodeContext";
 import {StoreEpisodeMetadata} from "./StoreEpisodeMetadata";
 import { StoreEpisodeScript} from "./StoreEpisodeScript";
 import {useOpenAiContext} from "../../../context/OpenAiContext";
 import {useElevenLabsContext} from "../../../context/ElevenLabsContext";
-import StoreEpisodeProgressIndicator from "./StoreEpisodeProgress";
 import {StoreEpisodeAudio} from "./StoreEpisodeAudio"; // Import components from your design library
 
 import '../../../styles/StoreEpisode.css'
 import {isValidArticle} from "../../../helpers/utils";
 import Stepper from "../../Commons/Stepper";
+import {StoreEpisodeArticleSelect} from "./StoreEpisodeArticleSelect";
 
 const StoreEpisode = ({ onFormDataChange }) => {
-    const {formData, setFormData} = useStoreEpisodeContext();
-    const [activeTab, setActiveTab] = useState(0)
-
+    const { formData, setFormData } = useStoreEpisodeContext();
     const { selectedArticle } = useOpenAiContext();
     const { elevenLabsInput } = useElevenLabsContext();
+
+    const [activeTab, setActiveTab] = useState(0)
+
+    const stageOptions = [
+        {
+            label: "Physician",
+            value: "physician"
+        },
+        {
+            label: "Student",
+            value: "student"
+        }
+    ];
 
     useEffect(() => {
         // Find the "Submit" button and set its opacity based on the formData conditions
@@ -70,21 +82,14 @@ const StoreEpisode = ({ onFormDataChange }) => {
             <Stepper activeTab={activeTab} />
 
             <div className={"store-episode__main-box"}>
-                <Box space={"s"} lSpace={"zero"} rSpace={"zero"}>
+                <Box space={"s"} bSpace={"l"} lSpace={"zero"} rSpace={"zero"}>
                     {/* Shared Fields */}
-                    <Columns alwaysFillSpace={false}>
-                        <Column alignSelf={"start"} size={["12","12","12"]}>
-                            <ArticleSelect disabled={activeTab} />
-
-                            <br />
-                            <Divider />
-                        </Column>
-                    </Columns>
+                    <StoreEpisodeArticleSelect activeTab={activeTab} setActiveTab={setActiveTab} />
 
 
-                    <Box space={"m"} lSpace={"zero"} rSpace={"zero"}>
+                    <Box space={"m"} tSpace={"l"} lSpace={"zero"} rSpace={"zero"}>
                         {activeTab === 0 && (
-                            <StoreEpisodeMetadata handleInputChange={handleInputChange} nextTab={nextTab} />
+                            <StoreEpisodeMetadata handleInputChange={handleInputChange} nextTab={nextTab} stageOptions={stageOptions} />
                         )}
 
                         {activeTab === 1 && (

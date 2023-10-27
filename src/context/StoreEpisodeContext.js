@@ -30,9 +30,7 @@ const StoreEpisodeProvider = ({ children }) => {
     useEffect(() => {
         if (!selectedArticle) return ;
         setFormData(prevState => ({...prevState, title: selectedArticle.title, xid: selectedArticle.xid}))
-        console.log("Setting: ", selectedArticle);
-        console.log("Form: ", formData);
-    }, [selectedArticle, setFormData])
+    }, [selectedArticle])
 
     return (
         <StoreEpisodeContext.Provider

@@ -18,7 +18,7 @@ const useOpenAi = ({promptId}) => {
         }
     };
 
-    const handleSubmit = async (e, openAiInput, openAiInputType, model, stream) => {
+    const handleSubmit = async ({e, openAiInput, openAiInputType, model, stream}) => {
         e.preventDefault();
         setElevenLabsInput(" ");
         setLoading(true);

@@ -6,6 +6,8 @@ const AppContext = createContext();
 const AppProvider = ({ children }) => {
     // Deployed:
     const [activeTab, setActiveTab] = useState(0); // default to the first tab
+    const [isDarkMode, setIsDarkMode] = useState(false);
+
 
     // Not yet reviewed
     const [resultScript, setResultScript] = useState(null);
@@ -20,6 +22,7 @@ const AppProvider = ({ children }) => {
         <AppContext.Provider
             value={{
                 activeTab, setActiveTab,
+                isDarkMode, setIsDarkMode,
 
                 // not deployed (yet)
                 resultScript, setResultScript,

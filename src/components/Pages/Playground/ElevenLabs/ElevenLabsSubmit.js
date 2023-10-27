@@ -28,7 +28,7 @@ export const ElevenLabsSubmit = () => {
                         disabled={elevenLabsLoading}
                         leftIcon={"zap"}
                     >
-                        {`Sonorous`}
+                        {`Listen To ElevenLabs`}
                     </Button>
                 )
             }

@@ -85,9 +85,6 @@ export const StoreEpisodeAudio = ({prevTab, nextTab}) => {
                     {fullTTSLoading && (
                         <Stack>
                             <LoadingSpinner screenReaderText="Loading" />
-                            <Box>
-                                <ProgressController />
-                            </Box>
                         </Stack>
                     )}
 

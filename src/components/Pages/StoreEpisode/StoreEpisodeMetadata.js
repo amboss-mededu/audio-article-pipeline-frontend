@@ -2,23 +2,11 @@ import {Button, Column, Columns, FormFieldGroup, Inline, Input, Select, Textarea
 import React from "react";
 import {useStoreEpisodeContext} from "../../../context/StoreEpisodeContext";
 import {useOpenAiContext} from "../../../context/OpenAiContext";
-import StoreEpisode from "./StoreEpisode";
-import StoreEpisodeArtwork from "./StoreEpisodeArtwork";
 import {isValidArticle} from "../../../helpers/utils";
 
-export const StoreEpisodeMetadata = ({nextTab, handleInputChange}) => {
+export const StoreEpisodeMetadata = ({nextTab, handleInputChange, stageOptions}) => {
     const {formData, setFormData, imageStatus} = useStoreEpisodeContext();
     const { selectedArticle } = useOpenAiContext();
-    const stageOptions = [
-        {
-            label: "Physician",
-            value: "physician"
-        },
-        {
-            label: "Student",
-            value: "student"
-        }
-    ];
 
     return (
         <>
@@ -39,6 +27,7 @@ export const StoreEpisodeMetadata = ({nextTab, handleInputChange}) => {
                             name="tags"
                             value={formData.tags}
                             onChange={handleInputChange}
+                            hasError={selectedArticle && selectedArticle.xid && !formData.tags}
                             placeholder="Tags, separated, by comma"
                             label="Tags" hint="Add tags related to the content"
                         />
@@ -50,6 +39,7 @@ export const StoreEpisodeMetadata = ({nextTab, handleInputChange}) => {
                     onChange={handleInputChange}
                     placeholder="Description"
                     rows={4}
+                    hasError={selectedArticle && selectedArticle.xid && !formData.description}
                     label="Description" hint="Provide a brief description"
                 />
                 <Button

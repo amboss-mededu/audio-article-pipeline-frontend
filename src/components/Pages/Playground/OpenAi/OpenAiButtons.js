@@ -30,14 +30,18 @@ export const OpenAiButtons = ({stream}) => {
                         <Button
                             onClick={(e) => {
                                 setStep(2);
-                                handleOpenAiSubmit(e, (openAiInputType === 'xid' && isValidArticle(selectedArticle) ) ? selectedArticle.xid : openAiInput, openAiInputType, model, stream)
+                                handleOpenAiSubmit({
+                                    e,
+                                    openAiInput: (openAiInputType === 'xid' && isValidArticle(selectedArticle) ) ? selectedArticle.xid : openAiInput,
+                                    openAiInputType, model, stream
+                                })
                             }}
                             variant="primary"
                             loading={openAiLoading}
                             disabled={buttonIsDisabled()}
                             leftIcon={"zap"}
                         >
-                            Accio Script
+                            Generate Script w/ GPT
                         </Button>
                     )
                 }

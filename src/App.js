@@ -11,8 +11,7 @@ import {StoreEpisodeProvider} from "./context/StoreEpisodeContext";
 import StoreEpisode from "./components/Pages/StoreEpisode/StoreEpisode";
 
 function App() {
-    const { activeTab } = useAppContext();
-    const [isNightTime, setNightTime] = useState(false)
+    const { activeTab, isDarkMode, setIsDarkMode } = useAppContext();
     const divRef = useRef(null);
     const boxRef = useRef(null);
     const [maxHeight, setMaxHeight] = useState('100vh');
@@ -42,14 +41,27 @@ function App() {
         };
     }, []);
 
-
     useEffect(() => {
-        const currentTime = new Date().getHours();
-        setNightTime(currentTime >= 19 || currentTime <= 6);
+        // Initial setting
+        const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        setIsDarkMode(prefersDarkMode);
+
+        // Listener to update the preference
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+        const handleChange = () => {
+            setIsDarkMode(mediaQuery.matches);
+        };
+
+        mediaQuery.addEventListener('change', handleChange);
+
+        // Cleanup
+        return () => {
+            mediaQuery.removeEventListener('change', handleChange);
+        };
     }, []);
 
     return (
-        <ThemeProvider theme={isNightTime ? dark : light}>
+        <ThemeProvider theme={isDarkMode ? dark : light}>
             <Container borderRadius={0}>
                 <div ref={divRef} style={{ height: maxHeight, borderRadius: 0 }}>
                     <ElevenLabsProvider>
