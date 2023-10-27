@@ -1,9 +1,7 @@
-// hooks/useElevenLabsSubmission.js
-import {useRef, useState} from 'react';
-import axios from 'axios';
+import {useRef, useState} from "react";
 import {Text} from "@amboss/design-system";
 
-const useElevenLabs = () => {
+const useFullTTS = () => {
     const [loading, setLoading] = useState(false);
     const [audioFilePath, setAudioFilePath] = useState(null);
     const [error, setError] = useState(null);
@@ -17,7 +15,7 @@ const useElevenLabs = () => {
     };
 
     const handleSubmit = async (e, elevenLabsInput, openAiCallId) => {
-        if(e) e.preventDefault();
+        if (e) e.preventDefault();
         setLoading(true);
         setError(null);
         setAudioFilePath(null)
@@ -28,13 +26,16 @@ const useElevenLabs = () => {
         // element.scrollIntoView({ behavior: 'smooth' });
         window.scrollTo(0, document.body.scrollHeight);
 
+        const apiUrl = `${process.env.REACT_APP_API_URL}/api/fulltts/request/${ true ? "audioOnly" : "full" }`;
 
         try {
-            const apiUrl = `${process.env.REACT_APP_API_URL}/api/elevenlabs/request`;
-
             const body = {
-                text: elevenLabsInput, // Passing the previously obtained result
-                openAiCallId: openAiCallId
+                promptId,
+                xid,
+                title,
+                userMessage,
+                tags,
+                description,
             }
 
             const response = await fetch(apiUrl, {
@@ -77,6 +78,7 @@ const useElevenLabs = () => {
         handleSubmit,
         handleAbort
     };
-};
+}
 
-export default useElevenLabs
+export default useFullTTS;
+

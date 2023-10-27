@@ -26,6 +26,10 @@ const useOpenAi = ({promptId}) => {
 
         abortControllerRef.current = new AbortController();
 
+        const element = document.getElementsByClassName('elevenLabsWrapper')[0];
+        // element.scrollIntoView({ behavior: 'smooth' });
+        window.scrollTo(0, document.body.scrollHeight);
+
         const apiUrl = process.env.NODE_ENV === '_development'
             ? 'https://automaticunitedmotion.domkoeln.repl.co/openai'
             : `${process.env.REACT_APP_API_URL}/api/openai/request?inputType=${openAiInputType}&stream=${stream}`;
@@ -34,6 +38,12 @@ const useOpenAi = ({promptId}) => {
 
             if(stream) {
 
+                const body = {
+                    promptId,
+                    userMessage: openAiInput,
+                    model
+                }
+
                 const response = await fetch(apiUrl, {
                     method: 'POST',
                     headers: {
@@ -41,11 +51,7 @@ const useOpenAi = ({promptId}) => {
                         'Accept': 'text/event-stream'
                     },
                     signal: abortControllerRef.current.signal,
-                    body: JSON.stringify({
-                        promptId,
-                        userMessage: openAiInput,
-                        model
-                    })
+                    body: JSON.stringify(body)
                 });
 
                 const result = [] // Store streamed data here
