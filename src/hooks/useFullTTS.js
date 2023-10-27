@@ -1,10 +1,19 @@
 import {useRef, useState} from "react";
 import {Text} from "@amboss/design-system";
+import {useOpenAiContext} from "../context/OpenAiContext";
+import {useStoreEpisodeContext} from "../context/StoreEpisodeContext";
+import {useElevenLabsContext} from "../context/ElevenLabsContext";
 
 const useFullTTS = () => {
     const [loading, setLoading] = useState(false);
-    const [audioFilePath, setAudioFilePath] = useState(null);
     const [error, setError] = useState(null);
+
+    const { selectedArticle, promptId } = useOpenAiContext();
+    const { formData, imgSrc } = useStoreEpisodeContext()
+    const { elevenLabsInput } = useElevenLabsContext();
+
+    const [result, setResult] = useState()
+
 
     const abortControllerRef = useRef(null);
 
@@ -14,11 +23,10 @@ const useFullTTS = () => {
         }
     };
 
-    const handleSubmit = async (e, elevenLabsInput, openAiCallId) => {
+    const handleSubmit = async (e) => {
         if (e) e.preventDefault();
         setLoading(true);
         setError(null);
-        setAudioFilePath(null)
 
         abortControllerRef.current = new AbortController();
 
@@ -30,12 +38,13 @@ const useFullTTS = () => {
 
         try {
             const body = {
+                artwork: imgSrc,
+                description: formData.description,
                 promptId,
-                xid,
-                title,
-                userMessage,
-                tags,
-                description,
+                tags: formData.tags,
+                title: formData.title,
+                userMessage: elevenLabsInput,
+                xid: formData.xid,
             }
 
             const response = await fetch(apiUrl, {
@@ -50,7 +59,7 @@ const useFullTTS = () => {
             if (response.ok) {  // check if the response status is OK (status code 200-299)
                 const result = await response.json();  // parses the response body as JSON
                 console.log(result);
-                setAudioFilePath(result.audioFile.location);
+                setResult(result)
             } else {
                 // handle non-OK responses
                 throw new Error('Network response was not ok.');
@@ -73,10 +82,10 @@ const useFullTTS = () => {
 
     return {
         loading,
-        audioFilePath,
         error,
+        result,
         handleSubmit,
-        handleAbort
+        handleAbort,
     };
 }
 

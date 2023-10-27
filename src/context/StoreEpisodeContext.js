@@ -1,4 +1,5 @@
-import {createContext, useContext, useState} from "react";
+import {createContext, useContext, useEffect, useState} from "react";
+import {useOpenAiContext} from "./OpenAiContext";
 
 const StoreEpisodeContext = createContext();
 
@@ -8,6 +9,8 @@ const StoreEpisodeProvider = ({ children }) => {
     const [imageReload, setImageReload] = useState(false)
     const [imageSrc, setImageSrc] = useState('');
     const [imageXid, setImageXid] = useState(null)
+
+    const {selectedArticle, setSelectedArticle} = useOpenAiContext();
 
     const [formData, setFormData] = useState({
         gcsUrl: "",
@@ -23,6 +26,13 @@ const StoreEpisodeProvider = ({ children }) => {
             tone: []
         }
     });
+
+    useEffect(() => {
+        if (!selectedArticle) return ;
+        setFormData(prevState => ({...prevState, title: selectedArticle.title, xid: selectedArticle.xid}))
+        console.log("Setting: ", selectedArticle);
+        console.log("Form: ", formData);
+    }, [selectedArticle, setFormData])
 
     return (
         <StoreEpisodeContext.Provider

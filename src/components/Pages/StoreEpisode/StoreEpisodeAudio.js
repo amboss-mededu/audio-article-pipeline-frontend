@@ -7,16 +7,73 @@ import {ElevenLabsSubmit} from "../Playground/ElevenLabs/ElevenLabsSubmit";
 import {ProgressController} from "../../../context/ProgressController";
 import {useStoreEpisodeContext} from "../../../context/StoreEpisodeContext";
 import {isValidArticle} from "../../../helpers/utils";
+import useFullTTS from "../../../hooks/useFullTTS";
 
 export const StoreEpisodeAudio = ({prevTab, nextTab}) => {
 
     const { selectedArticle, openAiCallId } = useOpenAiContext();
     const { elevenLabsInput, audioFilePath, elevenLabsLoading, elevenLabsError, handleElevenLabsSubmit } = useElevenLabsContext();
+
     const { imageStatus } = useStoreEpisodeContext();
+
+    // Use useFullTTS
+    const {
+        loading: fullTTSLoading,
+        handleSubmit: handleFullTTSSubmit,
+        handleAbort: handleFullTTSAbort,
+        result: fullTTSResult,
+        error: fullTTSError
+    } = useFullTTS();
+
+
+    /*
 
     useEffect(() => {
         handleElevenLabsSubmit(null, elevenLabsInput, openAiCallId)
     },[elevenLabsInput])
+
+     */
+
+    // Cleanup function to handle abort
+    useEffect(() => {
+        return () => {
+            handleFullTTSAbort();
+        };
+    }, []);
+
+    useEffect(() => {
+        console.log(fullTTSResult)
+    }, [fullTTSResult])
+
+    const ActionButton = () => {
+        return (
+            fullTTSLoading ? (
+                <Button
+                    name="cancel-request"
+                    type={"button"}
+                    destructive={true}
+                    size={"m"}
+                    variant={"primary"}
+                    onClick={handleFullTTSAbort}
+                    ariaAttributes={{
+                        'aria-label': 'Cancel request'
+                    }}
+                >
+                    Cancel request
+                </Button>
+            ) : (
+                <Button
+                    type={"button"}
+                    variant={"primary"}
+                    disabled={imageStatus !== "loaded" || !isValidArticle(selectedArticle) || ( fullTTSResult && fullTTSResult.success )}
+                    onClick={(e) => handleFullTTSSubmit(e)}
+                >
+                    Store to Database
+                </Button>
+            )
+        );
+    };
+
 
     return (
         <Box>
@@ -25,7 +82,7 @@ export const StoreEpisodeAudio = ({prevTab, nextTab}) => {
                 {/* <ElevenLabsSubmit /> */}
 
                 <div className={"elevenLabsWrapper"}>
-                    {elevenLabsLoading && (
+                    {fullTTSLoading && (
                         <Stack>
                             <LoadingSpinner screenReaderText="Loading" />
                             <Box>
@@ -34,7 +91,7 @@ export const StoreEpisodeAudio = ({prevTab, nextTab}) => {
                         </Stack>
                     )}
 
-                    {elevenLabsError && <Text>{elevenLabsError}</Text>}
+                    {fullTTSError && <Text>{fullTTSError}</Text>}
 
                     {audioFilePath && (
                         <Box alignText={"center"}>
@@ -44,21 +101,23 @@ export const StoreEpisodeAudio = ({prevTab, nextTab}) => {
                             </audio>
                         </Box>
                     )}
+
+                    {fullTTSResult && fullTTSResult.success && (
+                        <Box alignText={"center"}>
+                            <Text>Stored files successfully!</Text>
+                        </Box>
+                    )}
                 </div>
                 <Inline alignItems={"center"} space={"m"}>
-                    <Button
-                        type={"button"}
-                        variant={"primary"}
-                        disabled={ !audioFilePath || imageStatus !== "loaded" || !isValidArticle(selectedArticle)}
-                    >
-                        Store to Database
-                    </Button>
+                    <ActionButton />
+
                     <Button
                         name="previous-tab"
                         type={"button"}
                         size={"m"}
+                        disabled={ fullTTSLoading}
                         variant={"secondary"}
-                        onClick={prevTab}
+                        onClick={prevTab}  // Handle abort here as well if needed
                         ariaAttributes={{
                             'aria-label': 'Previous Tab'
                         }}
