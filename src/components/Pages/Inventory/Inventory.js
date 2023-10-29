@@ -8,22 +8,24 @@ import {
     PictogramButton,
     Link,
     Inline,
-    Pagination, Tooltip, Input, FormFieldGroup, Stack
+    Pagination, Tooltip, Input, FormFieldGroup, Stack, H4, Button, Container
 } from "@amboss/design-system";
 import styled from "@emotion/styled";
+import('../../../styles/Inventory.css')
 
 
 const Inventory = () => {
     const [episodes, setEpisodes] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [isLoading, setLoading] = useState(true);
     const [currentlySortedByColumn, setCurrentlySortedByColumn] = useState("title");
     const [sortDirection, setSortDirection] = useState("asc");
+
+    const [reloadTrigger, setReloadTrigger] = useState(0);
 
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 15;
 
     const [searchQuery, setSearchQuery] = useState("");
-
 
     const handleNextClick = () => setCurrentPage(currentPage + 1);
     const handlePrevClick = () => setCurrentPage(currentPage - 1);
@@ -32,7 +34,8 @@ const Inventory = () => {
     const endIdx = startIdx + itemsPerPage;
 
     useEffect(() => {
-        fetch('https://listentoamboss.kniggi.com/api/episodes/fetch')
+        setLoading(true);
+        fetch(`${process.env.REACT_APP_API_URL}/api/episodes/fetch`)
             .then(response => response.json())
             .then(data => {
                 setEpisodes(data);
@@ -42,7 +45,7 @@ const Inventory = () => {
                 console.error('Error fetching data:', error);
                 setLoading(false);
             });
-    }, []);
+    }, [reloadTrigger]);
 
     const handleSort = (columnName) => {
         if (currentlySortedByColumn === columnName) {
@@ -111,8 +114,35 @@ const Inventory = () => {
             <Text size="s">
                 <StyledLink href="#">{row.title}</StyledLink>
             </Text>
-            <Text size={"xs"}>{row.xid}</Text>
+            <Text size={"xs"}>[{row.xid}]</Text>
         </Stack>;
+
+    const EmptyState = () => {
+        return (
+            <Stack space="xs">
+                <H4>Unable to load the data</H4>
+                <div>
+                    <Text color="tertiary" size="s" align="center">
+                        We can&apos;t seem to be able to connect to server. Please try
+                        again.
+                    </Text>
+                    <Text color="tertiary" size="s" align="center">
+                        If the problem persists, contact customer support.
+                    </Text>
+                </div>
+                <Button
+                    as="button"
+                    leftIcon="reset"
+                    onClick={() => setReloadTrigger(prevState => prevState+1)}
+                    size="m"
+                    type="button"
+                    variant="tertiary"
+                >
+                    Try again
+                </Button>
+            </Stack>
+        )
+    }
 
     const columns = [
         {
@@ -190,17 +220,40 @@ const Inventory = () => {
     return (
         <div style={{ minWidth: '10rem', maxWidth: '960px', margin: '0 auto' }}>
             <Stack space={"m"}>
-                <FormFieldGroup>
-                    <Input
-                        hint="Search database"
-                        label="Search the inventory"
-                        name="inventory-search"
-                        type="text"
-                        placeholder="Search..."
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                    />
-                </FormFieldGroup>
+                <Box bSpace={"m"}>
+                    <FormFieldGroup label="Search the inventory">
+                        <Inline alignItems={"spaceBetween"}>
+                            <div className={"inventory__search-wrapper"}>
+                                <Input
+                                    name="inventory-search"
+                                    type="text"
+                                    placeholder="Search..."
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                />
+                                <PictogramButton
+                                    ariaAttributes={{ 'aria-label': 'Clear' }}
+                                    icon="x"
+                                    onClick={() => setSearchQuery("") }
+                                    size="s"
+                                    type="button"
+                                    variant="tertiary"
+                                />
+                            </div>
+                            <Button
+                                as="button"
+                                leftIcon="reset"
+                                onClick={() => setReloadTrigger(prevState => prevState+1)}
+                                size="m"
+                                type="button"
+                                disabled={isLoading}
+                                variant="tertiary"
+                            >
+                                Reload
+                            </Button>
+                        </Inline>
+                    </FormFieldGroup>
+                </Box>
                 <DataTable
                     caption="Inventory"
                     columns={columns}
@@ -217,10 +270,13 @@ const Inventory = () => {
                             gcsUrl: episode.gcsUrl
                         }
                     })}
-                    isLoading={loading}
+                    isLoading={isLoading}
                     currentlySortedByColumn={currentlySortedByColumn}
                     onSort={handleSort}
-                    footer={
+                    bodyCellVerticalPadding={"s"}
+                    isEmpty={!isLoading && ( !sortedEpisodes || !sortedEpisodes?.length)}
+                    emptyTableContentHeight={"10rem"}
+                    footer={ !isLoading && sortedEpisodes && sortedEpisodes.length &&
                         <Inline alignItems="center">
                             <Pagination
                                 numOfItems={sortedEpisodes.length}
@@ -231,7 +287,11 @@ const Inventory = () => {
                             />
                         </Inline>
                     }
-                />
+                >
+                    {!isLoading && ( !sortedEpisodes || !sortedEpisodes?.length) &&
+                        <EmptyState />
+                    }
+                </DataTable>
             </Stack>
         </div>
     );

@@ -1,0 +1,15 @@
+.inventory__search-wrapper {
+    display: flex;
+    position: relative;
+    align-items: center;
+}
+
+.inventory__search-wrapper input {
+    padding-right: 2rem;
+}
+
+.inventory__search-wrapper > button {
+    position: absolute;
+    right: 0;
+    z-index: 4;
+}
