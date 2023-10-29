@@ -38,12 +38,30 @@ export const Table = () => {
         />
     )
 
+    const rwdProps = () => {
+        return {
+            isFirstColumnSticky: innerWidth >= 500
+        };
+    }
+
     return (
         <DataTable
+            bodyCellVerticalPadding={"s"}
             caption="Inventory"
             columns={useColumns() || []}
+            currentlySortedByColumn={currentlySortedByColumn}
+            emptyTableContentHeight={"10rem"}
+            footer={ !isLoading && paginatedEpisodes && paginatedEpisodes.length &&
+                <Inline alignItems="center">
+                    <CustomPagination />
+                </Inline>
+            }
+            isEmpty={!isLoading && ( !sortedEpisodes || !sortedEpisodes?.length)}
+            isLoading={isLoading}
+            onSort={handleSort}
             rows={paginatedEpisodes && paginatedEpisodes.map((episode) => {
                 return {
+                    key: episode._id,
                     title: episode.title,
                     xid: episode.xid,
                     stage: episode.stage,
@@ -55,18 +73,8 @@ export const Table = () => {
                     gcsUrl: episode.gcsUrl
                 }
             })}
-            isLoading={isLoading}
-            currentlySortedByColumn={currentlySortedByColumn}
-            onSort={handleSort}
-            isFirstColumnSticky={innerWidth < 680 ? false : true}
-            bodyCellVerticalPadding={"s"}
-            isEmpty={!isLoading && ( !sortedEpisodes || !sortedEpisodes?.length)}
-            emptyTableContentHeight={"10rem"}
-            footer={ !isLoading && paginatedEpisodes && paginatedEpisodes.length &&
-                <Inline alignItems="center">
-                    <CustomPagination />
-                </Inline>
-            }
+            {...rwdProps()}
+            width={"100%"}
         >
             {!isLoading && ( !sortedEpisodes || !sortedEpisodes?.length) &&
                 <EmptyState />

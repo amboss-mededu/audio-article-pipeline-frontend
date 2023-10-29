@@ -38,8 +38,8 @@ export const InventoryProvider = ({ children }) => {
             aValue = a.voice[key];
             bValue = b.voice[key];
         } else {
-            aValue = a[currentlySortedByColumn];
-            bValue = b[currentlySortedByColumn];
+            aValue = a[currentlySortedByColumn] || 0;
+            bValue = b[currentlySortedByColumn] || 0;
         }
 
         if (aValue < bValue) return sortDirection === 'asc' ? -1 : 1;

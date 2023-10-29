@@ -16,7 +16,6 @@ const PlaygroundProvider = ({ children }) => {
     const { openAiInputType, openAiInput, selectedArticle } = useOpenAiContext()
 
     useEffect(() => {
-        console.log(step)
         if (step >= 2) return ;
         else if ( (openAiInputType === "text" && !openAiInput.length) || (openAiInputType === "xid" && !isValidArticle(selectedArticle))) {
             setStep(0)

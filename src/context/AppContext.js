@@ -3,13 +3,15 @@ import React, {createContext, useState, useContext, useEffect} from 'react';
 // Create the context
 const AppContext = createContext();
 
-const AppProvider = ({ children }) => {
+const AppProvider = ({ children, divRef, boxRef }) => {
     // Deployed:
     const [activeTab, setActiveTab] = useState(0); // default to the first tab
     const [isDarkMode, setIsDarkMode] = useState(false);
 
     const [innerWidth, setInnerWidth] = useState(window.innerWidth);
     const [innerHeight, setInnerHeight] = useState(window.innerHeight);
+    const [divRefHeight, setDivRefHeight] = useState(0);
+    const [boxRefWidth, setBoxRefWidth] = useState(0);
 
     const maxWidth = "960px"
 
@@ -38,6 +40,36 @@ const AppProvider = ({ children }) => {
         };
     }, []);
 
+    useEffect(() => {
+
+        const handleResize = () => {
+            if (divRef && divRef.current) {
+                setDivRefHeight(divRef.current.childNodes[0].offsetHeight);
+            }
+            if (boxRef && boxRef.current) {
+                setBoxRefWidth(boxRef.current.offsetWidth);
+            }
+        };
+
+        // Initial call
+        handleResize();
+
+        // Setup event listener for window resize
+        window.addEventListener('resize', handleResize);
+
+        // Setup MutationObserver
+        const observer = new MutationObserver(handleResize);
+        if (boxRef && boxRef.current) {
+            observer.observe(boxRef.current, { attributes: true, childList: true, subtree: true });
+        }
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+            observer.disconnect();
+        };
+    }, [divRef, boxRef]);
+
+
 
     // Not yet reviewed
     const [resultScript, setResultScript] = useState(null);
@@ -54,6 +86,8 @@ const AppProvider = ({ children }) => {
                 activeTab, setActiveTab,
                 isDarkMode, setIsDarkMode,
                 innerWidth, innerHeight, maxWidth,
+                divRef, boxRef,
+                boxRefWidth, divRefHeight,
 
                 // not deployed (yet)
                 resultScript, setResultScript,

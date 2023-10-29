@@ -49,7 +49,7 @@ const useElevenLabs = () => {
             if (response.ok) {  // check if the response status is OK (status code 200-299)
                 const result = await response.json();  // parses the response body as JSON
                 console.log(result);
-                setAudioFilePath(result.audioFile.location);
+                setAudioFilePath(result.signedFileName);
             } else {
                 // handle non-OK responses
                 throw new Error('Network response was not ok.');

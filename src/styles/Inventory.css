@@ -1,7 +1,18 @@
+.inventory--wrapper {
+    min-width: 10rem;
+    max-width: 960px;
+    margin: 0 auto;
+}
+
 .inventory__search-wrapper {
     display: flex;
     position: relative;
     align-items: center;
+    width: 250px;
+}
+
+.inventory__search-wrapper > div[data-ds-id="Input"] {
+    width: 100%;
 }
 
 .inventory__search-wrapper input {
@@ -10,6 +21,6 @@
 
 .inventory__search-wrapper > button {
     position: absolute;
-    right: 0;
+    right: .2rem;
     z-index: 4;
 }
