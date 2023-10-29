@@ -9,6 +9,7 @@ import {PlaygroundProvider} from "./context/PlaygroundContext";
 import {ElevenLabsProvider} from "./context/ElevenLabsContext";
 import {StoreEpisodeProvider} from "./context/StoreEpisodeContext";
 import StoreEpisode from "./components/Pages/StoreEpisode/StoreEpisode";
+import Inventory from "./components/Pages/Inventory/Inventory";
 
 function App() {
     const { activeTab, isDarkMode, setIsDarkMode } = useAppContext();
@@ -66,8 +67,8 @@ function App() {
                 <div ref={divRef} style={{ height: maxHeight, borderRadius: 0 }}>
                     <ElevenLabsProvider>
                     <OpenAiProvider>
-                        <div ref={boxRef}>
                             <Header />
+                        <div ref={boxRef} style={{maxWidth: "960px", margin: "0 auto"}}>
                             <Box tSpace={"zero"} className="App">
                                 {activeTab === 0 &&
                                     <PlaygroundProvider>
@@ -79,7 +80,11 @@ function App() {
                                         <StoreEpisode />
                                     </StoreEpisodeProvider>
                                 }
-                                {activeTab === 2 && <>{"Hello World"}</>}
+                                {activeTab === 2 &&
+                                    <>
+                                        <Inventory />
+                                    </>
+                                }
                             </Box>
                         </div>
                     </OpenAiProvider>
