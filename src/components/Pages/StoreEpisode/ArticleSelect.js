@@ -1,9 +1,9 @@
 import {Box, Column, Columns, FormFieldGroup, Inline, PictogramButton, Stack, Text} from "@amboss/design-system";
-import {ArticleSelect} from "../../Commons/ArticleSelect";
+import {ArticleSelect as CommonArticleSelect} from "../../Commons/ArticleSelect";
 import React from "react";
 import {useOpenAiContext} from "../../../context/OpenAiContext";
 
-export const StoreEpisodeArticleSelect = ({activeTab, setActiveTab}) => {
+export const ArticleSelect = ({activeTab, setActiveTab}) => {
 
     const { openAiLoading, selectedArticle } = useOpenAiContext();
 
@@ -12,7 +12,7 @@ export const StoreEpisodeArticleSelect = ({activeTab, setActiveTab}) => {
             <Column alignSelf={"start"} size={["12","12","12"]}>
                 {
                     activeTab === 0
-                        ? <ArticleSelect disabled={activeTab} />
+                        ? <CommonArticleSelect disabled={activeTab} />
                         : (
                             <div className={"article-selector__readonly-form"}>
                                 <FormFieldGroup label={"Selected Article"}>

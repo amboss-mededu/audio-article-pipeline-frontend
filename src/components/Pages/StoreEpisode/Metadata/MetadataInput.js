@@ -1,10 +1,10 @@
 import {Button, Column, Columns, FormFieldGroup, Inline, Input, Select, Textarea, Toggle} from "@amboss/design-system";
 import React from "react";
-import {useStoreEpisodeContext} from "../../../context/StoreEpisodeContext";
-import {useOpenAiContext} from "../../../context/OpenAiContext";
-import {isValidArticle} from "../../../helpers/utils";
+import {useStoreEpisodeContext} from "../../../../context/StoreEpisodeContext";
+import {useOpenAiContext} from "../../../../context/OpenAiContext";
+import {isValidArticle} from "../../../../helpers/utils";
 
-export const StoreEpisodeMetadata = ({nextTab, handleInputChange, stageOptions}) => {
+export const MetadataInput = ({nextTab, handleInputChange, stageOptions}) => {
     const {formData, setFormData, imageStatus} = useStoreEpisodeContext();
     const { selectedArticle } = useOpenAiContext();
 

@@ -1,10 +1,10 @@
 import React, {useEffect, useRef, useState} from 'react';
 import { Button, LoadingSpinner } from '@amboss/design-system';
-import {useStoreEpisodeContext} from "../../../context/StoreEpisodeContext";
-import {useOpenAiContext} from "../../../context/OpenAiContext";
-import {isValidArticle} from "../../../helpers/utils"; // Assuming your design system has these components
+import {useStoreEpisodeContext} from "../../../../context/StoreEpisodeContext";
+import {useOpenAiContext} from "../../../../context/OpenAiContext";
+import {isValidArticle} from "../../../../helpers/utils"; // Assuming your design system has these components
 
-const StoreEpisodeArtwork = () => {
+export const Artwork = () => {
     const { imageStatus, setImageStatus,
         imageReload, setImageReload,
         imageSrc, setImageSrc,
@@ -93,5 +93,3 @@ const StoreEpisodeArtwork = () => {
         </div>
     );
 };
-
-export default StoreEpisodeArtwork;

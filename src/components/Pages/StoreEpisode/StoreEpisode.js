@@ -3,16 +3,16 @@ import {
     Box
 } from '@amboss/design-system';
 import {useStoreEpisodeContext} from "../../../context/StoreEpisodeContext";
-import {StoreEpisodeMetadata} from "./StoreEpisodeMetadata";
-import { StoreEpisodeScript} from "./StoreEpisodeScript";
+import { MetadataInput } from "./Metadata/MetadataInput";
+import { ScriptInput} from "./Script/ScriptInput";
 import {useOpenAiContext} from "../../../context/OpenAiContext";
 import {useElevenLabsContext} from "../../../context/ElevenLabsContext";
-import {StoreEpisodeAudio} from "./StoreEpisodeAudio"; // Import components from your design library
+import {Audio} from "./Submit/Audio"; // Import components from your design library
 
 import '../../../styles/StoreEpisode.css'
 import {isValidArticle} from "../../../helpers/utils";
 import Stepper from "../../Commons/Stepper";
-import {StoreEpisodeArticleSelect} from "./StoreEpisodeArticleSelect";
+import {ArticleSelect} from "./ArticleSelect";
 
 const StoreEpisode = ({ onFormDataChange }) => {
     const { formData, setFormData } = useStoreEpisodeContext();
@@ -84,20 +84,20 @@ const StoreEpisode = ({ onFormDataChange }) => {
             <div className={"store-episode__main-box"}>
                 <Box space={"s"} bSpace={"l"} lSpace={"zero"} rSpace={"zero"}>
                     {/* Shared Fields */}
-                    <StoreEpisodeArticleSelect activeTab={activeTab} setActiveTab={setActiveTab} />
+                    <ArticleSelect activeTab={activeTab} setActiveTab={setActiveTab} />
 
 
                     <Box space={"m"} tSpace={"l"} lSpace={"zero"} rSpace={"zero"}>
                         {activeTab === 0 && (
-                            <StoreEpisodeMetadata handleInputChange={handleInputChange} nextTab={nextTab} stageOptions={stageOptions} />
+                            <MetadataInput handleInputChange={handleInputChange} nextTab={nextTab} stageOptions={stageOptions} />
                         )}
 
                         {activeTab === 1 && (
-                            <StoreEpisodeScript handleInputChange={handleInputChange} nextTab={nextTab} prevTab={prevTab} />
+                            <ScriptInput handleInputChange={handleInputChange} nextTab={nextTab} prevTab={prevTab} />
                         )}
 
                         {(activeTab === 2 && isValidArticle(selectedArticle) && elevenLabsInput) && (
-                            <StoreEpisodeAudio nextTab={nextTab} prevTab={prevTab} />
+                            <Audio nextTab={nextTab} prevTab={prevTab} />
                         )}
                     </Box>
                 </Box>

@@ -1,15 +1,15 @@
 import {Box, Button, FormFieldGroup, Inline, LoadingSpinner, Stack, Text} from "@amboss/design-system";
 import React, {useEffect} from "react";
-import {useOpenAiContext} from "../../../context/OpenAiContext";
-import {useElevenLabsContext} from "../../../context/ElevenLabsContext";
-import StoreEpisodeArtwork from "./StoreEpisodeArtwork";
-import {ElevenLabsSubmit} from "../Playground/ElevenLabs/ElevenLabsSubmit";
-import {ProgressController} from "../../../context/ProgressController";
-import {useStoreEpisodeContext} from "../../../context/StoreEpisodeContext";
-import {isValidArticle} from "../../../helpers/utils";
-import useFullTTS from "../../../hooks/useFullTTS";
+import {useOpenAiContext} from "../../../../context/OpenAiContext";
+import {useElevenLabsContext} from "../../../../context/ElevenLabsContext";
+import { Artwork } from "./Artwork";
+import {ElevenLabsSubmit} from "../../Playground/ElevenLabs/ElevenLabsSubmit";
+import { ProgressController } from "../../../../context/ProgressController";
+import {useStoreEpisodeContext} from "../../../../context/StoreEpisodeContext";
+import {isValidArticle} from "../../../../helpers/utils";
+import useFullTTS from "../../../../hooks/useFullTTS";
 
-export const StoreEpisodeAudio = ({prevTab, nextTab}) => {
+export const Audio = ({prevTab, nextTab}) => {
 
     const { selectedArticle, openAiCallId } = useOpenAiContext();
     const { elevenLabsInput, audioFilePath, elevenLabsLoading, elevenLabsError, handleElevenLabsSubmit } = useElevenLabsContext();
@@ -78,7 +78,7 @@ export const StoreEpisodeAudio = ({prevTab, nextTab}) => {
     return (
         <Box>
             <Stack alignItems={"center"} space={"xl"}>
-                <StoreEpisodeArtwork />
+                <Artwork />
                 {/* <ElevenLabsSubmit /> */}
 
                 <div className={"elevenLabsWrapper"}>

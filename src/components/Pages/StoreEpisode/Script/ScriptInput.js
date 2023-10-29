@@ -1,13 +1,13 @@
 import React from "react";
 
-import {ElevenLabsInput} from "../Playground/ElevenLabs/ElevenLabsInput";
+import {ElevenLabsInput} from "../../Playground/ElevenLabs/ElevenLabsInput";
 import {Button, Column, Columns, FormFieldGroup, Inline} from "@amboss/design-system";
-import {useOpenAiContext} from "../../../context/OpenAiContext";
-import {useElevenLabsContext} from "../../../context/ElevenLabsContext";
-import {isValidArticle} from "../../../helpers/utils";
-import {useAppContext} from "../../../context/AppContext";
+import {useOpenAiContext} from "../../../../context/OpenAiContext";
+import {useElevenLabsContext} from "../../../../context/ElevenLabsContext";
+import {isValidArticle} from "../../../../helpers/utils";
+import {useAppContext} from "../../../../context/AppContext";
 
-export const StoreEpisodeScript = ({nextTab, prevTab}) => {
+export const ScriptInput = ({nextTab, prevTab}) => {
 
     const { elevenLabsInput, setElevenLabsInput } = useElevenLabsContext();
     const { isDarkMode } = useAppContext()

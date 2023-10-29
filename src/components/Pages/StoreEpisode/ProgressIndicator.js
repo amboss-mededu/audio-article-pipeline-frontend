@@ -2,14 +2,11 @@ import {Box, Inline, Text, Icon, Stack} from "@amboss/design-system";
 import {useOpenAiContext} from "../../../context/OpenAiContext";
 import {useElevenLabsContext} from "../../../context/ElevenLabsContext";
 import {useStoreEpisodeContext} from "../../../context/StoreEpisodeContext";
-import Stepper from '@mui/material/Stepper';
-import Step from '@mui/material/Step';
-import StepLabel from '@mui/material/StepLabel';
 import {useEffect, useState} from "react";
 import {isValidArticle} from "../../../helpers/utils";
 
 
-const StoreEpisodeProgressIndicator = ({ activeTab }) => {
+export const ProgressIndicator = ({ activeTab }) => {
     const steps = ["Metadata", "Script", "Audio"];
     const { selectedArticle } = useOpenAiContext();
     const { audioFilePath } = useElevenLabsContext();
@@ -39,4 +36,3 @@ const StoreEpisodeProgressIndicator = ({ activeTab }) => {
     );
 };
 
-export default StoreEpisodeProgressIndicator;
