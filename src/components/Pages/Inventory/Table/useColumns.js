@@ -1,10 +1,11 @@
-import {Badge, Icon, Inline, Link, PictogramButton, Stack, Text, Tooltip} from "@amboss/design-system";
+import {Badge, Box, Icon, Inline, Link, Modal, PictogramButton, Stack, Text, Tooltip} from "@amboss/design-system";
 import React from "react";
 import {useInventoryContext} from "../../../../context/InventoryContext";
 import styled from "@emotion/styled";
 import {useAppContext} from "../../../../context/AppContext";
 
-export const useColumns = () => {
+
+export const useColumns = ({setActiveEpisode, setAudioModalOpen, isAudioModalOpen}) => {
 
     const {
         currentlySortedByColumn,
@@ -132,8 +133,24 @@ export const useColumns = () => {
                 renderCell: (row: DataTableRow) => (
                     <PictogramButton
                         ariaAttributes={{ 'aria-label': 'Download' }}
+                        disabled={!row.key || isAudioModalOpen}
                         icon="download"
-                        onClick={() => { window.location.href = row.gcsUrl }}
+                        onClick={async () => {
+                            const apiUrl = `${process.env.REACT_APP_API_URL}/api/episodes/fetch/audio/${row.key}`;
+                            const response = await fetch(apiUrl);
+                            const data = await response.json();
+                            const { signedUrl } = data;
+                            if (signedUrl) {
+                                setActiveEpisode({
+                                    ...row,
+                                    signedUrl
+                                });
+                                setAudioModalOpen(true)
+                            } else {
+                                setActiveEpisode(null);
+                                setAudioModalOpen(false)
+                            }
+                        }}
                         size="xs"
                         type="button"
                         variant="tertiary"

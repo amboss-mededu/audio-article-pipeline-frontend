@@ -22,6 +22,7 @@ function App({boxRef, divRef}) {
                     <ElevenLabsProvider>
                     <OpenAiProvider>
                     <InventoryProvider>
+                    <StoreEpisodeProvider>
                             <Header />
                         <div ref={boxRef} style={{maxWidth: maxWidth, margin: "0 auto"}}>
                             <Box tSpace={"zero"} className="App">
@@ -31,9 +32,9 @@ function App({boxRef, divRef}) {
                                     </PlaygroundProvider>
                                 }
                                 {activeTab === 1 &&
-                                    <StoreEpisodeProvider>
+                                    <>
                                         <StoreEpisode />
-                                    </StoreEpisodeProvider>
+                                    </>
                                 }
                                 {activeTab === 2 &&
                                     <>
@@ -42,6 +43,7 @@ function App({boxRef, divRef}) {
                                 }
                             </Box>
                         </div>
+                    </StoreEpisodeProvider>
                     </InventoryProvider>
                     </OpenAiProvider>
                     </ElevenLabsProvider>

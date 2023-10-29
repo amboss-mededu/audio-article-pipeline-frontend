@@ -1,9 +1,13 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
 import {useSorting} from "../components/Pages/Inventory/Table/useSorting";
+import {useAppContext} from "./AppContext";
 
 const InventoryContext = createContext();
 
 export const InventoryProvider = ({ children }) => {
+
+    const { innerHeight } = useAppContext();
+
     const [episodes, setEpisodes] = useState([]);
     const [isLoading, setLoading] = useState(true);
     const [reloadTrigger, setReloadTrigger] = useState(0);
@@ -12,7 +16,7 @@ export const InventoryProvider = ({ children }) => {
     const [sortDirection, setSortDirection] = useState("asc");
 
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 15;
+    const itemsPerPage = innerHeight > 1250 ? 15 : innerHeight > 850 ? 10 : 5;
 
     const [searchQuery, setSearchQuery] = useState("");
 

@@ -33,7 +33,7 @@ const Header = () => {
             case 1:
                 return <H2>Store Episode</H2>
             case 2:
-                return <H2>No clue yet</H2>
+                return <H2>Inventory</H2>
             default:
                 return <H2>Cut The Panic Transtympanic</H2>
         }

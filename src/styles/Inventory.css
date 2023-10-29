@@ -9,6 +9,7 @@
     position: relative;
     align-items: center;
     width: 250px;
+    z-index: 0;
 }
 
 .inventory__search-wrapper > div[data-ds-id="Input"] {

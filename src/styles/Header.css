@@ -7,10 +7,13 @@
 Sticky header
  */
 div[data-ds-id="HeaderContainer"] {
-    height: 82px;
     top: 0px;
     position: sticky;
     z-index: 10;
+}
+
+div[data-ds-id="HeaderContainer"].behind-modal {
+    z-index: 0;
 }
 
 div[data-ds-id="HeaderContainer"] > div[data-ds-id="Box"] {

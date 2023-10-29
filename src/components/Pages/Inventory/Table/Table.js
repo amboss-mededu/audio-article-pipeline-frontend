@@ -1,23 +1,25 @@
 import {useColumns} from "./useColumns";
-import {DataTable, Inline, Pagination} from "@amboss/design-system";
+import {Box, DataTable, Inline, Modal, Pagination} from "@amboss/design-system";
 import {EmptyState} from "./EmptyState";
-import React from "react";
+import React, {useRef, useState} from "react";
 import {useInventoryContext} from "../../../../context/InventoryContext";
 import {useSorting} from "./useSorting";
 import {useAppContext} from "../../../../context/AppContext";
+import {AudioModal} from "./AudioModal";
 
 export const Table = () => {
 
+    const { innerWidth } = useAppContext()
+    const { currentPage, setCurrentPage, itemsPerPage, filteredEpisodes } = useInventoryContext()
     const {
         isLoading, setLoading,
         currentlySortedByColumn, sortedEpisodes
     } = useInventoryContext()
 
-    const { innerWidth } = useAppContext()
-
     const { handleSort } = useSorting();
 
-    const { currentPage, setCurrentPage, itemsPerPage, filteredEpisodes } = useInventoryContext()
+    const [activeEpisode, setActiveEpisode] = useState(null)
+    const [isAudioModalOpen, setAudioModalOpen] = useState(false)
 
     // Pagination
     const handleNextClick = () => setCurrentPage(currentPage + 1);
@@ -45,40 +47,46 @@ export const Table = () => {
     }
 
     return (
-        <DataTable
-            bodyCellVerticalPadding={"s"}
-            caption="Inventory"
-            columns={useColumns() || []}
-            currentlySortedByColumn={currentlySortedByColumn}
-            emptyTableContentHeight={"10rem"}
-            footer={ !isLoading && paginatedEpisodes && paginatedEpisodes.length &&
-                <Inline alignItems="center">
-                    <CustomPagination />
-                </Inline>
-            }
-            isEmpty={!isLoading && ( !sortedEpisodes || !sortedEpisodes?.length)}
-            isLoading={isLoading}
-            onSort={handleSort}
-            rows={paginatedEpisodes && paginatedEpisodes.map((episode) => {
-                return {
-                    key: episode._id,
-                    title: episode.title,
-                    xid: episode.xid,
-                    stage: episode.stage,
-                    voice_name: episode.voice.name,
-                    voice_sex: episode.voice.sex,
-                    voice_tone: episode.voice.tone?.join(", "),
-                    version: episode.version,
-                    creationDate: episode.creationDate,
-                    gcsUrl: episode.gcsUrl
+        <>
+            <DataTable
+                bodyCellVerticalPadding={"s"}
+                caption="Inventory"
+                columns={useColumns({setActiveEpisode, setAudioModalOpen, isAudioModalOpen}) || []}
+                currentlySortedByColumn={currentlySortedByColumn}
+                emptyTableContentHeight={"10rem"}
+                footer={ !isLoading && paginatedEpisodes && paginatedEpisodes.length &&
+                    <Inline alignItems="center">
+                        <CustomPagination />
+                    </Inline>
                 }
-            })}
-            {...rwdProps()}
-            width={"100%"}
-        >
-            {!isLoading && ( !sortedEpisodes || !sortedEpisodes?.length) &&
-                <EmptyState />
+                isEmpty={!isLoading && ( !sortedEpisodes || !sortedEpisodes?.length)}
+                isLoading={isLoading}
+                onSort={handleSort}
+                rows={paginatedEpisodes && paginatedEpisodes.map((episode) => {
+                    return {
+                        key: episode._id,
+                        title: episode.title,
+                        xid: episode.xid,
+                        stage: episode.stage,
+                        voice_name: episode.voice.name,
+                        voice_sex: episode.voice.sex,
+                        voice_tone: episode.voice.tone?.join(", "),
+                        version: episode.version,
+                        creationDate: episode.creationDate,
+                        gcsUrl: episode.gcsUrl
+                    }
+                })}
+                {...rwdProps()}
+                width={"100%"}
+            >
+                {!isLoading && ( !sortedEpisodes || !sortedEpisodes?.length) &&
+                    <EmptyState />
+                }
+            </DataTable>
+
+            {
+                isAudioModalOpen && <AudioModal open={false} activeEpisode={activeEpisode} setAudioModalOpen={setAudioModalOpen} />
             }
-        </DataTable>
+        </>
     )
 }
