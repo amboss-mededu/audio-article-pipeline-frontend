@@ -10,9 +10,10 @@ import {ElevenLabsProvider} from "./context/ElevenLabsContext";
 import {StoreEpisodeProvider} from "./context/StoreEpisodeContext";
 import StoreEpisode from "./components/Pages/StoreEpisode/StoreEpisode";
 import Inventory from "./components/Pages/Inventory/Inventory";
+import {InventoryProvider} from "./context/InventoryContext";
 
 function App() {
-    const { activeTab, isDarkMode, setIsDarkMode } = useAppContext();
+    const { activeTab, isDarkMode, setIsDarkMode, innerHeight, maxWidth } = useAppContext();
     const divRef = useRef(null);
     const boxRef = useRef(null);
     const [maxHeight, setMaxHeight] = useState('100vh');
@@ -42,33 +43,16 @@ function App() {
         };
     }, []);
 
-    useEffect(() => {
-        // Initial setting
-        const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        setIsDarkMode(prefersDarkMode);
-
-        // Listener to update the preference
-        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-        const handleChange = () => {
-            setIsDarkMode(mediaQuery.matches);
-        };
-
-        mediaQuery.addEventListener('change', handleChange);
-
-        // Cleanup
-        return () => {
-            mediaQuery.removeEventListener('change', handleChange);
-        };
-    }, []);
 
     return (
         <ThemeProvider theme={isDarkMode ? dark : light}>
             <Container borderRadius={0}>
-                <div ref={divRef} style={{ height: maxHeight, borderRadius: 0 }}>
+                <div ref={divRef} style={{ height: innerHeight, borderRadius: 0 }}>
                     <ElevenLabsProvider>
                     <OpenAiProvider>
+                    <InventoryProvider>
                             <Header />
-                        <div ref={boxRef} style={{maxWidth: "960px", margin: "0 auto"}}>
+                        <div ref={boxRef} style={{maxWidth: maxWidth, margin: "0 auto"}}>
                             <Box tSpace={"zero"} className="App">
                                 {activeTab === 0 &&
                                     <PlaygroundProvider>
@@ -87,6 +71,7 @@ function App() {
                                 }
                             </Box>
                         </div>
+                    </InventoryProvider>
                     </OpenAiProvider>
                     </ElevenLabsProvider>
                 </div>

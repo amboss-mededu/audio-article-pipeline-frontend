@@ -1,7 +1,7 @@
 import {Box, Column, Columns, FormFieldGroup, Inline, PictogramButton, Stack, Text} from "@amboss/design-system";
-import {ArticleSelect as CommonArticleSelect} from "../../Commons/ArticleSelect";
+import {ArticleSelect as CommonArticleSelect} from "../../../Commons/ArticleSelect";
 import React from "react";
-import {useOpenAiContext} from "../../../context/OpenAiContext";
+import {useOpenAiContext} from "../../../../context/OpenAiContext";
 
 export const ArticleSelect = ({activeTab, setActiveTab}) => {
 

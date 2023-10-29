@@ -12,7 +12,7 @@ import {Audio} from "./Submit/Audio"; // Import components from your design libr
 import '../../../styles/StoreEpisode.css'
 import {isValidArticle} from "../../../helpers/utils";
 import Stepper from "../../Commons/Stepper";
-import {ArticleSelect} from "./ArticleSelect";
+import {ArticleSelect} from "./Header/ArticleSelect";
 
 const StoreEpisode = ({ onFormDataChange }) => {
     const { formData, setFormData } = useStoreEpisodeContext();

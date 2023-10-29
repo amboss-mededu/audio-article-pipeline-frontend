@@ -1,9 +1,9 @@
 import {Box, Inline, Text, Icon, Stack} from "@amboss/design-system";
-import {useOpenAiContext} from "../../../context/OpenAiContext";
-import {useElevenLabsContext} from "../../../context/ElevenLabsContext";
-import {useStoreEpisodeContext} from "../../../context/StoreEpisodeContext";
+import {useOpenAiContext} from "../../../../context/OpenAiContext";
+import {useElevenLabsContext} from "../../../../context/ElevenLabsContext";
+import {useStoreEpisodeContext} from "../../../../context/StoreEpisodeContext";
 import {useEffect, useState} from "react";
-import {isValidArticle} from "../../../helpers/utils";
+import {isValidArticle} from "../../../../helpers/utils";
 
 
 export const ProgressIndicator = ({ activeTab }) => {
