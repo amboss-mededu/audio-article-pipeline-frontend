@@ -54,7 +54,7 @@ const Stepper = ({activeTab}) => {
     };
 
     return (
-        <div style={{ position: "sticky", top: "82px", zIndex: 5 }}>
+        <div style={{ position: "sticky", top: "72px", zIndex: 5 }}>
             <Container borderRadius={"zero"} elevation={0}>
             <div className="progress-container">
                 {Array.from({ length: 3 }).map((_, i) => {

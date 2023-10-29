@@ -34,7 +34,7 @@ const useFullTTS = () => {
         // element.scrollIntoView({ behavior: 'smooth' });
         window.scrollTo(0, document.body.scrollHeight);
 
-        const apiUrl = `${process.env.REACT_APP_API_URL}/api/fulltts/request/${ true ? "audioOnly" : "full" }`;
+        const apiUrl = `${process.env.REACT_APP_API_URL}/api/fulltts/request/${ true ? "audio" : "full" }`;
 
         try {
             const body = {

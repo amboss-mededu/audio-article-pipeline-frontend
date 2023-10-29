@@ -59,7 +59,7 @@ export const Table = () => {
                         <CustomPagination />
                     </Inline>
                 }
-                isEmpty={!isLoading && ( !sortedEpisodes || !sortedEpisodes?.length)}
+                isEmpty={!isLoading && ( !filteredEpisodes || !filteredEpisodes?.length)}
                 isLoading={isLoading}
                 onSort={handleSort}
                 rows={paginatedEpisodes && paginatedEpisodes.map((episode) => {
@@ -68,6 +68,7 @@ export const Table = () => {
                         title: episode.title,
                         xid: episode.xid,
                         stage: episode.stage,
+                        description: episode.description,
                         voice_name: episode.voice.name,
                         voice_sex: episode.voice.sex,
                         voice_tone: episode.voice.tone?.join(", "),
@@ -79,8 +80,8 @@ export const Table = () => {
                 {...rwdProps()}
                 width={"100%"}
             >
-                {!isLoading && ( !sortedEpisodes || !sortedEpisodes?.length) &&
-                    <EmptyState />
+                {!isLoading && ( !filteredEpisodes || !filteredEpisodes?.length) &&
+                    <EmptyState error={!sortedEpisodes} empty={!filteredEpisodes} />
                 }
             </DataTable>
 

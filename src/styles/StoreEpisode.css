@@ -55,6 +55,7 @@
     padding: 0.5rem 0.5rem 0.5rem 0.5rem;
     border-radius: 10px;
     width: 80%;
+    text-align: center;
 }
 
 .store-episode__article-button--light {

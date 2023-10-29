@@ -8,13 +8,17 @@ import { ProgressController } from "../../../../context/ProgressController";
 import {useStoreEpisodeContext} from "../../../../context/StoreEpisodeContext";
 import {isValidArticle} from "../../../../helpers/utils";
 import useFullTTS from "../../../../hooks/useFullTTS";
+import {SuccessCard} from "./SuccessCard";
+import {useAppContext} from "../../../../context/AppContext";
 
 export const Audio = ({prevTab, nextTab}) => {
 
-    const { selectedArticle, openAiCallId } = useOpenAiContext();
-    const { elevenLabsInput, audioFilePath, elevenLabsLoading, elevenLabsError, handleElevenLabsSubmit } = useElevenLabsContext();
+    const { selectedArticle } = useOpenAiContext();
+    const { audioFilePath} = useElevenLabsContext();
 
     const { imageStatus } = useStoreEpisodeContext();
+
+    const {boxRefWidth } = useAppContext()
 
     // Use useFullTTS
     const {
@@ -24,15 +28,6 @@ export const Audio = ({prevTab, nextTab}) => {
         result: fullTTSResult,
         error: fullTTSError
     } = useFullTTS();
-
-
-    /*
-
-    useEffect(() => {
-        handleElevenLabsSubmit(null, elevenLabsInput, openAiCallId)
-    },[elevenLabsInput])
-
-     */
 
     // Cleanup function to handle abort
     useEffect(() => {
@@ -78,10 +73,12 @@ export const Audio = ({prevTab, nextTab}) => {
     return (
         <Box>
             <Stack alignItems={"center"} space={"xl"}>
-                <Artwork />
-                {/* <ElevenLabsSubmit /> */}
+                <div className={"elevenLabsWrapper"} style={{width: "600px", maxWidth: 0.8*boxRefWidth}}>
+                    <Box space={"m"} tSpace={"zero"}>
+                        <Artwork />
+                    </Box>
+                    {/* <ElevenLabsSubmit /> */}
 
-                <div className={"elevenLabsWrapper"}>
                     {fullTTSLoading && (
                         <Stack>
                             <LoadingSpinner screenReaderText="Loading" />
@@ -99,9 +96,9 @@ export const Audio = ({prevTab, nextTab}) => {
                         </Box>
                     )}
 
-                    {fullTTSResult && fullTTSResult.success && (
+                    {fullTTSResult && fullTTSResult.success && fullTTSResult.data && (
                         <Box alignText={"center"}>
-                            <Text>Stored files successfully!</Text>
+                            <SuccessCard episodes={fullTTSResult.data.createdEpisodes} />
                         </Box>
                     )}
                 </div>

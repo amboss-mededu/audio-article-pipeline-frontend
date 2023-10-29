@@ -56,6 +56,7 @@ export const InventoryProvider = ({ children }) => {
             episode.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
             episode.xid.toLowerCase().includes(searchQuery.toLowerCase()) ||
             episode.stage.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            episode.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
             episode.voice.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
             episode.voice.sex.toLowerCase().includes(searchQuery.toLowerCase())
             // Add more fields if necessary

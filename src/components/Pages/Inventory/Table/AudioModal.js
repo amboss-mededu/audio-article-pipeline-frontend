@@ -39,16 +39,19 @@ export const AudioModal = ({open, activeEpisode, setAudioModalOpen}) => {
                 privateProps={{
                     skipPortal: false
                 }}
-                subHeader={activeEpisode.description}
+                subHeader={`[${activeEpisode.xid}]`}
             >
                 <Modal.Stack>
                     <Modal.Text>
                         <Inline alignItems={activeEpisode.voice_name && activeEpisode.stage ? "spaceBetween" : activeEpisode.voice_name && !activeEpisode.stage ? "left" : "right"} >
                             { activeEpisode.voice_name && (
-                                <Text>Spoken by: {activeEpisode.voice_name}</Text>
+                                <Text weight={"bold"}>Spoken by: {activeEpisode.voice_name}</Text>
                             )}
                             <Badge color={activeEpisode.stage === 'physician' ? 'green' : 'brand'} text={activeEpisode.stage} />
                         </Inline>
+                    </Modal.Text>
+                    <Modal.Text>
+                        <Text >{activeEpisode.description}</Text>
                     </Modal.Text>
                     <Artwork />
                     <Box space={["s","s","m"]} alignText={"center"}>
