@@ -128,13 +128,13 @@ export const useColumns = ({setActiveEpisode, setAudioModalOpen, isAudioModalOpe
                 }
             },
             {
-                label: 'GET',
+                label: 'Play',
                 name: 'gcsUrl',
                 renderCell: (row: DataTableRow) => (
                     <PictogramButton
                         ariaAttributes={{ 'aria-label': 'Download' }}
                         disabled={!row.key || isAudioModalOpen}
-                        icon="download"
+                        icon="play-filled"
                         onClick={async () => {
                             const apiUrl = `${process.env.REACT_APP_API_URL}/api/episodes/fetch/audio/${row.key}`;
                             const response = await fetch(apiUrl);

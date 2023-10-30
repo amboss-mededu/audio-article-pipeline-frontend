@@ -81,7 +81,7 @@ export const Table = () => {
                 width={"100%"}
             >
                 {!isLoading && ( !filteredEpisodes || !filteredEpisodes?.length) &&
-                    <EmptyState error={!sortedEpisodes} empty={!filteredEpisodes} />
+                    <EmptyState error={!sortedEpisodes.length} empty={!filteredEpisodes.length} />
                 }
             </DataTable>
 
