@@ -8,10 +8,10 @@ export const MetadataInput = ({nextTab}) => {
     const {formData, setFormData, imageStatus, stageOptions} = useStoreEpisodeContext();
     const { selectedArticle } = useOpenAiContext();
     
-    const handleInputChange = (e) => {
+    const handleInputChange = (e, fallback) => {
         const { name, value } = e.target;
         console.log(name,value);
-        const updatedFormData = { ...formData, [name]: value };
+        const updatedFormData = { ...formData, [fallback || name]: value };
         setFormData(updatedFormData);
     };
 
@@ -23,7 +23,7 @@ export const MetadataInput = ({nextTab}) => {
                         <Select
                             name="stage"
                             value={formData.stage}
-                            onChange={handleInputChange}
+                            onChange={(e) => handleInputChange(e,"stage")}
                             placeholder="Select stage"
                             options={stageOptions}
                             label="Stage" hint="Select either Student or Physician"
