@@ -4,9 +4,16 @@ import {useStoreEpisodeContext} from "../../../../context/StoreEpisodeContext";
 import {useOpenAiContext} from "../../../../context/OpenAiContext";
 import {isValidArticle} from "../../../../helpers/utils";
 
-export const MetadataInput = ({nextTab, handleInputChange, stageOptions}) => {
-    const {formData, setFormData, imageStatus} = useStoreEpisodeContext();
+export const MetadataInput = ({nextTab}) => {
+    const {formData, setFormData, imageStatus, stageOptions} = useStoreEpisodeContext();
     const { selectedArticle } = useOpenAiContext();
+    
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        console.log(name,value);
+        const updatedFormData = { ...formData, [name]: value };
+        setFormData(updatedFormData);
+    };
 
     return (
         <>
