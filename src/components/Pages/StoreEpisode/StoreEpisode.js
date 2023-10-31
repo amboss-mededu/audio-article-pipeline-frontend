@@ -21,17 +21,6 @@ const StoreEpisode = ({ onFormDataChange }) => {
 
     const [activeTab, setActiveTab] = useState(0)
 
-    const stageOptions = [
-        {
-            label: "Physician",
-            value: "physician"
-        },
-        {
-            label: "Student",
-            value: "student"
-        }
-    ];
-
     useEffect(() => {
         // Find the "Submit" button and set its opacity based on the formData conditions
         const submitButton = document.querySelector('button[value="submit"]');
@@ -49,15 +38,6 @@ const StoreEpisode = ({ onFormDataChange }) => {
             }
         }
     }, [elevenLabsInput, selectedArticle]);
-
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        const updatedFormData = { ...formData, [name]: value };
-        setFormData(updatedFormData);
-        if (onFormDataChange) {
-            onFormDataChange(updatedFormData);
-        }
-    };
 
     const switchTab = (i) => {
         if (i === 2 && (!elevenLabsInput || !isValidArticle(selectedArticle))) {
@@ -89,11 +69,11 @@ const StoreEpisode = ({ onFormDataChange }) => {
 
                     <Box space={"m"} tSpace={"l"} lSpace={"zero"} rSpace={"zero"}>
                         {activeTab === 0 && (
-                            <MetadataInput handleInputChange={handleInputChange} nextTab={nextTab} stageOptions={stageOptions} />
+                            <MetadataInput nextTab={nextTab} />
                         )}
 
                         {activeTab === 1 && (
-                            <ScriptInput handleInputChange={handleInputChange} nextTab={nextTab} prevTab={prevTab} />
+                            <ScriptInput nextTab={nextTab} prevTab={prevTab} />
                         )}
 
                         {(activeTab >= 2 && isValidArticle(selectedArticle) && elevenLabsInput) && (
