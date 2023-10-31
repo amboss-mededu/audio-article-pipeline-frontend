@@ -17,7 +17,7 @@ export const Artwork = () => {
     const fetchImageFromBackend = async () => {
         setImageStatus('loading');
 
-        const apiUrl = `${process.env.REACT_APP_API_URL}/api/episodes/artwork/random`
+        const apiUrl = `${process.env.REACT_APP_API_URL}/api/episodes/artwork/random?format=png`
         // const apiUrl = `${process.env.REACT_APP_API_URL}/api/episodes/artwork/magic`
 
         try {

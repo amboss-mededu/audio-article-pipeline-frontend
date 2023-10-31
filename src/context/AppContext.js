@@ -29,23 +29,23 @@ const AppProvider = ({ children, divRef, boxRef }) => {
         };
     }, []);
 
+
     useEffect(() => {
+        console.log(boxRef, divRef, document.body.scrollHeight, window.innerHeight )
         const handleResize = () => {
+            // Logic for innerHeight and innerWidth
             setInnerWidth(window.innerWidth);
-            setInnerHeight(window.innerHeight);
-        };
-        window.addEventListener('resize', handleResize);
-        return () => {
-            window.removeEventListener('resize', handleResize);
-        };
-    }, []);
+            setInnerHeight(document.body.scrollHeight);  // directly set to current scrollHeight
 
-    useEffect(() => {
-
-        const handleResize = () => {
+            // Logic for divRefHeight and boxRefWidth
             if (divRef && divRef.current) {
-                setDivRefHeight(divRef.current.childNodes[0].offsetHeight);
+                const childNodeHeight = divRef.current.childNodes[1]?.offsetHeight + 80 || 0;
+                const maxHeight = Math.max(childNodeHeight, window.innerHeight);
+
+                console.log(divRef.current.childNodes[0]);
+                setDivRefHeight(maxHeight);  // directly set to current childNodeHeight
             }
+
             if (boxRef && boxRef.current) {
                 setBoxRefWidth(boxRef.current.offsetWidth);
             }
@@ -63,6 +63,7 @@ const AppProvider = ({ children, divRef, boxRef }) => {
             observer.observe(boxRef.current, { attributes: true, childList: true, subtree: true });
         }
 
+        // Cleanup
         return () => {
             window.removeEventListener('resize', handleResize);
             observer.disconnect();

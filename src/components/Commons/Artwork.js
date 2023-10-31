@@ -1,71 +1,64 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {Box, LoadingSpinner} from "@amboss/design-system";
-import {isValidArticle} from "../../helpers/utils";
+import ('../../styles/Artwork.css')
 
 export const Artwork = () => {
     const [imageStatus, setImageStatus] = useState('initial');
-    const [imageReload, setImageReload] = useState(false)
     const [imageSrc, setImageSrc] = useState('');
-    const [imageXid, setImageXid] = useState(null)
 
-    const fetchImageFromBackend = async () => {
-        setImageStatus('loading');
-
-        const apiUrl = `${process.env.REACT_APP_API_URL}/api/episodes/artwork/random`
-
-        try {
-            // Fetch your image from the backend
-            const response = await fetch(apiUrl);
-
-            if(!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-
-            const blob = await response.blob();
-            const url = URL.createObjectURL(blob);
-
-            setImageSrc(url);
-            setImageStatus('loaded');
-            setImageReload(true)
-        } catch (error) {
-            console.error('Error fetching image:', error);
-            setImageStatus('initial'); // Revert to the initial state in case of an error
-        }
-    };
+    const wrapperRef = useRef(null)
 
     useEffect(() => {
+
+        const fetchImageFromBackend = async () => {
+            setImageStatus('loading');
+
+            const apiUrl = `${process.env.REACT_APP_API_URL}/api/episodes/artwork/random`
+
+            try {
+                // Fetch your image from the backend
+                const response = await fetch(apiUrl);
+
+                if(!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                const blob = await response.blob();
+                const url = URL.createObjectURL(blob);
+
+                setImageSrc(url);
+                setImageStatus('loaded');
+            } catch (error) {
+                console.error('Error fetching image:', error);
+                setImageStatus('initial'); // Revert to the initial state in case of an error
+            }
+        };
+
         if ( imageStatus === "initial" ) {
             fetchImageFromBackend();
         }
-    }, [imageStatus, fetchImageFromBackend])
+    }, [imageStatus])
 
-    const contentDivStyle = {
-        display: 'grid',
-        width: '67%',
-        aspectRatio: "1 / 1",
-        border: `1px ${imageStatus === "loaded" ? "solid" : "dashed"}`,
-        position: 'relative',
-        margin: 'auto',
-        alignContent: 'stretch',
-        alignItems: 'center',
-        borderRadius: '10px',
-        overflow: 'hidden'
-    }
+    useEffect(() => {
+        if (!wrapperRef || !wrapperRef.current) return;
 
-    const wrapDivStyle = {
-        display: 'flex',
-        flexDirection: 'column',
-        rowGap: '10px',
-        alignItems: 'center'
-    }
+        switch (imageStatus) {
+            case "loading":
+                wrapperRef.current.style.borderStyle = "dashed";
+                break;
+            default:
+                wrapperRef.current.style.borderStyle = "solid";
+                break;
+        }
+    }, [imageStatus, wrapperRef])
 
     return(
         <Box>
-            <div style={wrapDivStyle}>
-                <div style={contentDivStyle}>
+            <div className={"artwork artwork__wrapper"} >
+                <div ref={wrapperRef} className={"artwork artwork__content"}>
                     {imageStatus === 'loading' && <LoadingSpinner  screenReaderText={"Loading Artwork"}/>}
                     {imageStatus === 'loaded' && (
-                        <img src={imageSrc} id={"episode-artwork-img"} alt={`Artwork for ${imageXid || "Episode"}`} style={{ width: '100%', height: '100%' }} />
+                        <img src={imageSrc} id={"episode-artwork-img"} alt={`Artwork for Episode`} style={{ width: '100%', height: '100%' }} />
                     )}
                 </div>
             </div>

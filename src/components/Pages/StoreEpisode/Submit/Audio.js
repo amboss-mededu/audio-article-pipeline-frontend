@@ -3,20 +3,20 @@ import React, {useEffect} from "react";
 import {useOpenAiContext} from "../../../../context/OpenAiContext";
 import {useElevenLabsContext} from "../../../../context/ElevenLabsContext";
 import { Artwork } from "./Artwork";
-import {ElevenLabsSubmit} from "../../Playground/ElevenLabs/ElevenLabsSubmit";
-import { ProgressController } from "../../../../context/ProgressController";
+import { ProgressController } from "../../../Commons/ProgressController";
 import {useStoreEpisodeContext} from "../../../../context/StoreEpisodeContext";
 import {isValidArticle} from "../../../../helpers/utils";
 import useFullTTS from "../../../../hooks/useFullTTS";
 import {SuccessCard} from "./SuccessCard";
 import {useAppContext} from "../../../../context/AppContext";
+import VoiceSelect from "./VoiceSelect";
 
-export const Audio = ({prevTab, nextTab}) => {
+export const Audio = ({prevTab, nextTab, setActiveTab}) => {
 
     const { selectedArticle } = useOpenAiContext();
-    const { audioFilePath} = useElevenLabsContext();
+    const { audioFilePath, elevenLabsInput } = useElevenLabsContext();
 
-    const { imageStatus } = useStoreEpisodeContext();
+    const { imageStatus, selectedVoices } = useStoreEpisodeContext();
 
     const {boxRefWidth } = useAppContext()
 
@@ -37,7 +37,7 @@ export const Audio = ({prevTab, nextTab}) => {
     }, []);
 
     useEffect(() => {
-        console.log(fullTTSResult)
+        // console.log(fullTTSResult)
     }, [fullTTSResult])
 
     const ActionButton = () => {
@@ -60,8 +60,8 @@ export const Audio = ({prevTab, nextTab}) => {
                 <Button
                     type={"button"}
                     variant={"primary"}
-                    disabled={imageStatus !== "loaded" || !isValidArticle(selectedArticle) || ( fullTTSResult && fullTTSResult.success )}
-                    onClick={(e) => handleFullTTSSubmit(e)}
+                    disabled={imageStatus !== "loaded" || !isValidArticle(selectedArticle) || !selectedVoices.length|| ( fullTTSResult && fullTTSResult.success )}
+                    onClick={(e) => handleFullTTSSubmit(e, setActiveTab)}
                 >
                     Store to Database
                 </Button>
@@ -80,8 +80,9 @@ export const Audio = ({prevTab, nextTab}) => {
                     {/* <ElevenLabsSubmit /> */}
 
                     {fullTTSLoading && (
-                        <Stack>
+                        <Stack space={["l","l","xl"]}>
                             <LoadingSpinner screenReaderText="Loading" />
+                            <ProgressController inputLength={elevenLabsInput.length} />
                         </Stack>
                     )}
 
@@ -102,6 +103,7 @@ export const Audio = ({prevTab, nextTab}) => {
                         </Box>
                     )}
                 </div>
+                { !fullTTSResult && !fullTTSLoading && <VoiceSelect /> }
                 <Inline alignItems={"center"} space={"m"}>
                     <ActionButton />
 
@@ -111,7 +113,7 @@ export const Audio = ({prevTab, nextTab}) => {
                         size={"m"}
                         disabled={ fullTTSLoading}
                         variant={"secondary"}
-                        onClick={prevTab}  // Handle abort here as well if needed
+                        onClick={() => setActiveTab(1)}
                         ariaAttributes={{
                             'aria-label': 'Previous Tab'
                         }}

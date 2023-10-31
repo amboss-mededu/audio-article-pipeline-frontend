@@ -1,0 +1,22 @@
+/* Equivalent to wrapDivStyle */
+.artwork__wrapper {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    align-items: center;
+}
+
+/* Equivalent to contentDivStyle */
+.artwork__content {
+    display: grid;
+    width: 67%;
+    min-width: 150px;
+    aspect-ratio: 1 / 1;
+    border: 1px solid; /* The type (solid or dashed) will need to be dynamically set */
+    position: relative;
+    margin: auto;
+    align-content: stretch;
+    align-items: center;
+    border-radius: 10px;
+    overflow: hidden;
+}

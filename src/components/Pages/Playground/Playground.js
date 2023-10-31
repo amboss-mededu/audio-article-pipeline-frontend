@@ -1,5 +1,5 @@
 import {Box, Divider, LoadingSpinner, Stack} from "@amboss/design-system";
-import {ProgressController} from "../../../context/ProgressController";
+import {ProgressController} from "../../Commons/ProgressController";
 import {useOpenAiContext} from "../../../context/OpenAiContext";
 import {OpenAiWrapper} from "./OpenAiWrapper";
 import {usePlaygroundContext} from "../../../context/PlaygroundContext";

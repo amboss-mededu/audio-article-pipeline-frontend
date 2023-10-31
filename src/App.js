@@ -13,12 +13,12 @@ import Inventory from "./components/Pages/Inventory/Inventory";
 import {InventoryProvider} from "./context/InventoryContext";
 
 function App({boxRef, divRef}) {
-    const { activeTab, isDarkMode, setIsDarkMode, innerHeight, maxWidth } = useAppContext();
+    const { activeTab, isDarkMode, setIsDarkMode, innerHeight, divRefHeight, maxWidth } = useAppContext();
 
     return (
         <ThemeProvider theme={isDarkMode ? dark : light}>
             <Container borderRadius={0}>
-                <div ref={divRef} style={{ height: innerHeight, borderRadius: 0 }}>
+                <div ref={divRef} style={{ height: divRefHeight, borderRadius: 0 }}>
                     <ElevenLabsProvider>
                     <OpenAiProvider>
                     <InventoryProvider>

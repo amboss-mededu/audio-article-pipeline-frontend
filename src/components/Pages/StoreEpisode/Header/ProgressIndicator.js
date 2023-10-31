@@ -10,7 +10,7 @@ export const ProgressIndicator = ({ activeTab }) => {
     const steps = ["Metadata", "Script", "Audio"];
     const { selectedArticle } = useOpenAiContext();
     const { audioFilePath } = useElevenLabsContext();
-    const { imageStatus } = useStoreEpisodeContext();
+    const { imageStatus, fullTTSResult } = useStoreEpisodeContext();
 
     const [status, setStatus] = useState(0)
 

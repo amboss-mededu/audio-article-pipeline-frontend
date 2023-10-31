@@ -22,19 +22,23 @@ export const ArticleSelect = ({activeTab, setActiveTab}) => {
                                                 <Text weight={"bold"} size={"m"} as={"span"} >
                                                     {selectedArticle.title}
                                                 </Text>
-                                                <PictogramButton
-                                                    ariaAttributes={{
-                                                        'aria-label': 'Change Article'
-                                                    }}
-                                                    icon="edit-3"
-                                                    disabled={ activeTab>1 || openAiLoading }
-                                                    onBlur={function noRefCheck(){}}
-                                                    onClick={() => setActiveTab(0)}
-                                                    onFocus={function noRefCheck(){}}
-                                                    size="l"
-                                                    type="button"
-                                                    variant="tertiary"
-                                                />
+                                                {
+                                                    activeTab < 2 && (
+                                                        <PictogramButton
+                                                            ariaAttributes={{
+                                                                'aria-label': 'Change Article'
+                                                            }}
+                                                            icon="edit-3"
+                                                            disabled={ activeTab>1 || openAiLoading }
+                                                            onBlur={function noRefCheck(){}}
+                                                            onClick={() => setActiveTab(0)}
+                                                            onFocus={function noRefCheck(){}}
+                                                            size="l"
+                                                            type="button"
+                                                            variant="tertiary"
+                                                        />
+                                                    )
+                                                }
                                             </Box>
                                             <Text size={"xs"}>
                                                 XID: {selectedArticle.xid}

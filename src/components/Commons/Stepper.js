@@ -1,16 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import '../../styles/Stepper.css';
 import {Text, Icon, Container} from "@amboss/design-system";
-import {isValidArticle} from "../../helpers/utils";
-import {useOpenAiContext} from "../../context/OpenAiContext";
-import {useElevenLabsContext} from "../../context/ElevenLabsContext";
-import {useStoreEpisodeContext} from "../../context/StoreEpisodeContext";
 
 const Stepper = ({activeTab}) => {
-
-    const { selectedArticle } = useOpenAiContext();
-    const { audioFilePath } = useElevenLabsContext();
-    const { imageStatus } = useStoreEpisodeContext();
 
     useEffect(() => {
         const updateStepStyles = () => {
@@ -38,20 +30,12 @@ const Stepper = ({activeTab}) => {
         };
     }, []);
 
-    // checkmark-circle-filled
-    // circle
-    // check-circle
-    // filled-dot
-    // x
-
     const CustomIcon = ({ i }) => {
-        // Currently disabled -->
-        const isActiveTabCheck = false && i === activeTab && i === 2 && audioFilePath && imageStatus === "loaded" && isValidArticle(selectedArticle);
-
-        const iconName = i < activeTab || isActiveTabCheck ? "check" : "";
-
+        const iconName = i < activeTab && "check";
         return <Icon inline size="m" name={iconName} />;
     };
+
+    console.log(activeTab)
 
     return (
         <div style={{ position: "sticky", top: "72px", zIndex: 5 }}>
@@ -60,7 +44,6 @@ const Stepper = ({activeTab}) => {
                 {Array.from({ length: 3 }).map((_, i) => {
                     const isCompleted = i < activeTab;
                     const isCurrent = i === activeTab;
-                    const isCheckCondition = isCompleted || (isCurrent && i === 2 && audioFilePath && imageStatus === "loaded" && isValidArticle(selectedArticle));
 
                     return (
                         <div key={i} className={`step${isCompleted ? ' completed' : ''}${isCurrent ? ' current' : ''}`}>

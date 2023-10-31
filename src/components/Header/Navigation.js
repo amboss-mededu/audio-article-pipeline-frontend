@@ -64,7 +64,6 @@ const HeaderNavigation = ({windowWidth, showTabs, setShowTabs}) => {
                     {
                         showTabs ?
                             <Tabs
-                                horizontalPadding={["xxl","xl","xxl"]}
                                 className={"nav-bar__tabs"}
                                 activeTab={activeTab}
                                 onTabSelect={handleTabChange}

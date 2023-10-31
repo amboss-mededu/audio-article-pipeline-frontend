@@ -9,7 +9,7 @@ const useFullTTS = () => {
     const [error, setError] = useState(null);
 
     const { selectedArticle, promptId } = useOpenAiContext();
-    const { formData, imgSrc } = useStoreEpisodeContext()
+    const { formData, imgSrc, selectedVoices } = useStoreEpisodeContext()
     const { elevenLabsInput } = useElevenLabsContext();
 
     const [result, setResult] = useState()
@@ -23,7 +23,7 @@ const useFullTTS = () => {
         }
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e, setActiveTab) => {
         if (e) e.preventDefault();
         setLoading(true);
         setError(null);
@@ -34,7 +34,7 @@ const useFullTTS = () => {
         // element.scrollIntoView({ behavior: 'smooth' });
         window.scrollTo(0, document.body.scrollHeight);
 
-        const apiUrl = `${process.env.REACT_APP_API_URL}/api/fulltts/request/${ true ? "audio" : "full" }`;
+        const apiUrl = `${process.env.REACT_APP_API_URL}/api/fulltts/request/audio`;
 
         try {
             const body = {
@@ -43,6 +43,7 @@ const useFullTTS = () => {
                 promptId,
                 tags: formData.tags,
                 title: formData.title,
+                voices: selectedVoices.length && selectedVoices,
                 userMessage: elevenLabsInput,
                 xid: formData.xid,
             }
@@ -58,8 +59,8 @@ const useFullTTS = () => {
 
             if (response.ok) {  // check if the response status is OK (status code 200-299)
                 const result = await response.json();  // parses the response body as JSON
-                console.log(result);
                 setResult(result)
+                if ( result.success ) setActiveTab(3)
             } else {
                 // handle non-OK responses
                 throw new Error('Network response was not ok.');
@@ -73,7 +74,8 @@ const useFullTTS = () => {
                     </div>
                 );
             } else {
-                setError('An error occurred while processing your request.');
+                console.error(err.message)
+                setError(`An error occurred while processing your request: ${err.message}`);
             }
         } finally {
             setLoading(false);

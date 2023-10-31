@@ -33,16 +33,18 @@ export const useColumns = ({setActiveEpisode, setAudioModalOpen, isAudioModalOpe
     const daysAgoOrExactDate = (creationDate) => {
         const currentDate = new Date();
         const episodeDate = new Date(creationDate);
-
         const diffTime = Math.abs(currentDate - episodeDate);
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
-        if (diffDays <= 10) {
+        if (diffDays === 1) {
+            return "Today";
+        } else if (diffDays <= 10) {
             return `${diffDays} days ago`;
         } else {
-            return episodeDate.toDateString();
+            return episodeDate.toLocaleDateString();
         }
     };
+
 
     return (
         [
@@ -128,13 +130,13 @@ export const useColumns = ({setActiveEpisode, setAudioModalOpen, isAudioModalOpe
                 }
             },
             {
-                label: 'Play',
-                name: 'gcsUrl',
+                label: 'Info',
+                name: 'details',
                 renderCell: (row: DataTableRow) => (
                     <PictogramButton
-                        ariaAttributes={{ 'aria-label': 'Download' }}
+                        ariaAttributes={{ 'aria-label': 'Open Modal' }}
                         disabled={!row.key || isAudioModalOpen}
-                        icon="play-filled"
+                        icon="headphones"
                         onClick={async () => {
                             const apiUrl = `${process.env.REACT_APP_API_URL}/api/episodes/fetch/audio/${row.key}`;
                             const response = await fetch(apiUrl);

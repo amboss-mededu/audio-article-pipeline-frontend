@@ -1,7 +1,7 @@
 import {useColumns} from "./useColumns";
 import {Box, DataTable, Inline, Modal, Pagination} from "@amboss/design-system";
 import {EmptyState} from "./EmptyState";
-import React, {useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {useInventoryContext} from "../../../../context/InventoryContext";
 import {useSorting} from "./useSorting";
 import {useAppContext} from "../../../../context/AppContext";
@@ -28,11 +28,19 @@ export const Table = () => {
     const startIdx = (currentPage - 1) * itemsPerPage;
     const endIdx = startIdx + itemsPerPage;
 
+    useEffect(() => {
+        const maxPage = Math.floor(filteredEpisodes.length / itemsPerPage + 0.99);
+
+        if (currentPage > maxPage) {
+            setCurrentPage(maxPage || 1);
+        }
+    }, [filteredEpisodes, itemsPerPage, currentPage, setCurrentPage]);
+
     const paginatedEpisodes = filteredEpisodes?.slice(startIdx, endIdx);
 
     const CustomPagination = () => (
         <Pagination
-            numOfItems={sortedEpisodes.length}
+            numOfItems={filteredEpisodes.length}
             numOfItemsPerPage={itemsPerPage}
             currentPage={currentPage}
             onPrevClick={handlePrevClick}
@@ -62,19 +70,22 @@ export const Table = () => {
                 isEmpty={!isLoading && ( !filteredEpisodes || !filteredEpisodes?.length)}
                 isLoading={isLoading}
                 onSort={handleSort}
-                rows={paginatedEpisodes && paginatedEpisodes.map((episode) => {
+                rows={paginatedEpisodes && paginatedEpisodes.map(
+                    ({ _id, elevenLabsCallId, xid, stage, description, tags, title, voice, version, creationDate, gcsUrl }) => {
                     return {
-                        key: episode._id,
-                        title: episode.title,
-                        xid: episode.xid,
-                        stage: episode.stage,
-                        description: episode.description,
-                        voice_name: episode.voice.name,
-                        voice_sex: episode.voice.sex,
-                        voice_tone: episode.voice.tone?.join(", "),
-                        version: episode.version,
-                        creationDate: episode.creationDate,
-                        gcsUrl: episode.gcsUrl
+                        key: _id,
+                        elevenLabsCallId,
+                        xid,
+                        stage,
+                        description,
+                        tags,
+                        title,
+                        voice_name: voice.name,
+                        voice_sex: voice.sex,
+                        voice_tone: voice.tone?.join(", "),
+                        version,
+                        creationDate: creationDate || 0,
+                        gcsUrl
                     }
                 })}
                 {...rwdProps()}

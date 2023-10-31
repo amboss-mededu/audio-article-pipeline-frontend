@@ -2,7 +2,29 @@ import {Card, Stack, CardBox, Text, Divider, PictogramButton, Inline, Tooltip} f
 import {Popover} from "@mui/material";
 
 export const SuccessCard = ({ episodes = [] }) => {
-    console.log(episodes);
+
+    const Episode = ({voice}) => {
+
+        if (!voice || typeof voice !== "object") return ;
+
+        return (
+            <Inline>
+                <Text weight="bold">
+                    {voice.name}
+                </Text>
+                { voice.tone.length
+                    ? (
+                        <Tooltip  content={voice.tone.join(", ")}>
+                            <Text>
+                                ({voice.sex})
+                            </Text>
+                        </Tooltip>
+                    )
+                    : <Text>({voice.sex})</Text>
+                }
+            </Inline>
+        )
+    }
 
     return (
         <Card
@@ -10,24 +32,10 @@ export const SuccessCard = ({ episodes = [] }) => {
             title={episodes[0].title}
         >
             {episodes.map((episode, index) => (
-                <Stack space="zero">
+                <Stack space="zero" key={index}>
                     <CardBox key={index}>
                         <Inline alignItems={"spaceBetween"}>
-                            <Inline>
-                                <Text weight="bold">
-                                    {episode.voice.name}
-                                </Text>
-                                { episode.voice.tone.length
-                                    ? (
-                                        <Tooltip  content={episode.voice.tone.join(", ")}>
-                                            <Text>
-                                                ({episode.voice.sex})
-                                            </Text>
-                                        </Tooltip>
-                                    )
-                                    : <Text>({episode.voice.sex})</Text>
-                                }
-                            </Inline>
+                            <Episode voice={episode.voice} />
                             <PictogramButton
                                 ariaAttributes={{ 'aria-label': 'Download' }}
                                 icon="download"

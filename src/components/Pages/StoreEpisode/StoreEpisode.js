@@ -96,8 +96,8 @@ const StoreEpisode = ({ onFormDataChange }) => {
                             <ScriptInput handleInputChange={handleInputChange} nextTab={nextTab} prevTab={prevTab} />
                         )}
 
-                        {(activeTab === 2 && isValidArticle(selectedArticle) && elevenLabsInput) && (
-                            <Audio nextTab={nextTab} prevTab={prevTab} />
+                        {(activeTab >= 2 && isValidArticle(selectedArticle) && elevenLabsInput) && (
+                            <Audio nextTab={nextTab} prevTab={prevTab} setActiveTab={setActiveTab} />
                         )}
                     </Box>
                 </Box>
