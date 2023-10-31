@@ -17,6 +17,17 @@ const StoreEpisodeProvider = ({ children }) => {
 
 
     const {selectedArticle, setSelectedArticle} = useOpenAiContext();
+    
+    const stageOptions = [
+        {
+            label: "Physician",
+            value: "physician"
+        },
+        {
+            label: "Student",
+            value: "student"
+        }
+    ];
 
     const [formData, setFormData] = useState({
         gcsUrl: "",
@@ -55,7 +66,7 @@ const StoreEpisodeProvider = ({ children }) => {
     return (
         <StoreEpisodeContext.Provider
             value={{
-                formData, setFormData,
+                formData, setFormData, stageOptions,
                 imageStatus, setImageStatus,
                 imageReload, setImageReload,
                 imageSrc, setImageSrc,
