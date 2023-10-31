@@ -50,7 +50,7 @@ export const Artwork = () => {
 
     useEffect(() => {
         if ( imageStatus === "initial" && isValidArticle(selectedArticle)) {
-            fetchImageFromBackend(selectedArticle.xid);
+            fetchImageFromBackend();
         }
     }, [selectedArticle, imageStatus, fetchImageFromBackend])
 
