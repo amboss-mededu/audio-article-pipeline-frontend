@@ -10,6 +10,8 @@ const StoreEpisodeProvider = ({ children }) => {
     const [imageReload, setImageReload] = useState(false)
     const [imageSrc, setImageSrc] = useState('');
     const [imageXid, setImageXid] = useState(null)
+    const [imageRetryCount, setImageRetryCount] = useState(0);
+
 
     const [availableVoices, setAvailableVoices] = useState([]);
     const [voicesError, setVoicesError] = useState(null);
@@ -18,9 +20,20 @@ const StoreEpisodeProvider = ({ children }) => {
 
     const {selectedArticle, setSelectedArticle} = useOpenAiContext();
 
-    const [formData, setFormData] = useState({
+    const stageOptions = [
+        {
+            label: "Physician",
+            value: "physician"
+        },
+        {
+            label: "Student",
+            value: "student"
+        }
+    ];
+
+    const formDefault = {
         gcsUrl: "",
-        stage: "student",
+        stage: "physician",
         xid: "",
         duration: 0,
         tags: "",
@@ -28,10 +41,12 @@ const StoreEpisodeProvider = ({ children }) => {
         title: "",
         voice: {
             name: "",
-            sex: "male",
+            sex: "",
             tone: []
         }
-    });
+    }
+
+    const [formData, setFormData] = useState(formDefault);
 
     useEffect(() => {
         if (!selectedArticle) return ;
@@ -45,7 +60,7 @@ const StoreEpisodeProvider = ({ children }) => {
                 setAvailableVoices(data);
             } catch (error) {
                 console.error('Failed to fetch voices:', error);
-                setVoicesError(error.message)
+                setVoicesError(`Failed to fetch voices: ${error.message || "Network error"}`)
             }
         };
 
@@ -55,14 +70,15 @@ const StoreEpisodeProvider = ({ children }) => {
     return (
         <StoreEpisodeContext.Provider
             value={{
-                formData, setFormData,
+                formData, setFormData, stageOptions, formDefault,
                 imageStatus, setImageStatus,
                 imageReload, setImageReload,
                 imageSrc, setImageSrc,
                 imageXid, setImageXid,
+                imageRetryCount, setImageRetryCount,
                 availableVoices, setAvailableVoices,
                 voicesError, setVoicesError,
-                selectedVoices, setSelectedVoices
+                selectedVoices, setSelectedVoices,
             }}
         >
             {children}

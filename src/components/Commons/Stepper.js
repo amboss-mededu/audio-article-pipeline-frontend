@@ -35,8 +35,6 @@ const Stepper = ({activeTab}) => {
         return <Icon inline size="m" name={iconName} />;
     };
 
-    console.log(activeTab)
-
     return (
         <div style={{ position: "sticky", top: "72px", zIndex: 5 }}>
             <Container borderRadius={"zero"} elevation={0}>

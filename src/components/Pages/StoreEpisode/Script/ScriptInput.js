@@ -12,7 +12,7 @@ export const ScriptInput = ({nextTab, prevTab}) => {
     const { elevenLabsInput, setElevenLabsInput } = useElevenLabsContext();
     const { isDarkMode } = useAppContext()
 
-    const { openAiLoading, promptId, handleOpenAiAbort, handleOpenAiSubmit, selectedArticle, model } = useOpenAiContext();
+    const { openAiLoading, promptId, handleOpenAiAbort, handleOpenAiSubmit, selectedArticle, model, openAiError } = useOpenAiContext();
     const stream = true;
     const openAiInputType = "xid";
 
@@ -104,9 +104,10 @@ export const ScriptInput = ({nextTab, prevTab}) => {
         )
     }
 
+
     return (
         <>
-            <FormFieldGroup>
+            <FormFieldGroup errorMessages={elevenLabsInput.length ? [] : [openAiError]}>
                 { false && elevenLabsInput && <CustomOpenAiButtonGroup /> }
 
                 <div className={"store-episode__article"}>

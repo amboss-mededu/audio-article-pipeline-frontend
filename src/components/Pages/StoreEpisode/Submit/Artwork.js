@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import { Button, LoadingSpinner } from '@amboss/design-system';
+import {Button, Icon, Text, LoadingSpinner} from '@amboss/design-system';
 import {useStoreEpisodeContext} from "../../../../context/StoreEpisodeContext";
 import {useOpenAiContext} from "../../../../context/OpenAiContext";
 import {isValidArticle} from "../../../../helpers/utils"; // Assuming your design system has these components
@@ -8,7 +8,9 @@ export const Artwork = () => {
     const { imageStatus, setImageStatus,
         imageReload, setImageReload,
         imageSrc, setImageSrc,
-        imageXid, setImageXid } = useStoreEpisodeContext()
+        imageXid, setImageXid,
+        imageRetryCount, setImageRetryCount
+    } = useStoreEpisodeContext()
 
     const { selectedArticle } = useOpenAiContext();
 
@@ -17,11 +19,9 @@ export const Artwork = () => {
     const fetchImageFromBackend = async () => {
         setImageStatus('loading');
 
-        const apiUrl = `${process.env.REACT_APP_API_URL}/api/episodes/artwork/random?format=png`
-        // const apiUrl = `${process.env.REACT_APP_API_URL}/api/episodes/artwork/magic`
+        const apiUrl = `${process.env.REACT_APP_API_URL}/api/episodes/artwork/random?format=png`;
 
         try {
-            // Fetch your image from the backend
             const response = await fetch(apiUrl);
 
             if(!response.ok) {
@@ -33,13 +33,22 @@ export const Artwork = () => {
 
             setImageSrc(url);
             setImageStatus('loaded');
-            setImageReload(true)
-            isValidArticle(selectedArticle) && setImageXid(selectedArticle.xid)
+            setImageReload(true);
+            isValidArticle(selectedArticle) && setImageXid(selectedArticle.xid);
+
+            // Reset retry count upon successful fetch
+            setImageRetryCount(0);
         } catch (error) {
-            console.error('Error fetching image:', error);
-            setImageStatus('initial'); // Revert to the initial state in case of an error
+            // Increment retry count and revert to initial state if less than max attempts
+            if (imageRetryCount < 2) {
+                setImageRetryCount(imageRetryCount + 1);
+                setImageStatus('initial');
+            } else {
+                setImageStatus('error');
+            }
         }
     };
+
 
 
     useEffect(() => {
@@ -73,6 +82,19 @@ export const Artwork = () => {
         alignItems: 'center'
     }
 
+    const ImageError = () => {
+        return (
+            <Text as="span" align={"center"}>
+                <Icon
+                    inline
+                    color={"error"}
+                    name="alert-triangle"
+                    size="l"
+                />
+            </Text>
+        )
+    }
+
     return (
         <div style={wrapDivStyle}>
             <div style={contentDivStyle}>
@@ -81,6 +103,7 @@ export const Artwork = () => {
                 )}
 
                 {imageStatus === 'loading' && <LoadingSpinner />}
+                {imageStatus === 'error' && <ImageError />}
                 {imageStatus === 'loaded' && (
                     <img src={imageSrc} id={"episode-artwork-img"} alt={`Artwork for ${imageXid || "Episode"}`} style={{ width: '100%', height: '100%' }} />
                 )}

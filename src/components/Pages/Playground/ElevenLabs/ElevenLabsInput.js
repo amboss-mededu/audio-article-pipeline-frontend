@@ -1,11 +1,13 @@
 import {FormFieldGroup, Text, Textarea} from "@amboss/design-system";
 import {useElevenLabsContext} from "../../../../context/ElevenLabsContext";
 import {useEffect, useRef} from "react";
+import {useOpenAiContext} from "../../../../context/OpenAiContext";
 
 export const ElevenLabsInput = ({elevenLabsPlaceholder}) => {
 
     const textAreaRef = useRef(null); // Workaround to keep the textarea focused
     const { elevenLabsInput, setElevenLabsInput } = useElevenLabsContext();
+    const { openAiError } = useOpenAiContext();
 
     /*
     Considered setting timeout but had terrible UX
@@ -25,6 +27,7 @@ export const ElevenLabsInput = ({elevenLabsPlaceholder}) => {
             <Textarea
                 ref={textAreaRef}
                 name={"eleven-labs-input"}
+                hasError={!elevenLabsInput.length && openAiError}
                 value={elevenLabsInput}
                 maxLength={20000}
                 rows={20}

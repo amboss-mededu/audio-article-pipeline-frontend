@@ -4,9 +4,21 @@ import {useStoreEpisodeContext} from "../../../../context/StoreEpisodeContext";
 import {useOpenAiContext} from "../../../../context/OpenAiContext";
 import {isValidArticle} from "../../../../helpers/utils";
 
-export const MetadataInput = ({nextTab, handleInputChange, stageOptions}) => {
-    const {formData, setFormData, imageStatus} = useStoreEpisodeContext();
-    const { selectedArticle } = useOpenAiContext();
+export const MetadataInput = ({nextTab}) => {
+    const {formData, setFormData, imageStatus, stageOptions, formDefault} = useStoreEpisodeContext();
+    const { setSelectedArticle, selectedArticle } = useOpenAiContext();
+
+    const handleInputChange = (e, fallback) => {
+        const { name, value } = e.target;
+        const updatedFormData = { ...formData, [fallback || name]: value };
+        setFormData(updatedFormData);
+    };
+
+    const handleClearForm = (e) => {
+        setFormData(formDefault);
+        setSelectedArticle(null);
+        console.log("Form cleared")
+    }
 
     return (
         <>
@@ -16,7 +28,7 @@ export const MetadataInput = ({nextTab, handleInputChange, stageOptions}) => {
                         <Select
                             name="stage"
                             value={formData.stage}
-                            onChange={handleInputChange}
+                            onChange={(e) => handleInputChange(e,"stage")}
                             placeholder="Select stage"
                             options={stageOptions}
                             label="Stage" hint="Select either Student or Physician"
@@ -42,19 +54,35 @@ export const MetadataInput = ({nextTab, handleInputChange, stageOptions}) => {
                     hasError={selectedArticle && selectedArticle.xid && !formData.description}
                     label="Description" hint="Provide a brief description"
                 />
-                <Button
-                    name="next-tab"
-                    type={"button"}
-                    size={"m"}
-                    disabled={!isValidArticle(selectedArticle)}
-                    variant={(isValidArticle(selectedArticle) && formData.stage && formData.description && formData.tags) ? "primary" : "secondary"}
-                    onClick={nextTab}
-                    ariaAttributes={{
-                        'aria-label': 'Next Tab'
-                    }}
-                >
-                    Next
-                </Button>
+                <Inline alignItems={"spaceBetween"}>
+                    <Button
+                        name="next-tab"
+                        type={"button"}
+                        size={"m"}
+                        disabled={!isValidArticle(selectedArticle)}
+                        variant={(isValidArticle(selectedArticle) && formData.stage && formData.description && formData.tags) ? "primary" : "secondary"}
+                        onClick={nextTab}
+                        ariaAttributes={{
+                            'aria-label': 'Next Tab'
+                        }}
+                    >
+                        Next
+                    </Button>
+                    <Button
+                        name="clear-form"
+                        type={"button"}
+                        size={"m"}
+                        disabled={!isValidArticle(selectedArticle)}
+                        variant={"tertiary"}
+                        destructive={true}
+                        onClick={handleClearForm}
+                        ariaAttributes={{
+                            'aria-label': 'Clear Form'
+                        }}
+                    >
+                        Clear form
+                    </Button>
+                </Inline>
 
             </FormFieldGroup>
         </>

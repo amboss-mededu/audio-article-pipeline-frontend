@@ -31,7 +31,6 @@ const AppProvider = ({ children, divRef, boxRef }) => {
 
 
     useEffect(() => {
-        console.log(boxRef, divRef, document.body.scrollHeight, window.innerHeight )
         const handleResize = () => {
             // Logic for innerHeight and innerWidth
             setInnerWidth(window.innerWidth);
@@ -42,7 +41,6 @@ const AppProvider = ({ children, divRef, boxRef }) => {
                 const childNodeHeight = divRef.current.childNodes[1]?.offsetHeight + 80 || 0;
                 const maxHeight = Math.max(childNodeHeight, window.innerHeight);
 
-                console.log(divRef.current.childNodes[0]);
                 setDivRefHeight(maxHeight);  // directly set to current childNodeHeight
             }
 
