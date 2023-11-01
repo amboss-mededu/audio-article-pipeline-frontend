@@ -31,9 +31,9 @@ const StoreEpisodeProvider = ({ children }) => {
         }
     ];
 
-    const [formData, setFormData] = useState({
+    const formDefault = {
         gcsUrl: "",
-        stage: "student",
+        stage: "physician",
         xid: "",
         duration: 0,
         tags: "",
@@ -41,10 +41,12 @@ const StoreEpisodeProvider = ({ children }) => {
         title: "",
         voice: {
             name: "",
-            sex: "male",
+            sex: "",
             tone: []
         }
-    });
+    }
+
+    const [formData, setFormData] = useState(formDefault);
 
     useEffect(() => {
         if (!selectedArticle) return ;
@@ -68,7 +70,7 @@ const StoreEpisodeProvider = ({ children }) => {
     return (
         <StoreEpisodeContext.Provider
             value={{
-                formData, setFormData, stageOptions,
+                formData, setFormData, stageOptions, formDefault,
                 imageStatus, setImageStatus,
                 imageReload, setImageReload,
                 imageSrc, setImageSrc,
@@ -76,7 +78,7 @@ const StoreEpisodeProvider = ({ children }) => {
                 imageRetryCount, setImageRetryCount,
                 availableVoices, setAvailableVoices,
                 voicesError, setVoicesError,
-                selectedVoices, setSelectedVoices
+                selectedVoices, setSelectedVoices,
             }}
         >
             {children}
