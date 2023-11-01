@@ -7,9 +7,10 @@ import {isValidArticle} from "../../../../helpers/utils";
 export const MetadataInput = ({nextTab}) => {
     const {formData, setFormData, imageStatus, stageOptions} = useStoreEpisodeContext();
     const { selectedArticle } = useOpenAiContext();
-    
+
     const handleInputChange = (e, fallback) => {
         const { name, value } = e.target;
+        console.log(e.target);
         console.log(name,value);
         const updatedFormData = { ...formData, [fallback || name]: value };
         setFormData(updatedFormData);
