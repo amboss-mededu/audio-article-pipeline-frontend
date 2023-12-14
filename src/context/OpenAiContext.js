@@ -19,7 +19,7 @@ export const OpenAiProvider = ({ children }) => {
     const models = [
         {label: 'GPT-3.5-Turbo', value: 'gpt-3.5-turbo'},
         {label: 'GPT-3.5-16K', value: 'gpt-3.5-turbo-16k'},
-        {label: 'GPT-4', value: 'gpt-4'}
+        {label: 'GPT-4-Turbo', value: 'gpt-4-1106-preview'}
     ]
 
     useEffect(() => {
